@@ -1,0 +1,115 @@
+﻿/*---------------------
+  Order History
+-----------------------*/
+
+/* Đổi màu nền và kích thước cho modal */
+.custom-modal-checkorder-content {
+    background-color: #f8f9fa;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Đổi màu nền và viền cho header */
+.custom-header-checkorder {
+    background-color: #c6c6c6;
+    color: #fff;
+    border-bottom: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* Đổi màu chữ cho tiêu đề modal */
+.custom-title-checkorder {
+    color: black;
+    text-align: center;
+    flex-grow: 1;
+}
+
+/* Đổi màu nền cho footer và làm cong các góc */
+.custom-footer-checkorder {
+    background-color: #c6c6c6;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* Đổi màu nền và làm cong các góc cho bảng trong modal */
+.custom-body-checkorder table {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+    /* Đổi màu nền các hàng xen kẽ trong bảng */
+    .custom-body-checkorder table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    /* Đổi màu chữ và thêm viền cho các cell trong bảng */
+    .custom-body-checkorder table td,
+    .custom-body-checkorder table th {
+        color: #333;
+        border: 1px solid #ccc;
+    }
+
+/* Tạo hiệu ứng hover cho nút */
+.custom-footer-checkorder .btn:hover {
+    opacity: 0.8;
+}
+
+.btn-checkorder {
+    background-color: #f08632;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 0px;
+}
+
+    .btn-checkorder:hover {
+        color: #fff;
+        background-color: #b86622;
+        border-color: #b86622;
+    }
+
+    .btn-checkorder:focus {
+        color: #fff;
+        background-color: #b86622;
+        border-color: #b86622;
+        box-shadow: 0 0 0 .1rem rgba(199, 219, 241, 0.5);
+    }
+
+    .btn-checkorder:not(:disabled):not(.disabled):active {
+        color: #fff;
+        background-color: #b86622;
+        border-color: #b86622;
+    }
+
+.btn-cancel-order {
+    background-color: #f85959;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 0px;
+}
+
+    .btn-cancel-order:hover {
+        color: #fff;
+        background-color: #9f1f1f;
+        border-color: #9f1f1f;
+    }
+
+    .btn-cancel-order:focus {
+        color: #fff;
+        background-color: #9f1f1f;
+        border-color: #9f1f1f;
+        box-shadow: 0 0 0 .1rem rgba(199, 219, 241, 0.5);
+    }
+
+    .btn-cancel-order:not(:disabled):not(.disabled):active {
+        color: #fff;
+        background-color: #9f1f1f;
+        border-color: #9f1f1f;
+    }
