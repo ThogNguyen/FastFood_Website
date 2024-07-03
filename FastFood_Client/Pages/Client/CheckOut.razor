@@ -1,0 +1,112 @@
+﻿@page "/checkout"
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__text">
+                    <h2>Thanh toán</h2>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__links">
+                    <a href="">Trang Chủ</a>
+                    <a href="cart">Giỏ Hàng</a>
+                    <span>Thanh Toán</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            <form action="#">
+                <div class="row mb-5">
+                    <div class="col-lg-8 col-md-6">
+                        <h6 class="coupon__code">
+                            <span class="icon_tag_alt"></span> Bạn có mã giảm giá? Nhấn vào
+                            <a href="/cart"> đây </a> để nhập mã.
+                        </h6>
+                        <h6 class="checkout__title">Thông Tin Giao Hàng</h6>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Fist Name<span>*</span></p>
+                                    <input type="text">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Last Name<span>*</span></p>
+                                    <input type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Address<span>*</span></p>
+                            <input type="text" class="checkout__input__add">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Phone<span>*</span></p>
+                                    <input type="text">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Email<span>*</span></p>
+                                    <input type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Ghi chú<span>*</span></p>
+                            <input type="text" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="checkout__order">
+                            <h6 class="order__title">Sản phẩm bạn mua</h6>
+                            <div class="checkout__order__products">Sản phẩm <span>Thành tiền</span></div>
+                            <ul class="checkout__total__products">
+                                <li><samp>01.</samp> Vanilla salted caramel <span>$ 300.0</span></li>
+                                <li><samp>02.</samp> German chocolate <span>$ 170.0</span></li>
+                                <li><samp>03.</samp> Sweet autumn <span>$ 170.0</span></li>
+                                <li><samp>04.</samp> Cluten free mini dozen <span>$ 110.0</span></li>
+                            </ul>
+                            <ul class="checkout__total__all">
+                                <li>Thành Tiền <span>$750.99</span></li>
+                                <li>Tổng Tiền <span>$750.99</span></li>
+                            </ul>
+                            <div class="checkout__input__checkbox">
+                                <label for="payment">
+                                    Ship (COD)
+                                    <input type="checkbox" id="payment">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="checkout__input__checkbox">
+                                <label for="paypal">
+                                    VNPay
+                                    <input type="checkbox" id="paypal">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <button type="submit" class="site-btn">Thanh toán</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- Checkout Section End -->
+
+@code {
+
+}

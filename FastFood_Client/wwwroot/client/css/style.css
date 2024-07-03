@@ -135,6 +135,7 @@ ol {
 
 .spad {
   padding-top: 100px;
+  padding-bottom: 50px;
 }
 
 .text-white h1,
@@ -185,7 +186,7 @@ ol {
   background: #000;
 }
 
-.loader {
+.loader2 {
   width: 40px;
   height: 40px;
   position: absolute;
@@ -1495,7 +1496,6 @@ ol {
   padding-left: 30px;
   border-radius: 0;
   float: none;
-  margin-right: 18px;
 }
 .shop__option__right .nice-select .list {
   margin-top: 0;
@@ -1567,7 +1567,7 @@ ol {
 }
 
 .product__details__big__img {
-  width: calc(84% - 20px);
+  width: 100%;
   float: left;
   margin-right: 20px;
 }
@@ -1728,6 +1728,95 @@ ol {
   padding-top: 44px;
   margin-bottom: 0;
 }
+
+/*---------------------
+  Review Form Styling
+-----------------------*/
+
+.reviews .comments-list .item {
+    margin: 10px 0 10px 0;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reviews .comments-list .comment-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviews .comments-list .comment-meta {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+    .reviews .comments-list .comment-meta .author {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+.reviews .comments-list .comment-content {
+    font-size: 16px;
+    color: #333;
+}
+
+.review-form {
+    margin-top: 10px;
+}
+
+    .review-form .title {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .review-form .form-group {
+        margin-bottom: 20px;
+    }
+
+        .review-form .form-group .text {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .review-form .form-group .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* Enhanced Button Styling */
+        .review-form .form-group button {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            .review-form .form-group button:hover {
+                background-color: #0056b3;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+            }
+
+            .review-form .form-group button:active {
+                background-color: #003f7f;
+                transform: translateY(0);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
 
 /*---------------------
   Related Products
@@ -1961,9 +2050,9 @@ ol {
 .coupon__code span {
   color: #f08632;
 }
-.coupon__code a {
-  color: #444444;
-}
+    .coupon__code a {
+        color: #f60000;
+    }
 
 .checkout__title {
   color: #111111;
@@ -3298,10 +3387,6 @@ ol {
     width: 60%;
   }
 
-  .shop__option__right .nice-select {
-    margin-right: 5px;
-  }
-
   .related__products__slider.owl-carousel .owl-nav button {
     left: -20px;
   }
@@ -3470,7 +3555,7 @@ ol {
     cursor: pointer;
   }
   .offcanvas__option ul li a {
-    color: #111111;
+    color: #ffffff;
   }
   .offcanvas__option ul li:hover ul {
     top: 24px;
@@ -3490,6 +3575,7 @@ ol {
     -webkit-transition: all, 0.3s;
     -o-transition: all, 0.3s;
     transition: all, 0.3s;
+    width: 180px;
   }
   .offcanvas__option ul li ul li {
     list-style: none;
