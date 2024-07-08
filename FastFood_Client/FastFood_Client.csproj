@@ -10,4 +10,8 @@
     <Folder Include="wwwroot\admin\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FastFood_API\FastFood_API.csproj" />
+  </ItemGroup>
+
 </Project>

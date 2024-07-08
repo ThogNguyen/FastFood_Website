@@ -39,11 +39,6 @@
     border-radius: 10px;
 }
 
-    /* Đổi màu nền các hàng xen kẽ trong bảng */
-    .custom-body-checkorder table tbody tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
     /* Đổi màu chữ và thêm viền cho các cell trong bảng */
     .custom-body-checkorder table td,
     .custom-body-checkorder table th {
