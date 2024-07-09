@@ -1,0 +1,113 @@
+﻿@layout AdminLayout
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Quản lý vai trò </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Họ và Tên</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-user" style="color: blue;"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>UserName</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-id-badge" style="color: green;"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-lock" style="color: red;"></i>
+                                        </div>
+                                    </div>
+                                    <input type="password" class="form-control pwstrength" data-indicator="pwindicator">
+                                </div>
+                                <div id="pwindicator" class="pwindicator">
+                                    <div class="bar"></div>
+                                    <div class="label"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-phone" style="color: orange;"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control phone-number">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Roles</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-user-tag" style="color: purple;"></i>
+                                        </div>
+                                    </div>
+                                    <select class="form-control">
+                                        <option>User</option>
+                                        <option>Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Địa chỉ</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-map-marker-alt" style="color: brown;"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-envelope" style="color: gray;"></i>
+                                        </div>
+                                    </div>
+                                    <input type="email" class="form-control" required="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <button class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</div>
+@code {
+
+}

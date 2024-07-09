@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastFood_API", "FastFood_AP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastFood_Client", "FastFood_Client\FastFood_Client.csproj", "{3B5CEECC-DB64-424F-8AEC-2300612F13B7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{7697C6B9-4032-406E-A841-EA881D261541}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3B5CEECC-DB64-424F-8AEC-2300612F13B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B5CEECC-DB64-424F-8AEC-2300612F13B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B5CEECC-DB64-424F-8AEC-2300612F13B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7697C6B9-4032-406E-A841-EA881D261541}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7697C6B9-4032-406E-A841-EA881D261541}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7697C6B9-4032-406E-A841-EA881D261541}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7697C6B9-4032-406E-A841-EA881D261541}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
