@@ -37635,7 +37635,7 @@ input[readonly] {
 .form-control {
     height: 40px;
     border: 1px solid #dee2e6;
-    color: #a6a9b7
+    color: #000000a3
 }
 
     .form-control:focus {
@@ -37677,7 +37677,7 @@ select.form-control[multiple], select.form-control[size] {
 
 label, legend {
     font-weight: 500;
-    color: #a6a9b7
+    color: #000000a3;
 }
 
 .custom-select.is-valid, .form-control.is-valid {
@@ -38489,6 +38489,7 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before, tab
 }
 
 .table > tbody > tr > td {
+    color: black;
     vertical-align: middle;
     white-space: nowrap
 }
