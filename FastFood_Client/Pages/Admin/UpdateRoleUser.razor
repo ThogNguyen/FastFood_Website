@@ -1,0 +1,62 @@
+﻿
+@layout AdminLayout
+@page "/UpdateRoleUser"
+<div class="col-md-12">
+    <div class="card card-statistics">
+        <div class="card-header">
+            <div class="card-heading">
+                <h4 class="card-title">Update Role</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <form>
+
+                <div class="form-group">
+                    <label for="inputAddress">Id Role</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-key"></i></span>
+                        </div>
+                        <input readonly type="text" class="form-control" id="inputAddress" placeholder="1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">User Name</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-user-circle"></i></span>
+                        </div>
+                        <input readonly type="text" class="form-control" id="inputAddress" placeholder="abc">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputRole">Role </label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                        </div>
+                        <select class="custom-select">
+                            <option selected>Role</option>
+                            <option value="1">User</option>
+                            <option value="2">Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">description</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-info-circle"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="Xem web">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-danger">Back</button>
+            </form>
+        </div>
+    </div>
+</div>
+@code {
+
+}
