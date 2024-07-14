@@ -1,0 +1,45 @@
+﻿@layout AdminLayout
+@page "/RoleUser"
+<div class="col-md-12">
+    <div class="card card-statistics">
+        <div class="card-header">
+            <div class="card-heading">
+                <h4 class="card-title mb-3">Role User</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID Role</th>
+                            <th scope="col">User Name </th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Abc</td>
+                            <td>User</td>
+                            <td>Xem web</td>
+
+
+                            <td>
+                                <a href="UpdateRoleUser"><button type="button" class="btn btn-sm btn-warning">Edit</button></a>
+
+                                <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+
+}
