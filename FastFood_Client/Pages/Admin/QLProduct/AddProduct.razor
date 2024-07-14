@@ -1,0 +1,71 @@
+﻿@page "/addproduct"
+@layout AdminLayout
+
+<!-- begin row -->
+<div class="row">
+    <div class="col-md-12 m-b-30">
+        <!-- begin page title -->
+        <div class="d-block d-sm-flex flex-nowrap align-items-center">
+            <div class="page-title mb-2 mb-sm-0">
+                <h1>Add Product</h1>
+            </div>
+        </div>
+        <!-- end page title -->
+    </div>
+</div>
+<!-- end row -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-statistics">
+            <!-- Nội dung form thêm sản phẩm -->
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="productName">Tên Sản Phẩm</label>
+                        <input type="text" class="form-control" id="productName" placeholder="Nhập tên sản phẩm">
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">Giá Sản Phẩm</label>
+                        <input type="text" class="form-control" id="productPrice" placeholder="Nhập giá sản phẩm">
+                    </div>
+                    <div class="form-group">
+                        <label for="productQuantity">Số Lượng</label>
+                        <input type="number" class="form-control" id="productQuantity" placeholder="Nhập số lượng">
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">Hình Ảnh</label>
+                        <input type="file" class="form-control" id="productImage" placeholder="Đường dẫn hình ảnh">
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Mô Tả</label>
+                        <textarea class="form-control" id="productDescription" rows="3" placeholder="Nhập mô tả sản phẩm"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="productAddedDate">Ngày Thêm</label>
+                        <input type="datetime-local" class="form-control" id="productAddedDate">
+                    </div>
+                  
+                    <div class="form-group">
+                        <label for="productIsActive">Đang Hoạt Động</label>
+                        <select class="form-control" id="productIsActive">
+                            <option value="true">Có</option>
+                            <option value="false">Không</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productIsCombo">Là Combo</label>
+                        <select class="form-control" id="productIsCombo">
+                            <option value="true">Có</option>
+                            <option value="false">Không</option>
+                        </select>
+                    </div>
+
+                    <a href="products" class="btn btn-primary">Thêm Sản Phẩm</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
