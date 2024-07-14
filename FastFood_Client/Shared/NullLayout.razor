@@ -19,27 +19,33 @@
 </head>
 
 <body>
+    <!-- begin app -->
     <div class="app">
+        <!-- begin app-wrap -->
         <div class="app-wrap">
+            <!-- begin pre-loader -->
             <div class="loader">
                 <div class="h-100 d-flex justify-content-center">
                     <div class="align-self-center">
-                        <img src="admin/assets/img/loader/loader.svg" alt="loader">
+                        <img src="/admin/assets/img/loader/loader.svg" alt="loader">
                     </div>
                 </div>
             </div>
-            <AdminHeader></AdminHeader>
-            <div class="app-container">
-                <AdminSideBar></AdminSideBar>
-                <div class="app-main" id="main">
-                    <div class="container-fluid">
+            <!-- end pre-loader -->
+            <!--start login contant-->
+            <div class="app-contant">
+                <div class="bg-white">
+                    <div class="container-fluid p-0">
                         @Body
                     </div>
                 </div>
             </div>
+            <!--end login contant-->
         </div>
+        <!-- end app-wrap -->
     </div>
-    
+    <!-- end app -->
+
 
     <script src="/admin/assets/js/vendors.js"></script>
     <script src="/admin/assets/js/app.js"></script>
