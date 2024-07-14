@@ -17931,7 +17931,8 @@ code {
 .badge {
     padding: .4em .8em;
     font-weight: 500;
-    line-height: 1.3
+    line-height: 1.3;
+    font-size: 14px;
 }
 
 .badge-primary {
