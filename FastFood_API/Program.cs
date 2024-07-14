@@ -1,5 +1,7 @@
-﻿
+﻿using Data.DatabaseConnect;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Reflection;
 
 namespace FastFood_API
@@ -14,6 +16,7 @@ namespace FastFood_API
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddSwaggerGen(c =>
@@ -30,6 +33,13 @@ namespace FastFood_API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFilename);
                 c.IncludeXmlComments(xmlPath);
             });
+
+            // Cấu hình kết nối database
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("db"));
+            });
+
 
             var app = builder.Build();
 

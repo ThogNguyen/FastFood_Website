@@ -7,11 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FastFood_API\FastFood_API.csproj" />
+    <Compile Remove="wwwroot\admin\assets\img\QLProdu\**" />
+    <Content Remove="wwwroot\admin\assets\img\QLProdu\**" />
+    <EmbeddedResource Remove="wwwroot\admin\assets\img\QLProdu\**" />
+    <None Remove="wwwroot\admin\assets\img\QLProdu\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\admin\assets\img\QLProdu\" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,15 +2,6 @@
 @page "/products"
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<style>
-    .product-image {
-        width: 50px; /* Chiều rộng hình ảnh */
-        height: 50px; /* Chiều cao hình ảnh */
-        border-radius: 50%; /* Làm cho hình ảnh thành hình tròn */
-        object-fit: cover; /* Đảm bảo hình ảnh không bị biến dạng */
-    }
-
-</style>
 <!-- begin row -->
 <div class="row">
     <div class="col-md-12 m-b-30">
@@ -28,12 +19,15 @@
 <div class="row editable-wrapper">
     <div class="col-lg-12 ">
         <div class="card card-statistics">
-            <a href="addproduct" class="btn btn-sm btn-primary" style="padding: 5px 10px; width:100px; margin:10px;">
-                <span><i class="fas fa-plus"></i></span> Add Product
-            </a>
-
-
+            
             <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <a href="addproduct" class="tabledit-edit-button btn btn-success">
+                            <span><i class="dashicons dashicons-plus-light"></i></span> Thêm
+                        </a>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="table display responsive nowrap table-light table-bordered">
                         <thead class="thead-light text-center">
@@ -43,10 +37,8 @@
                                 <th>Quantity</th>
                                 <th>Image</th>
                                 <th>Description</th>
-                                <th>AddedDate</th>
-                                <th>UpdatedDate</th>
-                                <th>IsActive</th>
-                                <th>IsCombo</th>
+                                <th>Trạng Thái</th>
+                                <th>Combo</th>
                                 <th>Thao Tác</th>
                             </tr>
                         </thead>
@@ -56,28 +48,21 @@
                                 <td>$98.49</td>
                                 <td>10</td>
                                 <td>
-                                    <img src="/admin/assets/img/product-1.jpg" alt="Product Image" class="product-image" />
+                                    <img src="/admin/assets/img/product-1.jpg" width="70" alt="Product Image" />
                                 </td>
                                 <td>
                                    Ngon như mẹ nấu
                                 </td>
                                 <td>
-                                    12/02/2024 12:00:00 SA
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-danger">Hết Hàng</span>
                                 </td>
                                 <td>
-                                    12/02/2024 12:00:00 SA
-                                </td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">True</span>
-                                </td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success" style="background-color:dimgrey ; color: white;">False</span>
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-danger">Không</span>
                                 </td>
                                 <td>
                                     <a href="editproduct" class="tabledit-edit-button btn btn-sm btn-primary">
-                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Edit
+                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
                                     </a>
-
                                 </td>
                             </tr>
                             <tr class="text-center">
@@ -85,26 +70,20 @@
                                 <td>$98.49</td>
                                 <td>10</td>
                                 <td>
-                                    <img src="/admin/assets/img/product-2.jpg" alt="Product Image" class="product-image" />
+                                    <img src="/admin/assets/img/product-2.jpg" width="70" alt="Product Image" class="product-image" />
                                 </td>
                                 <td>
                                     Ngon như Boy money
                                 </td>
                                 <td>
-                                    12/02/2024 12:00:00 SA
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">Còn Hàng</span>
                                 </td>
                                 <td>
-                                    12/02/2024 12:00:00 SA
-                                </td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">True</span>
-                                </td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success" style="background-color:dimgrey ; color: white;">False</span>
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">Có</span>
                                 </td>
                                 <td>
                                     <a href="editproduct" class="tabledit-edit-button btn btn-sm btn-primary">
-                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Edit
+                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
                                     </a>
 
                                 </td>
@@ -114,26 +93,20 @@
                                 <td>$98.49</td>
                                 <td>10</td>
                                 <td>
-                                    <img src="/admin/assets/img/product-6.jpg" alt="Product Image" class="product-image" />
+                                    <img src="/admin/assets/img/product-6.jpg" width="70" alt="Product Image" class="product-image" />
                                 </td>
                                 <td>
-                                    Ngon như Girl 18
+                                    Ngon
                                 </td>
                                 <td>
-                                    12/02/2024 12:00:00 SA
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">Còn Hàng</span>
                                 </td>
                                 <td>
-                                    12/02/2024 12:00:00 SA
-                                </td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">True</span>
-                                </td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success" style="background-color:dimgrey ; color: white;">False</span>
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-danger">Không</span>
                                 </td>
                                 <td>
                                     <a href="editproduct" class="tabledit-edit-button btn btn-sm btn-primary">
-                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Edit
+                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
                                     </a>
 
                                 </td>

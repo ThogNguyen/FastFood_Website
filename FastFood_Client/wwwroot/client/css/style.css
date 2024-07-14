@@ -1486,17 +1486,18 @@ ol {
 .shop__option__right {
   text-align: right;
 }
-.shop__option__right .nice-select {
-  border: none;
-  background: #f5f5f5;
-  display: inline-block;
-  width: 205px;
-  height: 46px;
-  line-height: 46px;
-  padding-left: 30px;
-  border-radius: 0;
-  float: none;
-}
+
+    .shop__option__right .nice-select {
+        border: none;
+        background: #f5f5f5;
+        display: inline-block;
+        width: 150px;
+        height: 46px;
+        line-height: 46px;
+        padding-left: 30px;
+        border-radius: 0;
+        float: none;
+    }
 .shop__option__right .nice-select .list {
   margin-top: 0;
   border-radius: 0;
@@ -1523,9 +1524,11 @@ ol {
   -o-transition: all, 0.3s;
   transition: all, 0.3s;
 }
-.shop__option__right a:hover {
-  color: #888888;
+
+.option1 .nice-select {
+    width: 240px;
 }
+
 
 .shop__pagination a {
   display: inline-block;
