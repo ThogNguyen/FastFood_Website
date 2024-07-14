@@ -1,6 +1,52 @@
 ﻿@layout AdminLayout
 @page "/products"
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+<style>
+    .btn-edit {
+        background-color: #007bff; /* Màu xanh lam cho nút Sửa */
+        border-color: #007bff;
+        color: #fff;
+    }
+
+        .btn-edit:hover {
+            background-color: #0056b3; /* Màu xanh đậm hơn khi hover */
+            border-color: #0056b3;
+            color: #fff;
+        }
+
+    .btn-detail {
+        background-color: #17a2b8; /* Màu xanh lam nhạt cho nút Chi tiết */
+        border-color: #17a2b8;
+        color: #fff;
+    }
+
+        .btn-detail:hover {
+            background-color: #138496; /* Màu xanh đậm hơn khi hover */
+            border-color: #138496;
+            color: #fff;
+        }
+
+    .btn-delete {
+        background-color: #dc3545; /* Màu đỏ cho nút Xóa */
+        border-color: #dc3545;
+        color: #fff;
+    }
+
+        .btn-delete:hover {
+            background-color: #c82333; /* Màu đỏ đậm hơn khi hover */
+            border-color: #c82333;
+            color: #fff;
+        }
+
+    .product-image {
+        width: 50px; /* Chiều rộng hình ảnh */
+        height: 50px; /* Chiều cao hình ảnh */
+        border-radius: 50%; /* Làm cho hình ảnh thành hình tròn */
+        object-fit: cover; /* Đảm bảo hình ảnh không bị biến dạng */
+    }
+
+</style>
 <!-- begin row -->
 <div class="row">
     <div class="col-md-12 m-b-30">
@@ -23,26 +69,152 @@
                     <table class="table display responsive nowrap table-light table-bordered">
                         <thead class="thead-light text-center">
                             <tr>
-                                <th>a</th>
-                                <th>b</th>
-                                <th>c</th>
-                                <th>d</th>
-                                <th>e</th>
-                                <th>f</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Image</th>
+                                <th>Description</th>
+                               @*  <th>AddedDate</th>
+                                <th>UpdatedDate</th> *@
+                                <th>IsActive</th>
+                                <th>IsCombo</th>
+                                <th>Thao Tác</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="text-center">
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
+                                <td>T-SHIRT CONTRAST POCKET</td>
+                                <td>$98.49</td>
+                                <td>10</td>
                                 <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">1</span>
+                                    <img src="/admin/assets/img/product-1.jpg" alt="Product Image" class="product-image" />
                                 </td>
                                 <td>
-                                    <button class="tabledit-edit-button btn btn-sm btn-primary">
+                                   Ngon như nhà làm
+                                </td>
+                               @*  <td>
+                                    12/02/2024 12:00:00 SA
+                                </td>
+                                <td>
+                                    12/02/2024 12:00:00 SA
+                                </td> *@
+                                <td>
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">True</span>
+                                </td>
+                                <td>
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">True</span>
+                                </td>
+                                <td>
+                                    <button class="tabledit-edit-button btn btn-sm btn-primary btn-edit">
                                         <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
+                                    </button>
+                                    <button class="tabledit-edit-button btn btn-sm btn-detail">
+                                        <span><i class="fas fa-info-circle"></i></span> Chi tiết
+                                    </button>
+                                    <button class="tabledit-edit-button btn btn-sm btn-delete">
+                                        <span><i class="fas fa-trash-alt"></i></span> Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td>T-SHIRT CONTRAST POCKET</td>
+                                <td>$98.49</td>
+                                <td>10</td>
+                                <td>
+                                    <img src="/admin/assets/img/product-2.jpg" alt="Product Image" class="product-image" />
+                                </td>
+                                <td>
+                                    Ngon như nhà làm
+                                </td>
+                                @*  <td>
+                                12/02/2024 12:00:00 SA
+                                </td>
+                                <td>
+                                12/02/2024 12:00:00 SA
+                                </td> *@
+                                <td>
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success" style="background-color:#808080; color: white;">False</span>
+                                </td>
+                                <td>
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">True</span>
+                                </td>
+                                <td>
+                                    <button class="tabledit-edit-button btn btn-sm btn-primary btn-edit">
+                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
+                                    </button>
+                                    <button class="tabledit-edit-button btn btn-sm btn-detail">
+                                        <span><i class="fas fa-info-circle"></i></span> Chi tiết
+                                    </button>
+                                    <button class="tabledit-edit-button btn btn-sm btn-delete">
+                                        <span><i class="fas fa-trash-alt"></i></span> Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td>T-SHIRT CONTRAST POCKET</td>
+                                <td>$98.49</td>
+                                <td>10</td>
+                                <td>
+                                    <img src="/admin/assets/img/product-3.jpg" alt="Product Image" class="product-image" />
+                                </td>
+                                <td>
+                                    Ngon như nhà làm
+                                </td>
+                                @*  <td>
+                                12/02/2024 12:00:00 SA
+                                </td>
+                                <td>
+                                12/02/2024 12:00:00 SA
+                                </td> *@
+                                <td>
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">True</span>
+                                </td>
+                                <td>
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">True</span>
+                                </td>
+                                <td>
+                                    <button class="tabledit-edit-button btn btn-sm btn-primary btn-edit">
+                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
+                                    </button>
+                                    <button class="tabledit-edit-button btn btn-sm btn-detail">
+                                        <span><i class="fas fa-info-circle"></i></span> Chi tiết
+                                    </button>
+                                    <button class="tabledit-edit-button btn btn-sm btn-delete">
+                                        <span><i class="fas fa-trash-alt"></i></span> Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td>T-SHIRT CONTRAST POCKET</td>
+                                <td>$98.49</td>
+                                <td>10</td>
+                                <td>
+                                    <img src="/admin/assets/img/product-6.jpg" alt="Product Image" class="product-image" />
+                                </td>
+                                <td>
+                                    Ngon như nhà làm
+                                </td>
+                                @*  <td>
+                                12/02/2024 12:00:00 SA
+                                </td>
+                                <td>
+                                12/02/2024 12:00:00 SA
+                                </td> *@
+                                <td>
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">True</span>
+                                </td>
+                                <td>
+                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success" style="background-color: #808080; color: white;">False</span>
+                                </td>
+                                <td>
+                                    <button class="tabledit-edit-button btn btn-sm btn-primary btn-edit">
+                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
+                                    </button>
+                                    <button class="tabledit-edit-button btn btn-sm btn-detail">
+                                        <span><i class="fas fa-info-circle"></i></span> Chi tiết
+                                    </button>
+                                    <button class="tabledit-edit-button btn btn-sm btn-delete">
+                                        <span><i class="fas fa-trash-alt"></i></span> Xóa
                                     </button>
                                 </td>
                             </tr>

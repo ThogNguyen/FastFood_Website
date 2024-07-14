@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\admin\" />
+    <ProjectReference Include="..\FastFood_API\FastFood_API.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FastFood_API\FastFood_API.csproj" />
+    <Folder Include="wwwroot\admin\assets\img\QLProdu\" />
   </ItemGroup>
 
 </Project>
