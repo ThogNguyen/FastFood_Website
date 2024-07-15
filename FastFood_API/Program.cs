@@ -40,7 +40,6 @@ namespace FastFood_API
                 options.UseSqlServer(builder.Configuration.GetConnectionString("db"));
             });
 
-
             var app = builder.Build();
 
             app.UseSwagger();

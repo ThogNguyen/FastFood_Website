@@ -17,13 +17,14 @@ namespace Data.Entity
         public string? CustomerName { get; set; }
         public DateTime? ReviewDate { get; set; }
         public string? Comment { get; set; }
-        public int ProductId { get; set; }
-        [ForeignKey("ProductId")]
+
+        public int Product_Id { get; set; }
+        [ForeignKey("Product_Id")]
         public Product Product { get; set; }
 
-        [ForeignKey("User_Id")]
         [Column(TypeName = "nvarchar(450)")]
         public string? User_Id { get; set; }
+        [ForeignKey("User_Id")]
         public ApplicationUser User { get; set; }
     }
 }

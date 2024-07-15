@@ -23,6 +23,7 @@ namespace Data.Entity
         public DateTime? StartDate { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? EndDate { get; set; }
-        public ICollection<Order> Order { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }

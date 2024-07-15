@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class addDb : Migration
+    public partial class addDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -212,15 +212,14 @@ namespace Data.Migrations
                     TotalAmount = table.Column<int>(type: "int", nullable: false),
                     TotalDiscount = table.Column<int>(type: "int", nullable: false),
                     DiscountCode = table.Column<string>(type: "nvarchar(20)", nullable: true),
-                    Coupon_Id = table.Column<int>(type: "int", nullable: true),
-                    CouponId = table.Column<int>(type: "int", nullable: true)
+                    Coupon_Id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Order", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Order_Coupon_CouponId",
-                        column: x => x.CouponId,
+                        name: "FK_Order_Coupon_Coupon_Id",
+                        column: x => x.Coupon_Id,
                         principalTable: "Coupon",
                         principalColumn: "Id");
                 });
@@ -234,21 +233,20 @@ namespace Data.Migrations
                     CustomerName = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     ReviewDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    User_Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Product_Id = table.Column<int>(type: "int", nullable: false),
+                    User_Id = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Review", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Review_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Review_AspNetUsers_User_Id",
+                        column: x => x.User_Id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Review_Product_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_Review_Product_Product_Id",
+                        column: x => x.Product_Id,
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -290,17 +288,17 @@ namespace Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MainOrderName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Order_Id = table.Column<int>(type: "int", nullable: false),
-                    User_Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    User_Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderTogethers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderTogethers_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_OrderTogethers_AspNetUsers_User_Id",
+                        column: x => x.User_Id,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderTogethers_Order_Order_Id",
                         column: x => x.Order_Id,
@@ -349,9 +347,9 @@ namespace Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_CouponId",
+                name: "IX_Order_Coupon_Id",
                 table: "Order",
-                column: "CouponId");
+                column: "Coupon_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetail_Order_Id",
@@ -364,24 +362,24 @@ namespace Data.Migrations
                 column: "Product_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderTogethers_ApplicationUserId",
-                table: "OrderTogethers",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrderTogethers_Order_Id",
                 table: "OrderTogethers",
                 column: "Order_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_ProductId",
-                table: "Review",
-                column: "ProductId");
+                name: "IX_OrderTogethers_User_Id",
+                table: "OrderTogethers",
+                column: "User_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_UserId",
+                name: "IX_Review_Product_Id",
                 table: "Review",
-                column: "UserId");
+                column: "Product_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Review_User_Id",
+                table: "Review",
+                column: "User_Id");
         }
 
         /// <inheritdoc />

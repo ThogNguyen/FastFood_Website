@@ -30,10 +30,11 @@ namespace Data.Entity
         [Column(TypeName = "nvarchar(20)")]
         public string? DiscountCode { get; set; }
 
-        // khóa ngoại
-        [ForeignKey("Coupon_Id")]
+        // Foreign key
         public int? Coupon_Id { get; set; }
+        [ForeignKey("Coupon_Id")]
         public Coupon? Coupon { get; set; }
+
         public ICollection<OrderTogether> OrderTogethers { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
     }

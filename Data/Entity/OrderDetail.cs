@@ -15,8 +15,8 @@ namespace Data.Entity
         public int Id { get; set; }
         public int Quantity { get; set; }
         public int SubTotal { get; set; }
-        
-        // khóa ngoại
+
+        // Foreign key
         public int Order_Id { get; set; }
         [ForeignKey("Order_Id")]
         public Order Order { get; set; }

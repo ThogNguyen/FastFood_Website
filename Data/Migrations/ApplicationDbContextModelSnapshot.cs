@@ -135,9 +135,6 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CouponId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("Coupon_Id")
                         .HasColumnType("int");
 
@@ -170,7 +167,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CouponId");
+                    b.HasIndex("Coupon_Id");
 
                     b.ToTable("Order");
                 });
@@ -212,9 +209,6 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("MainOrderName")
                         .HasColumnType("nvarchar(max)");
 
@@ -227,9 +221,9 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("Order_Id");
+
+                    b.HasIndex("User_Id");
 
                     b.ToTable("OrderTogethers");
                 });
@@ -285,23 +279,20 @@ namespace Data.Migrations
                     b.Property<string>("CustomerName")
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Product_Id")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ReviewDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("User_Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("Product_Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("User_Id");
 
                     b.ToTable("Review");
                 });
@@ -442,8 +433,8 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entity.Order", b =>
                 {
                     b.HasOne("Data.Entity.Coupon", "Coupon")
-                        .WithMany("Order")
-                        .HasForeignKey("CouponId");
+                        .WithMany("Orders")
+                        .HasForeignKey("Coupon_Id");
 
                     b.Navigation("Coupon");
                 });
@@ -469,13 +460,15 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entity.OrderTogether", b =>
                 {
-                    b.HasOne("Data.Entity.ApplicationUser", "ApplicationUser")
-                        .WithMany("OrderTogethers")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("Data.Entity.Order", "Order")
                         .WithMany("OrderTogethers")
                         .HasForeignKey("Order_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entity.ApplicationUser", "ApplicationUser")
+                        .WithMany("OrderTogethers")
+                        .HasForeignKey("User_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -488,13 +481,13 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Entity.Product", "Product")
                         .WithMany("Reviews")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("Product_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Entity.ApplicationUser", "User")
                         .WithMany("Reviews")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("User_Id");
 
                     b.Navigation("Product");
 
@@ -561,7 +554,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entity.Coupon", b =>
                 {
-                    b.Navigation("Order");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Data.Entity.Order", b =>
