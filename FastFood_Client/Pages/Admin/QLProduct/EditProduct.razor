@@ -7,7 +7,7 @@
         <!-- begin page title -->
         <div class="d-block d-sm-flex flex-nowrap align-items-center">
             <div class="page-title mb-2 mb-sm-0">
-                <h1>Edit Product</h1>
+                <h1>Sửa sản phẩm</h1>
             </div>
         </div>
         <!-- end page title -->
@@ -15,59 +15,76 @@
 </div>
 <!-- end row -->
 
+<div class="form-group mb-3">
+    <a href="products" class="tabledit-edit-button btn btn-danger">
+        Trở về
+    </a>
+</div>
+
 <div class="row">
-    <div class="col-lg-12">
-        <div class="form-group mb-3">
-            <a href="products" class="tabledit-edit-button btn btn-danger">
-                Trở về
-            </a>
-        </div>
+    <div class="col-lg-8  mx-auto">
         <div class="card card-statistics">
             <!-- Nội dung form thêm sản phẩm -->
             <div class="card-body">
                 <form>
-                    <div class="form-group">
-                        <label for="productName">Tên Sản Phẩm</label>
-                        <input type="text" class="form-control" id="productName" placeholder="Nhập tên sản phẩm">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="productName">Tên Sản Phẩm</label>
+                                <input type="text" class="form-control" id="productName" placeholder="Nhập tên sản phẩm">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="productPrice">Giá Sản Phẩm</label>
+                                <input type="text" class="form-control" id="productPrice" placeholder="Nhập giá sản phẩm">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="productQuantity">Số Lượng</label>
+                                <input type="number" class="form-control" id="productQuantity" placeholder="Nhập số lượng">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="productPrice">Giá Sản Phẩm</label>
-                        <input type="text" class="form-control" id="productPrice" placeholder="Nhập giá sản phẩm">
-                    </div>
-                    <div class="form-group">
-                        <label for="productQuantity">Số Lượng</label>
-                        <input type="number" class="form-control" id="productQuantity" placeholder="Nhập số lượng">
+                    <div class="form-group text-center">
+                        <img src="/client/img/shop/product-1.jpg" width="150" />
                     </div>
                     <div class="form-group">
                         <label for="productImage">Hình Ảnh</label>
-                        <input type="file" class="form-control" id="productImage" placeholder="Đường dẫn hình ảnh">
+                        <input type="file" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label for="productDescription">Mô Tả</label>
                         <textarea class="form-control" id="productDescription" rows="3" placeholder="Nhập mô tả sản phẩm"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="productAddedDate">Ngày Ngày Cập Nhật</label>
+                        <label for="productAddedDate">Ngày Thêm</label>
                         <input type="datetime-local" class="form-control" id="productAddedDate">
                     </div>
 
-                    <div class="form-group">
-                        <label for="productIsActive">Trạng Thái</label>
-                        <select class="form-control" id="productIsActive">
-                            <option value="true">Còn Hàng</option>
-                            <option value="false">Hết Hàng</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="productIsCombo">Là Combo</label>
-                        <select class="form-control" id="productIsCombo">
-                            <option value="true">Có</option>
-                            <option value="false">Không</option>
-                        </select>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="productIsActive">Trạng Thái</label>
+                                <select class="form-control" id="productIsActive">
+                                    <option value="true">Còn Hàng</option>
+                                    <option value="false">Hết Hàng</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="productIsCombo">Là Combo</label>
+                                <select class="form-control" id="productIsCombo">
+                                    <option value="true">Có</option>
+                                    <option value="false">Không</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
-                    <a href="products" class="btn btn-primary">Update Product</a>
-
+                    <button type="submit" class="btn btn-primary w-100">Thêm sản phẩm</button>
                 </form>
             </div>
         </div>

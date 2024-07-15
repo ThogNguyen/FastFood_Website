@@ -5,7 +5,7 @@ namespace FastFood_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ComboItemsApiController : ControllerBase
+    public class AccountsController : ControllerBase
     {
     }
 }
