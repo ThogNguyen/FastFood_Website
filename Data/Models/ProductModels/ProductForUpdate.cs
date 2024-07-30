@@ -10,7 +10,5 @@ namespace Data.Models.ProductModels
 {
     public class ProductForUpdate : ProductBaseDTO
     {
-        public bool? IsActive { get; set; }
-        public bool? IsCombo { get; set; }
     }
 }

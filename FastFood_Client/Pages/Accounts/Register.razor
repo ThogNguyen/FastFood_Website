@@ -13,60 +13,76 @@
         <div class="d-flex align-items-center h-100-vh">
             <div class="register p-5">
                 <h3>Welcome, Please create your account.</h3>
-                <form action="#" class="mt-2 mt-sm-5">
+                <EditForm Model="@registerVM" OnValidSubmit="HandleRegister">
+                    <DataAnnotationsValidator />
                     <div class="row">
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">First Name*</label>
-                                <input type="text" class="form-control" placeholder="First Name" />
+                                <label class="control-label">Họ và tên*</label>
+                                <InputText @bind-Value="registerVM.FullName" class="form-control" placeholder="Nhập họ và tên của bạn" />
+                                <ValidationMessage For="@(() => registerVM.FullName)" />
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Last Name*</label>
-                                <input type="text" class="form-control" placeholder="Last Name" />
+                                <label class="control-label">Tên đăng nhập*</label>
+                                <InputText @bind-Value="registerVM.Username" class="form-control" placeholder="Nhập tên đăng nhập" />
+                                <ValidationMessage For="@(() => registerVM.Username)" />
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Email*</label>
-                                <input type="email" class="form-control" placeholder="Email" />
+                                <InputText @bind-Value="registerVM.Email" type="email" class="form-control" placeholder="Nhập email" />
+                                <ValidationMessage For="@(() => registerVM.Email)" />
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Số điện thoại*</label>
+                                <InputText @bind-Value="registerVM.PhoneNumber" class="form-control" placeholder="Nhập số điện thoại" />
+                                <ValidationMessage For="@(() => registerVM.PhoneNumber)" />
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <label class="control-label">Username*</label>
-                                <input type="text" class="form-control" placeholder="Username" />
+                                <label class="control-label">Địa chỉ*</label>
+                                <InputText @bind-Value="registerVM.Address" class="form-control" placeholder="Nhập địa chỉ" />
+                                <ValidationMessage For="@(() => registerVM.Address)" />
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <label class="control-label">Password*</label>
-                                <input type="password" class="form-control" placeholder="Password" />
+                                <label class="control-label">Mật khẩu*</label>
+                                <InputText @bind-Value="registerVM.Password" type="password" class="form-control" placeholder="Nhập mật khẩu" />
+                                <ValidationMessage For="@(() => registerVM.Password)" />
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="control-label">Xác nhận mật khẩu*</label>
+                                <InputText @bind-Value="registerVM.ConfirmPassword" type="password" class="form-control" placeholder="Nhập mật khẩu lần 2" />
+                                <ValidationMessage For="@(() => registerVM.ConfirmPassword)" />
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="gridCheck">
                                 <label class="form-check-label" for="gridCheck">
-                                    I accept terms & policy
+                                    Tôi đồng ý điều khoản & chính sách
                                 </label>
                             </div>
                         </div>
                         <div class="col-12 mt-3">
-                            <a href="auth-login.html" class="btn btn-primary text-uppercase w-100">Sign up</a>
+                            <button type="submit" class="btn btn-primary text-uppercase w-100">Đăng Ký</button>
                         </div>
                         <div class="col-12 mt-3">
-                            <p>Already have an account?<a href="login"> Sign In</a></p>
+                            <p>Đã có tài khoản?<a href="login"> Đăng Nhập</a></p>
                         </div>
                     </div>
-                </form>
+                </EditForm>
             </div>
         </div>
     </div>
 </div>
 
-
-@code {
-
-}

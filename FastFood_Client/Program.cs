@@ -1,3 +1,5 @@
+using FastFood_Client.HttpRepositories.Interfaces;
+using FastFood_Client.HttpRepositories.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -12,6 +14,10 @@ namespace FastFood_Client
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
+                    
+            builder.Services.AddHttpClient();
+
+            builder.Services.AddScoped<IHttpProductService, HttpProductService>();
 
             var app = builder.Build();
 
@@ -26,7 +32,6 @@ namespace FastFood_Client
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.MapBlazorHub();

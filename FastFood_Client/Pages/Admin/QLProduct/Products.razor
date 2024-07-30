@@ -28,82 +28,54 @@
                         </a>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table display responsive nowrap table-light table-bordered">
-                        <thead class="thead-light text-center">
-                            <tr>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Image</th>
-                                <th>Trạng Thái</th>
-                                <th>Combo</th>
-                                <th>Thao Tác</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="text-center">
-                                <td>T-SHIRT CONTRAST POCKET</td>
-                                <td>$98.49</td>
-                                <td>10</td>
-                                <td>
-                                    <img src="/admin/assets/img/product-1.jpg" width="70" alt="Product Image" />
-                                </td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-danger">Hết Hàng</span>
-                                </td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-danger">Không</span>
-                                </td>
-                                <td>
-                                    <a href="editproduct" class="tabledit-edit-button btn btn-sm btn-primary">
-                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="text-center">
-                                <td>T-SHIRT CONTRAST POCKET</td>
-                                <td>$98.49</td>
-                                <td>10</td>
-                                <td>
-                                    <img src="/admin/assets/img/product-2.jpg" width="70" alt="Product Image" class="product-image" />
-                                </td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">Còn Hàng</span>
-                                </td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">Có</span>
-                                </td>
-                                <td>
-                                    <a href="editproduct" class="tabledit-edit-button btn btn-sm btn-primary">
-                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
-                                    </a>
-
-                                </td>
-                            </tr>
-                            <tr class="text-center">
-                                <td>T-SHIRT CONTRAST POCKET</td>
-                                <td>$98.49</td>
-                                <td>10</td>
-                                <td>
-                                    <img src="/admin/assets/img/product-6.jpg" width="70" alt="Product Image" class="product-image" />
-                                </td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">Còn Hàng</span>
-                                </td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-danger">Không</span>
-                                </td>
-                                <td>
-                                    <a href="editproduct" class="tabledit-edit-button btn btn-sm btn-primary">
-                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
-                                    </a>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                @if (products.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table display responsive nowrap table-light table-bordered">
+                            <thead class="thead-light text-center">
+                                <tr>
+                                    <th class="col-3">Tên sản phẩm</th>
+                                    <th class="col-2">Giá</th>
+                                    <th class="col-2">Hình</th>
+                                    <th class="col-2">Trạng Thái</th>
+                                    <th class="col-1">Combo</th>
+                                    <th class="col-2">Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var product in products)
+                                {
+                                    <tr class="text-center">
+                                        <td>@product.ProductName</td>
+                                        <td>@FormatCurrency(product.Price)</td>
+                                        <td>
+                                            <img src="@($"/client/img/shop/{product.Image}")" width="70" alt="Product Image" class="product-image" />
+                                        </td>
+                                        <td>
+                                            <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge @(product.IsActive ? "badge-success" : "badge-danger")">
+                                                @(product.IsActive ? "Còn Hàng" : "Hết Hàng")
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge @(product.IsCombo ? "badge-success" : "badge-danger")">
+                                                @(product.IsCombo ? "Có" : "Không")
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="editproduct/@product.Id" class="tabledit-edit-button btn btn-sm btn-primary">
+                                                <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-center">Chưa có sản phẩm nào.</p>
+                }
             </div>
         </div>
     </div>

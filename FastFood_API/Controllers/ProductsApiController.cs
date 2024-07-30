@@ -73,7 +73,7 @@ namespace FastFood_API.Controllers
             if (!ModelState.IsValid)
             {
                 var modelErrors = ModelState
-                    .SelectMany(ms => ms.Value.Errors.Select(e => e.ErrorMessage))
+                    .SelectMany(ms => ms.Value!.Errors.Select(e => e.ErrorMessage))
                     .ToList();
 
                 return BadRequest(new BaseListResponseMessage
