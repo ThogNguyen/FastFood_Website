@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Entity.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,20 +10,21 @@ using System.Threading.Tasks;
 namespace Data.Entity
 {
     [Table("OrderDetail")]
-    public class OrderDetail
+    public class OrderDetail : EntityAuditBase
     {
         [Key]
-        public int Id { get; set; }
-        public int Quantity { get; set; }
-        public int SubTotal { get; set; }
-
+        public Guid Id { get; set; }
+        public int Quantity { get; set; } = 1;
+        public decimal Price { get; set; }
+        // unit price = price * quantity
+        public decimal UnitPrice { get; set; }
         // Foreign key
-        public int Order_Id { get; set; }
-        [ForeignKey("Order_Id")]
-        public Order Order { get; set; }
+        public Guid Order_Id { get; set; }
+        [ForeignKey(nameof(Order_Id))]
+        public Order? Order { get; set; }
 
-        public int Product_Id { get; set; }
-        [ForeignKey("Product_Id")]
-        public Product Product { get; set; }
+        public Guid Product_Id { get; set; }
+        [ForeignKey(nameof(Product_Id))]
+        public Product? Product { get; set; }
     }
 }

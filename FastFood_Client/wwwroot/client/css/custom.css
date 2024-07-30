@@ -108,3 +108,14 @@
         background-color: #9f1f1f;
         border-color: #9f1f1f;
     }
+
+
+/*---------------------
+  User Info
+-----------------------*/
+
+.custom-input-image {
+    width: 70%;
+    margin: 0 auto;
+    display: block;
+}

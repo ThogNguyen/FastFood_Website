@@ -14,8 +14,7 @@ namespace Data.Entity
         public string? FullName { get; set; }
         [Column(TypeName = "nvarchar(100)")]
         public string? Address { get; set; }
-
-        public ICollection<OrderTogether> OrderTogethers { get; set; }
-        public ICollection<Review> Reviews { get; set; }
+        [Column(TypeName = "nvarchar(400)")]
+        public string? Avatar { get; set; }
     }
 }
