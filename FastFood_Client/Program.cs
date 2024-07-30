@@ -18,6 +18,7 @@ namespace FastFood_Client
             builder.Services.AddHttpClient();
 
             builder.Services.AddScoped<IHttpProductService, HttpProductService>();
+            builder.Services.AddScoped<IHttpCategoryService, HttpCategoryService>();
 
             var app = builder.Build();
 

@@ -2,6 +2,8 @@
 using Data.Models.ProductModels;
 using FastFood_Client.HttpRepositories.Interfaces;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace FastFood_Client.HttpRepositories.Services
 {
@@ -14,14 +16,9 @@ namespace FastFood_Client.HttpRepositories.Services
             _httpClient = httpClient;
         }
 
-        public Task<BaseResponseMessage> CreateProductAsync(ProductForCreate productDto)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<ProductForView>> GetAllProductsAsync()
         {
-            var response = await _httpClient.GetAsync("https://localhost:7241/api/ProductsApi/get-products");
+            var response = await _httpClient.GetAsync("https://localhost:44346/api/ProductsApi/get-products");
             if (response.IsSuccessStatusCode)
             {
                 var products = await response.Content.ReadFromJsonAsync<IEnumerable<ProductForView>>();
@@ -31,16 +28,6 @@ namespace FastFood_Client.HttpRepositories.Services
                 }
             }
             return Enumerable.Empty<ProductForView>();
-        }
-
-        public Task<ProductForView> GetProductByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<BaseResponseMessage> UpdateProductAsync(ProductForUpdate productDto, Guid id)
-        {
-            throw new NotImplementedException();
         }
     }
 }
