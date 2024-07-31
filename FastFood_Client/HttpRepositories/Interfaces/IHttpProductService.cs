@@ -6,5 +6,6 @@ namespace FastFood_Client.HttpRepositories.Interfaces
     public interface IHttpProductService
     {
         Task<IEnumerable<ProductForView>> GetAllProductsAsync();
+        Task CreateProductAsync(ProductForCreate productForCreate);
     }
 }

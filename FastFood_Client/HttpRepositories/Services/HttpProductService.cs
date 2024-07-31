@@ -16,6 +16,20 @@ namespace FastFood_Client.HttpRepositories.Services
             _httpClient = httpClient;
         }
 
+        public async Task CreateProductAsync(ProductForCreate productForCreate)
+        {
+            string data = JsonConvert.SerializeObject(productForCreate);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+
+            var postResult = await _httpClient.PostAsync("https://localhost:44346/api/ProductsApi/create-product", content);
+            var postContent = await postResult.Content.ReadAsStringAsync();
+
+            if (!postResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(postContent);
+            }
+        }
+
         public async Task<IEnumerable<ProductForView>> GetAllProductsAsync()
         {
             var response = await _httpClient.GetAsync("https://localhost:44346/api/ProductsApi/get-products");

@@ -1,19 +1,16 @@
 ﻿@page "/addproduct"
 @layout AdminLayout
 
-<!-- begin row -->
+<!-- Page content -->
 <div class="row">
     <div class="col-md-12 m-b-30">
-        <!-- begin page title -->
         <div class="d-block d-sm-flex flex-nowrap align-items-center">
             <div class="page-title mb-2 mb-sm-0">
                 <h1>Thêm sản phẩm</h1>
             </div>
         </div>
-        <!-- end page title -->
     </div>
 </div>
-<!-- end row -->
 
 <div class="form-group mb-3">
     <a href="products" class="tabledit-edit-button btn btn-danger">
@@ -22,72 +19,92 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-8  mx-auto">
+    <div class="col-lg-8 mx-auto">
         <div class="card card-statistics">
-            <!-- Nội dung form thêm sản phẩm -->
             <div class="card-body">
-                <form>
+                <EditForm Model="@product" OnValidSubmit="HandleSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    @if (!string.IsNullOrEmpty(statusMessage))
+                    {
+                        <div class="alert @GetAlertClass()" role="alert">
+                            @statusMessage
+                        </div>
+                    }
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="productName">Tên Sản Phẩm</label>
-                                <input type="text" class="form-control" id="productName" placeholder="Nhập tên sản phẩm">
+                                <InputText class="form-control" id="productName" @bind-Value="product.ProductName" />
+                                <ValidationMessage For="@(() => product.ProductName)" />
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="productPrice">Giá Sản Phẩm</label>
-                                <input type="number" class="form-control" id="productPrice" placeholder="Nhập giá sản phẩm">
+                                <InputNumber class="form-control" id="productPrice" @bind-Value="product.Price" />
+                                <ValidationMessage For="@(() => product.Price)" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="productQuantity">Giá giảm</label>
-                                <input type="number" class="form-control" id="productQuantity" placeholder="Nhập giá giảm">
+                                <label for="productDiscount">Giá giảm</label>
+                                <InputNumber class="form-control" id="productDiscount" @bind-Value="product.Discount" />
+                                <ValidationMessage For="@(() => product.Discount)" />
                             </div>
                         </div>
-                    </div>        
+                    </div>
+
                     <div class="form-group text-center">
-                        <img src="/client/img/shop/product-1.jpg" width="150"/>
+                        <img src="/client/img/shop/product-1.jpg" width="150" />
                     </div>
                     <div class="form-group">
                         <label for="productImage">Hình Ảnh</label>
-                        <input type="file" class="form-control"/>
+                        <InputText class="form-control" id="productImage" @bind-Value="product.Image" />
                     </div>
                     <div class="form-group">
                         <label for="productDescription">Mô Tả</label>
-                        <textarea class="form-control" id="productDescription" rows="3" placeholder="Nhập mô tả sản phẩm"></textarea>
+                        <InputTextArea class="form-control" id="productDescription" @bind-Value="product.Description" />
                     </div>
-                    <div class="form-group">
-                        <label for="productAddedDate">Ngày Thêm</label>
-                        <input type="datetime-local" class="form-control" id="productAddedDate">
-                    </div>
-                  
+
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="productIsActive">Trạng Thái</label>
-                                <select class="form-control" id="productIsActive">
+                                <InputSelect class="form-control" id="productIsActive" @bind-Value="product.IsActive">
                                     <option value="true">Còn Hàng</option>
                                     <option value="false">Hết Hàng</option>
-                                </select>
+                                </InputSelect>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="productIsCombo">Là Combo</label>
-                                <select class="form-control" id="productIsCombo">
+                                <InputSelect class="form-control" id="productIsCombo" @bind-Value="product.IsCombo">
                                     <option value="true">Có</option>
                                     <option value="false">Không</option>
-                                </select>
+                                </InputSelect>
                             </div>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">Thêm sản phẩm</button>
-                </form>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="category-id">Loại</label>
+                                <InputSelect class="form-control" id="category-id" @bind-Value="product.Category_Id">
+                                    @foreach (var category in categories)
+                                    {
+                                        <option value="@category.Id">@category.Name</option>
+                                    }
+                                </InputSelect>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100" @onclick="HandleSubmit">Thêm sản phẩm</button>
+                </EditForm>
             </div>
         </div>
     </div>
 </div>
-<!-- end row -->
