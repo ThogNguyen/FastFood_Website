@@ -10,5 +10,7 @@ namespace Data.Models.ProductModels
     public class ProductForView : ProductBaseDTO
     {
         public Guid Id { get; set; }
+        public string? CategoryName { get; set; }
+        public int Quantity { get; set; } = 1; // Mặc định là 1
     }
 }

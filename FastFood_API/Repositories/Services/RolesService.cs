@@ -30,7 +30,7 @@ namespace FastFood_API.Repositories.Services
                 };
             }
 
-            var role = _mapper.Map<IdentityRole>(roleForCreate);
+            var role = new IdentityRole(roleForCreate.Name);
             var result = await _roleManager.CreateAsync(role);
 
             if (result.Succeeded)

@@ -5,6 +5,7 @@ using Data.Models.MailModels;
 using FastFood_API.Helpers;
 using FastFood_API.Helpers.MailServices;
 using FastFood_API.Helpers.Profiles;
+using FastFood_API.Repositories;
 using FastFood_API.Repositories.Interfaces;
 using FastFood_API.Repositories.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,10 +26,11 @@ namespace FastFood_API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Logging.AddConsole(); // Log ra console
+            builder.Logging.AddDebug();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddSwaggerGen(c =>

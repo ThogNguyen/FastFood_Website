@@ -1,4 +1,9 @@
-﻿@page "/detailproduct"
+﻿@page "/ProductDetails/{id:guid}"
+@using Data.Models.ProductModels
+@using FastFood_Client.HttpRepositories.Interfaces
+@inject IHttpProductService HttpProductService
+@inject NavigationManager NavigationManager
+<PageTitle>Chi tiết sản phẩm</PageTitle>
 
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
@@ -6,14 +11,14 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="breadcrumb__text">
-                    <h2>Sản phẩm chi tiết</h2>
+                    <h2>Chi tiết sản phẩm</h2>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="breadcrumb__links">
-                    <a href="">Trang chủ</a>
-                    <a href="shop">Sản phẩm</a>
-                    <span>(Tên món ăn)</span>
+                    <a href="/">Trang chủ</a>
+                    <a href="/Shop">Sản phẩm</a>
+                    <span>@(Product != null ? Product.ProductName : "N/A")</span>  <!-- Kiểm tra Product trước khi truy cập thuộc tính -->
                 </div>
             </div>
         </div>
@@ -27,20 +32,20 @@
             <div class="col-lg-6">
                 <div class="product__details__img">
                     <div class="product__details__big__img">
-                        <img class="big_img" src="client/img/shop/details/product-big-1.jpg" alt="">
+                        <img class="big_img" src="@(Product != null ? Product.Image : "client/img/shop/details/product-big-1.jpg")" alt="@(Product != null ? Product.ProductName : "Sản phẩm")">  <!-- Kiểm tra Product trước khi truy cập thuộc tính -->
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="product__details__text">
                     <div class="product__label">Loại sản phẩm</div>
-                    <h4>SWEET AUTUMN LEAVES</h4>
-                    <h5>$26.41</h5>
+                    <h4>@(Product != null ? Product.ProductName : "N/A")</h4>  <!-- Kiểm tra Product trước khi truy cập thuộc tính -->
+                    <h5>$@(Product != null ? Product.Price.ToString("0.00") : "N/A")</h5>  <!-- Kiểm tra Product trước khi truy cập thuộc tính -->
                     <p>
-                        (Mô tả sản phẩm)
+                        @(Product != null ? Product.Description : "N/A")  <!-- Kiểm tra Product trước khi truy cập thuộc tính -->
                     </p>
                     <ul>
-                        <li>Mã sản phẩm: <span>17</span></li>
+                        <li>Mã sản phẩm: <span>@(Product != null ? Product.Id.ToString() : "N/A")</span></li>  <!-- Kiểm tra Product trước khi truy cập thuộc tính -->
                     </ul>
                     <div class="product__details__option">
                         <div class="quantity">
@@ -48,7 +53,7 @@
                                 <input type="text" value="1">
                             </div>
                         </div>
-                        <a href="cart" class="primary-btn">Thêm vào giỏ</a>
+                        <a href="/Cart" class="primary-btn">Thêm vào giỏ</a>
                     </div>
                 </div>
             </div>
@@ -68,10 +73,7 @@
                         <div class="row d-flex justify-content-center">
                             <div class="col-lg-8">
                                 <p>
-                                    This delectable Strawberry Pie is an extraordinary treat filled with sweet and
-                                    tasty chunks of delicious strawberries. Made with the freshest ingredients, one
-                                    bite will send you to summertime. Each gift arrives in an elegant gift box and
-                                    arrives with a greeting card of your choice that you can personalize online!
+                                    @(Product != null ? Product.Description : "N/A")
                                 </p>
                             </div>
                         </div>
@@ -81,44 +83,8 @@
                             <div class="col-lg-8">
                                 <div class="reviews">
                                     <div class="comments-list">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="item">
-                                                    <div class="comment-body">
-                                                        <div class="comment-meta">
-                                                            <span class="author">Peter</span> - <span class="time">June 02, 2018</span>
-                                                        </div>
-                                                        <div class="comment-content">Look at the sunset, .</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="item">
-                                                    <div class="comment-body">
-                                                        <div class="comment-meta">
-                                                            <span class="author">Peter</span> - <span class="time">June 02, 2018</span>
-                                                        </div>
-                                                        <div class="comment-content">Look at the sunset, .</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="item">
-                                                    <div class="comment-body">
-                                                        <div class="comment-meta">
-                                                            <span class="author">Peter</span> - <span class="time">June 02, 2018</span>
-                                                        </div>
-                                                        <div class="comment-content">Look at the sunset, .</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!-- Hiển thị danh sách đánh giá sản phẩm -->
                                     </div>
-
                                     <div class="review-form">
                                         <h4 class="title">Viết đánh giá</h4>
 
@@ -160,132 +126,57 @@
         </div>
         <div class="row">
             <div class="related__products__slider owl-carousel">
-                <div class="col-lg-3">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="detailproduct">
-                                <img src="client/img/shop/product-4.jpg" />
-                            </a>
-
-                            <div class="product__label">
-                                <span>Cupcake</span>
+                @if (RelatedProducts != null)
+                {
+                    @foreach (var relatedProduct in RelatedProducts)
+                    {
+                        <div class="col-lg-3">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg">
+                                    <a href="@($"ProductDetails/{relatedProduct.Id}")">
+                                        <img src="@relatedProduct.Image" />
+                                    </a>
+                                    <div class="product__label">
+                                        <span>@relatedProduct.ProductName</span>
+                                    </div>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a href="@($"ProductDetails/{relatedProduct.Id}")">@relatedProduct.ProductName</a></h6>
+                                    <div class="product__item__price">$@relatedProduct.Price.ToString("0.00")</div>
+                                    <div class="cart_add">
+                                        <a href="/Cart">Thêm vào giỏ</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="product__item__text">
-                            <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
-                            <div class="cart_add">
-                                <a href="cart">Thêm vào giỏ</a>
-                            </div>
-                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center">
+                        <p>Đang tải sản phẩm liên quan...</p>
                     </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="detailproduct">
-                                <img src="client/img/shop/product-4.jpg" />
-                            </a>
-
-                            <div class="product__label">
-                                <span>Cupcake</span>
-                            </div>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
-                            <div class="cart_add">
-                                <a href="cart">Thêm vào giỏ</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="detailproduct">
-                                <img src="client/img/shop/product-4.jpg" />
-                            </a>
-
-                            <div class="product__label">
-                                <span>Cupcake</span>
-                            </div>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
-                            <div class="cart_add">
-                                <a href="cart">Thêm vào giỏ</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="detailproduct">
-                                <img src="client/img/shop/product-4.jpg" />
-                            </a>
-
-                            <div class="product__label">
-                                <span>Cupcake</span>
-                            </div>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
-                            <div class="cart_add">
-                                <a href="cart">Thêm vào giỏ</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="detailproduct">
-                                <img src="client/img/shop/product-4.jpg" />
-                            </a>
-
-                            <div class="product__label">
-                                <span>Cupcake</span>
-                            </div>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
-                            <div class="cart_add">
-                                <a href="cart">Thêm vào giỏ</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="detailproduct">
-                                <img src="client/img/shop/product-4.jpg" />
-                            </a>
-
-                            <div class="product__label">
-                                <span>Cupcake</span>
-                            </div>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
-                            <div class="cart_add">
-                                <a href="cart">Thêm vào giỏ</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
 </section>
 <!-- Related Products Section End -->
-
 @code {
+    [Parameter] public Guid id { get; set; }
 
+    private ProductForView Product { get; set; }
+    private IEnumerable<ProductForView> RelatedProducts { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Product = await HttpProductService.GetProductByIdAsync(id);
+        // Lấy sản phẩm cùng loại từ API hoặc logic khác
+        RelatedProducts = await HttpProductService.GetAllProductsAsync();
+    }
+
+    private void NavigateToProductDetails(Guid productId)
+    {
+        NavigationManager.NavigateTo($"/ProductDetails/{productId}");
+    }
 }

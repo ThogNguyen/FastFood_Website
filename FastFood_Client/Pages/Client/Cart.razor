@@ -1,24 +1,9 @@
 ﻿@page "/cart"
+@using Data.Models.ProductModels
+@inject IJSRuntime jsRuntime
 
-<!-- Breadcrumb Begin -->
-<div class="breadcrumb-option">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="breadcrumb__text">
-                    <h2>Giỏ Hàng</h2>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="breadcrumb__links">
-                    <a href="">Trang Chủ</a>
-                    <span>Giỏ Hàng</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Breadcrumb End -->
+<PageTitle>Giỏ Hàng</PageTitle>
+<!-- ... (Phần Breadcrumb như trước) ... -->
 <!-- Shopping Cart Section Begin -->
 <section class="shopping-cart spad">
     <div class="container">
@@ -35,141 +20,89 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="client/img/shop/cart/cart-1.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>T-shirt Contrast Pocket</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 30.00</td>
-                                <td class="cart__close">
-                                    <a href="#">
-                                        <span class="icon_close"></span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="client/img/shop/cart/cart-2.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Diagonal Textured Cap</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 32.50</td>
-                                <td class="cart__close">
-                                    <a href="#">
-                                        <span class="icon_close"></span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="client/img/shop/cart/cart-3.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Basic Flowing Scarf</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 47.00</td>
-                                <td class="cart__close">
-                                    <a href="#">
-                                        <span class="icon_close"></span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="client/img/shop/cart/cart-4.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Basic Flowing Scarf</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 30.00</td>
-                                <td class="cart__close">
-                                    <a href="#">
-                                        <span class="icon_close"></span>
-                                    </a>
-                                </td>
-                            </tr>
+                            @if (CartItems != null)
+                            {
+                                @foreach (var product in CartItems)
+                                {
+                                    <tr>
+                                        <td class="product__cart__item">
+                                            <div class="product__cart__item__pic">
+                                                <img src="@product.Image" alt="">
+                                            </div>
+                                            <div class="product__cart__item__text">
+                                                <h6>@product.ProductName</h6>
+                                                <h5>$@product.Price.ToString("0.00")</h5>
+                                            </div>
+                                        </td>
+                                        <td class="quantity__item">
+                                            <div class="quantity">
+                                                <div class="pro-qty">
+                                                    <input type="text" @bind="product.Quantity">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="cart__price">$@(product.Price * product.Quantity).ToString("0.00")</td>
+                                        <td class="cart__close">
+                                            <a href="#" @onclick="@(() => RemoveFromCart(product.Id))">
+                                                <span class="icon_close"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center">Giỏ hàng trống</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div class="continue__btn">
-                            <a href="#">Tiếp tục mua</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div class="continue__btn update__btn">
-                            <a href="#"><i class="fa fa-spinner"></i> Cập nhật giỏ hàng</a>
-                        </div>
-                    </div>
-                </div>
+                <!-- ... (Phần continue__btn như trước) ... -->
             </div>
             <div class="col-lg-4">
-                <div class="cart__discount">
-                    <h6>Mã giảm giá</h6>
-                    <form action="#">
-                        <input type="text" placeholder="Nhập mã tại đây....">
-                        <button type="submit">Đồng ý</button>
-                    </form>
-                </div>
-                <div class="cart__total">
-                    <h6>Tổng tiền giỏ hàng</h6>
-                    <ul>
-                        <li>Thành Tiền <span>$ 169.50</span></li>
-                        <li>Giảm giá <span></span></li>
-                        <li>Tổng tiền <span>$ 169.50</span></li>
-                    </ul>
-                    <a href="checkout" class="primary-btn">Tiến hành thanh toán</a>
-                </div>
+                <!-- ... (Phần cart__discount và cart__total như trước) ... -->
             </div>
         </div>
     </div>
 </section>
 <!-- Shopping Cart Section End -->
-
 @code {
+    private List<ProductForView> CartItems { get; set; } = new List<ProductForView>();
+    private decimal TotalPrice { get; set; }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // 1. Lấy danh sách sản phẩm từ session
+            var cartItemsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "cart");
+            if (!string.IsNullOrEmpty(cartItemsJson))
+            {
+                CartItems = System.Text.Json.JsonSerializer.Deserialize<List<ProductForView>>(cartItemsJson);
+            }
+
+            // 2. Tính tổng tiền
+            CalculateTotalPrice();
+        }
+    }
+
+    private void CalculateTotalPrice()
+    {
+        TotalPrice = CartItems.Sum(p => p.Price * p.Quantity);
+    }
+
+    private void RemoveFromCart(Guid productId)
+    {
+        CartItems.RemoveAll(p => p.Id == productId);
+        CalculateTotalPrice();
+        // Cập nhật session (nếu cần)
+    }
+
+    private void UpdateCart()
+    {
+        CalculateTotalPrice();
+        // Cập nhật session (nếu cần)
+    }
 }
