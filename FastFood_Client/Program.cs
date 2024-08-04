@@ -15,16 +15,7 @@ namespace FastFood_Client
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Register HttpClient with default base address
-            builder.Services.AddHttpClient("APIClient", client =>
-            {
-                client.BaseAddress = new Uri("https://localhost:7241"); // Set the base address for your API
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            });
-
-            // Register services
-            builder.Services.AddScoped<IHttpOrderService, HttpOrderService>();
-            builder.Services.AddScoped<IHttpCouponService, HttpCouponService>();
+            
 
             // Add services to the container.
             builder.Services.AddRazorPages();
@@ -48,6 +39,8 @@ namespace FastFood_Client
             builder.Services.AddScoped<IHttpUserRoleService, HttpUserRoleService>();
             builder.Services.AddScoped<IHttpUserService, HttpUserService>();
             builder.Services.AddScoped<IHttpAccountService, HttpAccountService>();
+            builder.Services.AddScoped<IHttpOrderService, HttpOrderService>();
+            builder.Services.AddScoped<IHttpCouponService, HttpCouponService>();
 
             var app = builder.Build();
 

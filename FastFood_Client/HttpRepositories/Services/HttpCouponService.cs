@@ -14,12 +14,11 @@ namespace FastFood_Client.HttpRepositories.Services
         public HttpCouponService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://localhost:7241"); // Thiết lập BaseAddress
         }
 
         public async Task<List<CouponForView>> GetAllCoupon()
         {
-            var response = await _httpClient.GetAsync("api/CouponsApi/get-coupons"); // Sử dụng đường dẫn tương đối
+            var response = await _httpClient.GetAsync("https://localhost:44346/api/CouponsApi/get-coupons"); // Sử dụng đường dẫn tương đối
             var content = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
@@ -32,7 +31,7 @@ namespace FastFood_Client.HttpRepositories.Services
 
         public async Task<CouponForView> GetCoupons(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/CouponsApi/get-coupon/{id}"); // Sử dụng đường dẫn tương đối
+            var response = await _httpClient.GetAsync($"https://localhost:44346/api/CouponsApi/get-coupon/{id}"); // Sử dụng đường dẫn tương đối
             var content = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
@@ -47,7 +46,7 @@ namespace FastFood_Client.HttpRepositories.Services
         {
             string data = JsonConvert.SerializeObject(model);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-            var putResult = await _httpClient.PutAsync("api/CouponsApi/update-coupon", content); // Sử dụng đường dẫn tương đối
+            var putResult = await _httpClient.PutAsync("https://localhost:44346/api/CouponsApi/update-coupon", content); // Sử dụng đường dẫn tương đối
             var putContent = await putResult.Content.ReadAsStringAsync();
 
             if (!putResult.IsSuccessStatusCode)
@@ -58,7 +57,7 @@ namespace FastFood_Client.HttpRepositories.Services
 
         public async Task DeleteCoupons(Guid id)
         {
-            var deleteResult = await _httpClient.DeleteAsync($"api/CouponsApi/delete-coupon/{id}"); // Sử dụng đường dẫn tương đối
+            var deleteResult = await _httpClient.DeleteAsync($"https://localhost:44346/api/CouponsApi/delete-coupon/{id}"); // Sử dụng đường dẫn tương đối
             var deleteContent = await deleteResult.Content.ReadAsStringAsync();
 
             if (!deleteResult.IsSuccessStatusCode)
@@ -72,7 +71,7 @@ namespace FastFood_Client.HttpRepositories.Services
             string data = JsonConvert.SerializeObject(model);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
-            var postResult = await _httpClient.PostAsync("api/CouponsApi/create-coupon", content); // Sử dụng đường dẫn tương đối
+            var postResult = await _httpClient.PostAsync("https://localhost:44346/api/CouponsApi/create-coupon", content); // Sử dụng đường dẫn tương đối
             var postContent = await postResult.Content.ReadAsStringAsync();
 
             if (!postResult.IsSuccessStatusCode)

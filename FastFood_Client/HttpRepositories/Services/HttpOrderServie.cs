@@ -15,7 +15,6 @@ namespace FastFood_Client.HttpRepositories.Services
         public HttpOrderService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://localhost:44346");
         }
 
         private async Task<T> SendRequestAsync<T>(HttpRequestMessage requestMessage)
@@ -37,7 +36,7 @@ namespace FastFood_Client.HttpRepositories.Services
         {
             var data = JsonConvert.SerializeObject(orderDto);
             var content = new StringContent(data, Encoding.UTF8, "application/json");
-            var requestMessage = new HttpRequestMessage(HttpMethod.Post, "api/OrdersApi/create-order") { Content = content };
+            var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44346/api/OrdersApi/create-order") { Content = content };
             return SendRequestAsync<BaseResponseMessage>(requestMessage);
         }
 
@@ -45,7 +44,7 @@ namespace FastFood_Client.HttpRepositories.Services
         {
             var data = JsonConvert.SerializeObject(orderDto);
             var content = new StringContent(data, Encoding.UTF8, "application/json");
-            var requestMessage = new HttpRequestMessage(HttpMethod.Put, $"api/OrdersApi/update-order/{id}") { Content = content };
+            var requestMessage = new HttpRequestMessage(HttpMethod.Put, $"https://localhost:44346/api/OrdersApi/update-order/{id}") { Content = content };
             return SendRequestAsync<BaseResponseMessage>(requestMessage);
         }
 
@@ -53,19 +52,19 @@ namespace FastFood_Client.HttpRepositories.Services
         {
             var data = JsonConvert.SerializeObject(shippingStatus);
             var content = new StringContent(data, Encoding.UTF8, "application/json");
-            var requestMessage = new HttpRequestMessage(HttpMethod.Put, $"api/OrdersApi/update-shipping-status/{id}") { Content = content };
+            var requestMessage = new HttpRequestMessage(HttpMethod.Put, $"https://localhost:44346/api/OrdersApi/update-shipping-status/{id}") { Content = content };
             return SendRequestAsync<BaseResponseMessage>(requestMessage);
         }
 
         public Task<IEnumerable<OrderForView>> GetAllOrdersAsync()
         {
-            var requestMessage = new HttpRequestMessage(HttpMethod.Get, "api/OrdersApi/get-orders");
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44346/api/OrdersApi/get-orders");
             return SendRequestAsync<IEnumerable<OrderForView>>(requestMessage);
         }
 
         public Task<OrderForView> GetOrderByIdAsync(Guid id)
         {
-            var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"api/OrdersApi/get-order/{id}");
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:44346/api/OrdersApi/get-order/{id}");
             return SendRequestAsync<OrderForView>(requestMessage);
         }
     }
