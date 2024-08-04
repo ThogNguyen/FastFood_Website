@@ -1,0 +1,94 @@
+﻿@page "/category"
+@layout AdminLayout
+
+@using System.Net.Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
+@inject HttpClient Http
+@using Data.Models.CategoryModels
+@using FastFood_Client.HttpRepositories.Interfaces
+
+<!-- begin row -->
+<div class="row">
+    <div class="col-md-12 m-b-30">
+        <!-- begin page title -->
+        <div class="d-block d-sm-flex flex-nowrap align-items-center">
+            <div class="page-title mb-2 mb-sm-0">
+                <h1>Quản lý danh mục</h1>
+            </div>
+        </div>
+        <!-- end page title -->
+    </div>
+</div>
+<!-- end row -->
+<!-- begin row -->
+<div class="row editable-wrapper">
+    <div class="col-lg-12 ">
+        <div class="card card-statistics">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <a href="createcategory" class="tabledit-edit-button btn btn-success">
+                            <span><i class="dashicons dashicons-plus-light"></i></span> Thêm
+                        </a>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table display responsive nowrap table-light table-bordered">
+                        <thead class="thead-light text-center">
+                            <tr>
+                                <th>Mã danh mục</th>
+                                <th>Tên danh mục</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (categories != null && categories.Any())
+                            {
+                                @foreach (var category in categories)
+                                {
+                                    <tr class="text-center">
+                                        <td>@category.Id</td>
+                                        <td>@category.Name</td>
+                                        <td>
+                                            <a href="editcategory/@category.Id" class="tabledit-edit-button btn btn-sm btn-primary">
+                                                <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center">Loading...</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+@code {
+    private List<CategoryForView> categories;
+
+    [Inject]
+    public IHttpCategoryService CategoryService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            categories = (await CategoryService.GetAllCategory()).ToList();
+        }
+        catch (Exception ex)
+        {
+            // Hiển thị thông báo lỗi cho người dùng
+            Console.WriteLine($"Lỗi khi lấy dữ liệu: {ex.Message}");
+            // Bạn có thể thêm mã để thông báo lỗi cho người dùng ở đây
+        }
+    }
+}
