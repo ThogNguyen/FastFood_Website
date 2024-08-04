@@ -1,6 +1,14 @@
-﻿@layout AdminLayout
-@page "/coupons"
+﻿@page "/coupons"
+@layout AdminLayout
 
+@using System.Net.Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
+@inject HttpClient Http
+@using Data.Models.CouponModels
+@using Data.Models.CouponModels.Base
+@using FastFood_Client.HttpRepositories.Interfaces
+@using Newtonsoft.Json
 
 <!-- begin row -->
 <div class="row">
@@ -32,8 +40,10 @@
                         <thead class="thead-light text-center">
                             <tr>
                                 <th>Mã giảm giá</th>
+                                <th>Giảm giá</th>
+                                <th>Giá trị giảm tối đa</th>
                                 <th>Giảm %</th>
-                                <th>Số lượng</th>
+                                <th>Mô tả</th>
                                 <th>Ngày bắt đầu</th>
                                 <th>Ngày kết thúc</th>
                                 <th>Tình Trạng</th>
@@ -41,21 +51,42 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="text-center">
-                                <td>GIAMGIA99</td>
-                                <td>50%</td>
-                                <td>100</td>
-                                <td>1/1/2000</td>
-                                <td>1/2/2000</td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">Hoạt Động</span>
-                                </td>
-                                <td>
-                                    <a href="editcoupon" class="tabledit-edit-button btn btn-sm btn-primary">
-                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
-                                    </a>
-                                </td>
-                            </tr>
+                            @if (coupons != null && coupons.Any())
+                            {
+                                @foreach (var coupon in coupons)
+                                {
+                                    <tr class="text-center">
+                                        <td>@coupon.Code</td>
+                                        <td>@coupon.DiscountPrice</td>
+                                        <td>@coupon.MaxDiscountValue</td>
+                                        <td>@coupon.PercentDiscount</td>
+                                        <td>@coupon.Description</td>
+                                        <td>@coupon.StartDate?.ToString("dd/MM/yyyy")</td>
+                                        <td>@coupon.EndDate?.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            @if (coupon.IsActive)
+                                            {
+                                                <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">Hoạt Động</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-danger">Không hoạt động</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="editcoupon/@coupon.Id" class="tabledit-edit-button btn btn-sm btn-primary">
+                                                <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="9" class="text-center">Loading...</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -64,7 +95,25 @@
     </div>
 </div>
 <!-- end row -->
-
 @code {
+    private List<CouponForView> coupons;
+
+    [Inject]
+    public IHttpCouponService CouponService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            coupons = (await CouponService.GetAllCoupon()).ToList();
+        }
+        catch (Exception ex)
+        {
+            // Hiển thị thông báo lỗi cho người dùng
+            Console.WriteLine($"Lỗi khi lấy dữ liệu: {ex.Message}");
+            // Bạn có thể thêm mã để thông báo lỗi cho người dùng ở đây
+        }
+    }
 
 }
+

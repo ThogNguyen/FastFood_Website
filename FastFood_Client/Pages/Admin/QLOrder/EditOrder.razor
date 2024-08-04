@@ -1,7 +1,10 @@
-﻿@layout AdminLayout
-@page "/editorder"
+﻿@page "/editorder/{orderId:guid}"
+@using Data.Models.OrderModels
+@using FastFood_Client.HttpRepositories.Interfaces
+@layout AdminLayout
 
-
+@inject IHttpOrderService OrderService
+@inject NavigationManager Navigation
 
 <!-- begin row -->
 <div class="row">
@@ -22,35 +25,58 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="form-group mb-3">
-                    <a href="orders" class="tabledit-edit-button btn btn-danger">
+                    <button @onclick="NavigateToOrders" class="btn btn-danger">
                         Trở về
-                    </a>
+                    </button>
                 </div>
 
-                <form method="post">
-                    <div class="row">
-                        <div class="form-group mb-3">
-                            <label>Trạng thái</label>
-                            <select class="form-control">
-                                <option selected>Chọn trạng thái</option>
-                                <option>Đang xử lí</option>
-                                <option>Đã xác nhận</option>
-                                <option>Đang giao</option>
-                                <option>Đã giao</option>
-                            </select>
+                @if (order != null)
+                {
+                    <EditForm Model="@order" OnValidSubmit="HandleValidSubmit">
+                        <div class="row">
+                            <div class="form-group mb-3">
+                                <label>Trạng thái</label>
+                                <InputSelect class="form-control" @bind-Value="order.OrderStatus">
+                                    <option value="">Chọn trạng thái</option>
+                                    <option value="Pending">Đang xử lí</option>
+                                    <option value="Confirmed">Đã xác nhận</option>
+                                    <option value="Shipping">Đang giao</option>
+                                    <option value="Delivered">Đã giao</option>
+                                    <option value="Cancelled">Đã hủy</option>
+                                </InputSelect>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <button class="btn btn-primary w-100" type="submit">Lưu Thay Đổi</button>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <button class="btn btn-primary w-100" type="submit">Lưu Thay Đổi</button>
+                        </div>
+                    </EditForm>
+                }
+                else
+                {
+                    <p>Loading...</p>
+                }
             </div>
         </div>
     </div>
 </div>
 <!-- end row -->
-
 @code {
+    [Parameter] public Guid orderId { get; set; }
+    private OrderForView order;
 
+    protected override async Task OnInitializedAsync()
+    {
+        order = await OrderService.GetOrderByIdAsync(orderId);
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        Navigation.NavigateTo("/orders");
+    }
+
+    private void NavigateToOrders()
+    {
+        Navigation.NavigateTo("/orders");
+    }
 }

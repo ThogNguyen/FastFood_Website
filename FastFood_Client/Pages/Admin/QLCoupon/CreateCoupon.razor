@@ -1,6 +1,9 @@
-﻿@layout AdminLayout
-@page "/createcoupon"
+﻿@page "/createcoupon"
+@using Data.Models.CouponModels
+@using Data.Models.CouponModels.Base
+@using FastFood_Client.HttpRepositories.Interfaces
 
+@layout AdminLayout
 
 <!-- begin row -->
 <div class="row">
@@ -25,47 +28,56 @@
                 </a>
             </div>
             <div class="col-md-6 mx-auto">
-                <form method="post">
+                <EditForm Model="_couponForCreate" OnValidSubmit="Create">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary class="text-danger" />
                     <div class="row">
                         <div class="form-group">
                             <label class="control-label">Tên mã giảm giá</label>
-                            <input asp-for="FullName" class="form-control" />
-                            <span asp-validation-for="FullName" class="text-danger"></span>
+                            <InputText @bind-Value="_couponForCreate.Code" class="form-control" />
+                            <ValidationMessage For="@(() => _couponForCreate.Code)" class="text-danger" />
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="form-group">
-                            <label class="control-label">Giảm ?%</label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <label class="control-label">Giảm giá</label>
+                            <InputNumber @bind-Value="_couponForCreate.DiscountPrice" class="form-control" />
+                            <ValidationMessage For="@(() => _couponForCreate.DiscountPrice)" class="text-danger" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Giảm %</label>
+                            <InputNumber @bind-Value="_couponForCreate.PercentDiscount" class="form-control" />
+                            <ValidationMessage For="@(() => _couponForCreate.PercentDiscount)" class="text-danger" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">Số lượng</label>
-                            <input asp-for="PhoneNumber" class="form-control" />
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            <InputNumber @bind-Value="_couponForCreate.MaxDiscountValue" class="form-control" />
+                            <ValidationMessage For="@(() => _couponForCreate.MaxDiscountValue)" class="text-danger" />
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="form-group">
                             <label class="control-label">Ngày bắt đầu</label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <InputDate @bind-Value="_couponForCreate.StartDate" class="form-control" />
+                            <ValidationMessage For="@(() => _couponForCreate.StartDate)" class="text-danger" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">Ngày kết thúc</label>
-                            <input asp-for="PhoneNumber" class="form-control" />
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            <InputDate @bind-Value="_couponForCreate.EndDate" class="form-control" />
+                            <ValidationMessage For="@(() => _couponForCreate.EndDate)" class="text-danger" />
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="form-group">
                             <label>Tình trạng</label>
-                            <select class="form-control">
-                                <option selected>Chọn tình trạng</option>
-                                <option>Hoạt động</option>
-                                <option>Ngừng hoạt động</option>
-                            </select>
+                            <InputSelect @bind-Value="_couponForCreate.IsActive" class="form-control">
+                                <option value="true">Hoạt động</option>
+                                <option value="false">Ngừng hoạt động</option>
+                            </InputSelect>
+                            <ValidationMessage For="@(() => _couponForCreate.IsActive)" class="text-danger" />
                         </div>
                     </div>
 
@@ -76,13 +88,39 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </EditForm>
+
+                @if (!string.IsNullOrEmpty(_errorMessage))
+                {
+                    <div class="alert alert-danger">
+                        @(_errorMessage)
+                    </div>
+                }
             </div>
         </div>
     </div>
 </div>
 <!-- end row -->
-
 @code {
+    private CouponForCreate _couponForCreate = new CouponForCreate();
+    private string _errorMessage;
 
+    [Inject]
+    public IHttpCouponService CouponService { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    private async Task Create()
+    {
+        try
+        {
+            await CouponService.CreateCoupons(_couponForCreate); // Truyền _couponForCreate vào phương thức
+            NavigationManager.NavigateTo("/coupons");
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.Message; // Hiển thị thông báo lỗi
+        }
+    }
 }
