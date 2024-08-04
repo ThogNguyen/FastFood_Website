@@ -1,6 +1,12 @@
-﻿namespace FastFood_Client.HttpRepositories.Interfaces
+﻿using Data.Models.AccountModels.Response;
+using Data.Models.UserRolesModels;
+
+namespace FastFood_Client.HttpRepositories.Interfaces
 {
-    public class IHttpUserRoleService
+    public interface IHttpUserRoleService
     {
+        Task<IEnumerable<UserRoleForView>> GetAllUserRolesAsync();
+        Task<UserRoleForView> GetUserRolesByUserIdAsync(string userId);
+        Task UpdateUserRoleAsync(string userId, UserRoleForUpdate userRole);
     }
 }

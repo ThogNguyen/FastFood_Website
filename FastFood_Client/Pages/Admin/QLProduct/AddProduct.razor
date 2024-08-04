@@ -22,15 +22,8 @@
     <div class="col-lg-8 mx-auto">
         <div class="card card-statistics">
             <div class="card-body">
-                <EditForm Model="@product" OnValidSubmit="HandleSubmit">
-                    <DataAnnotationsValidator />
-                    <ValidationSummary />
-                    @if (!string.IsNullOrEmpty(statusMessage))
-                    {
-                        <div class="alert @GetAlertClass()" role="alert">
-                            @statusMessage
-                        </div>
-                    }
+                <EditForm Model="@product" OnValidSubmit="CreateProduct">
+                    <DataAnnotationsValidator/>
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
@@ -97,12 +90,12 @@
                                     {
                                         <option value="@category.Id">@category.Name</option>
                                     }
-                                </InputSelect>
+                                </InputSelect>  
                             </div>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100" @onclick="HandleSubmit">Thêm sản phẩm</button>
+                    <button type="submit" class="btn btn-success">Thêm sản phẩm</button>
                 </EditForm>
             </div>
         </div>

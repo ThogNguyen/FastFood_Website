@@ -4,6 +4,9 @@ using Data.Models.ProductModels;
 using FastFood_Client.HttpRepositories.Interfaces;
 using FastFood_Client.HttpRepositories.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Net.Http;
 
 namespace FastFood_Client.Pages.Admin.QLProduct
 {
@@ -15,7 +18,9 @@ namespace FastFood_Client.Pages.Admin.QLProduct
         public IHttpCategoryService httpCategoryService { get; set; }
         [Inject]
         public NavigationManager navigationManager { get; set; }
-        private string statusMessage;
+
+        [Inject]
+        public HttpClient httpClient { get; set; }
 
 
         ProductForCreate product = new ProductForCreate();
@@ -23,21 +28,19 @@ namespace FastFood_Client.Pages.Admin.QLProduct
 
         protected override async Task OnInitializedAsync()
         {
+            await LoadCategory();
+        }
+
+        private async Task LoadCategory()
+        {
             categories = await httpCategoryService.GetCategoriesAsync();
         }
 
-        private async Task HandleSubmit()
+        private async Task CreateProduct()
         {
-            statusMessage = "Product added successfully!";
+            await httpProductService.CreateProductAsync(product);
+            navigationManager.NavigateTo("/products");
         }
 
-        private string GetAlertClass()
-        {
-            if (statusMessage.StartsWith("Error"))
-                return "alert-danger";
-            if (statusMessage.StartsWith("Product added successfully"))
-                return "alert-success";
-            return "";
-        }
     }
 }

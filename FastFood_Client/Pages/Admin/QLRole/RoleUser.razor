@@ -1,5 +1,9 @@
-﻿@layout AdminLayout
-@page "/RoleUser"
+﻿@page "/RoleUser"
+@using Data.Models.UserRolesModels
+@using FastFood_Client.HttpRepositories.Interfaces
+@layout AdminLayout
+@inject IHttpUserRoleService UserRoleService
+
 <div class="col-md-12">
     <div class="card card-statistics">
         <div class="card-header">
@@ -13,31 +17,46 @@
                     <thead>
                         <tr>
                             <th scope="col">ID Role</th>
-                            <th scope="col">User Name </th>
+                            <th scope="col">User Name</th>
                             <th scope="col">Role</th>
-                            <th scope="col">Description</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Abc</td>
-                            <td>User</td>
-                            <td>Xem web</td>
-                            <td>
-                                <a href="UpdateRoleUser">
-                                    <button type="button" class="btn btn-sm btn-warning">Edit</button>
-                                </a>
-                            </td>
-                        </tr>
-
+                        @if (userRoles != null && userRoles.Any())
+                        {
+                            @foreach (var role in userRoles)
+                            {
+                                <tr>
+                                    <th scope="row">@role.RoleId</th>
+                                    <td>@role.UserName</td>
+                                    <td>@role.RoleName</td>
+                                    <td>
+                                        <a href="UpdateRoleUser/@role.UserId">
+                                            <button type="button" class="btn btn-sm btn-warning">Edit</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5">No data available</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-@code {
 
+@code {
+    private IEnumerable<UserRoleForView> userRoles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userRoles = await UserRoleService.GetAllUserRolesAsync();
+    }
 }

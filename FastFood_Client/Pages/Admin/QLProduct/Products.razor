@@ -1,6 +1,5 @@
 ﻿@layout AdminLayout
 @page "/products"
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <!-- begin row -->
 <div class="row">
@@ -62,10 +61,10 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <a href="editproduct" class="tabledit-edit-button btn btn-sm btn-primary">
+                                            <a href="editproduct/@product.Id" class="tabledit-edit-button btn btn-sm btn-primary">
                                                 <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
                                             </a>
-                                        </td>
+                                        </td>   
                                     </tr>
                                 }
                             </tbody>

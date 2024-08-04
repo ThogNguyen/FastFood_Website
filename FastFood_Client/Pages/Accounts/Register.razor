@@ -1,5 +1,11 @@
-﻿@layout NullLayout
-@page "/register"
+﻿@page "/register"
+@inject IHttpAccountService AccountService
+@inject NavigationManager navigationManager
+@layout NullLayout
+
+@using Data.Models.AccountModels
+@using System.ComponentModel.DataAnnotations
+@using FastFood_Client.HttpRepositories.Interfaces
 
 <div class="row no-gutters">
     <div class="col-sm-6 col-xxl-8 col-lg-7 bg-gradient o-hidden order-2 order-sm-1">
@@ -13,49 +19,57 @@
         <div class="d-flex align-items-center h-100-vh">
             <div class="register p-5">
                 <h3>Welcome, Please create your account.</h3>
-                <form>
+                <EditForm Model="@registerModel" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+
                     <div class="row">
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Họ và tên*</label>
-                                <input class="form-control" placeholder="Nhập họ và tên của bạn" />
+                                <InputText class="form-control" placeholder="Nhập họ và tên của bạn" @bind-Value="registerModel.FullName" />
+                                <ValidationMessage For="@(() => registerModel.FullName)" />
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Tên đăng nhập*</label>
-                                <inpu class="form-control" placeholder="Nhập tên đăng nhập" />
+                                <InputText class="form-control" placeholder="Nhập tên đăng nhập" @bind-Value="registerModel.Username" />
+                                <ValidationMessage For="@(() => registerModel.Username)" />
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Email*</label>
-                                <input type="email" class="form-control" placeholder="Nhập email" />
+                                <InputText type="email" class="form-control" placeholder="Nhập email" @bind-Value="registerModel.Email" />
+                                <ValidationMessage For="@(() => registerModel.Email)" />
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Số điện thoại*</label>
-                                <input class="form-control" placeholder="Nhập số điện thoại" />
-                               
+                                <InputText class="form-control" placeholder="Nhập số điện thoại" @bind-Value="registerModel.PhoneNumber" />
+                                <ValidationMessage For="@(() => registerModel.PhoneNumber)" />
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="control-label">Địa chỉ*</label>
-                                <input class="form-control" placeholder="Nhập địa chỉ" />
+                                <InputText class="form-control" placeholder="Nhập địa chỉ" @bind-Value="registerModel.Address" />
+                                <ValidationMessage For="@(() => registerModel.Address)" />
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="control-label">Mật khẩu*</label>
-                                <input type="password" class="form-control" placeholder="Nhập mật khẩu" />
+                                <InputText type="password" class="form-control" placeholder="Nhập mật khẩu" @bind-Value="registerModel.Password" />
+                                <ValidationMessage For="@(() => registerModel.Password)" />
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="control-label">Xác nhận mật khẩu*</label>
-                                <input type="password" class="form-control" placeholder="Nhập mật khẩu lần 2" />
+                                <InputText type="password" class="form-control" placeholder="Nhập mật khẩu lần 2" @bind-Value="registerModel.ConfirmPassword" />
+                                <ValidationMessage For="@(() => registerModel.ConfirmPassword)" />
                             </div>
                         </div>
                         <div class="col-12 mt-3">
@@ -65,9 +79,18 @@
                             <p>Đã có tài khoản?<a href="login"> Đăng Nhập</a></p>
                         </div>
                     </div>
-                </form>
+                </EditForm>
             </div>
         </div>
     </div>
 </div>
 
+@code {
+    private RegisterVM registerModel = new RegisterVM();
+
+    private async Task HandleValidSubmit()
+    {
+        await AccountService.RegisterUserAsync(registerModel);
+        navigationManager.NavigateTo("/login");
+    }
+}
