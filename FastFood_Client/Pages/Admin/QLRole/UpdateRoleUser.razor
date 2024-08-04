@@ -1,6 +1,12 @@
-﻿
+﻿@page "/UpdateRoleUser/{userId}"
+@using Data.Models.RoleModels
+@using Data.Models.UserRolesModels
+@using FastFood_Client.HttpRepositories.Interfaces
 @layout AdminLayout
-@page "/UpdateRoleUser"
+@inject IHttpUserRoleService UserRoleService
+@inject IHttpRoleService RoleService
+@inject NavigationManager NavigationManager
+
 <div class="col-md-12">
     <div class="card card-statistics">
         <div class="card-header">
@@ -9,56 +15,76 @@
             </div>
         </div>
         <div class="card-body">
-            <form>
-
-                <div class="form-group">
-                    <label for="inputAddress">Id Role</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-key"></i></span>
-                        </div>
-                        <input readonly type="text" class="form-control" id="inputAddress" placeholder="1">
-                    </div>
-                </div>
+            <EditForm Model="@userRole" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
                 <div class="form-group">
                     <label for="inputAddress">User Name</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-user-circle"></i></span>
                         </div>
-                        <input readonly type="text" class="form-control" id="inputAddress" placeholder="abc">
+                        <InputText readonly class="form-control" id="inputAddress" @bind-Value="userRoleView.UserName" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputRole">Role </label>
+                    <label for="inputRole">Role</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-user"></i></span>
                         </div>
-                        <select class="custom-select">
-                            <option selected>Role</option>
-                            <option value="1">User</option>
-                            <option value="2">Admin</option>
+                        <select class="custom-select" @bind="userRoleView.RoleName">
+                            @foreach (var role in roles)
+                            {
+                                <option value="@role.Id">@role.Name</option>
+                            }
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputAddress">description</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-info-circle"></i></span>
-                        </div>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="Xem web">
-                    </div>
-                </div>
                 <button type="submit" class="btn btn-primary">Save</button>
-                <a href="RoleUser">
-                    <button type="button" class="btn btn-danger">Back</button>
-                </a>
-            </form>
+                <button type="button" class="btn btn-danger" @onclick="GoBack">Back</button>
+            </EditForm>
         </div>
     </div>
 </div>
-@code {
 
+@code {
+    [Parameter]
+    public string userId { get; set; }
+
+    private UserRoleForUpdate userRole = new UserRoleForUpdate();
+    private UserRoleForView userRoleView = new UserRoleForView();
+    private IEnumerable<RoleForView> roles = new List<RoleForView>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadRole();
+        await LoadUserRole();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            await UserRoleService.UpdateUserRoleAsync(userId, userRole);
+            NavigationManager.NavigateTo("/RoleUser");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating user role: {ex.Message}");
+        }
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/RoleUser");
+    }
+    private async Task LoadUserRole()
+    {
+        userRoleView = await UserRoleService.GetUserRolesByUserIdAsync(userId);
+    }
+
+    private async Task LoadRole()
+    {
+        roles = await RoleService.GetAllRolesAsync();
+    }
 }

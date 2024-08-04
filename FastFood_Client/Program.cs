@@ -30,6 +30,25 @@ namespace FastFood_Client
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
 
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(origin =>
+                    true).AllowCredentials();
+                });
+            });
+
+            builder.Services.AddHttpClient();
+
+            builder.Services.AddScoped<IHttpProductService, HttpProductService>();
+            builder.Services.AddScoped<IHttpCategoryService, HttpCategoryService>();
+            builder.Services.AddScoped<IHttpRoleService, HttpRoleService>();
+            builder.Services.AddScoped<IHttpUserRoleService, HttpUserRoleService>();
+            builder.Services.AddScoped<IHttpUserService, HttpUserService>();
+            builder.Services.AddScoped<IHttpAccountService, HttpAccountService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -42,7 +61,7 @@ namespace FastFood_Client
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-
+            app.UseCors();
             app.MapBlazorHub();
             app.MapFallbackToPage("/_Host");
 

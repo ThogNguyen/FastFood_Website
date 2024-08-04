@@ -1,6 +1,9 @@
-﻿@layout AdminLayout
-@page "/users"
+﻿@page "/users"
+@using Data.Models.UserModels
+@using FastFood_Client.HttpRepositories.Interfaces
+@inject IHttpUserService UserService
 
+@layout AdminLayout
 
 <!-- begin row -->
 <div class="row">
@@ -8,7 +11,7 @@
         <!-- begin page title -->
         <div class="d-block d-sm-flex flex-nowrap align-items-center">
             <div class="page-title mb-2 mb-sm-0">
-                <h1>Quản lí Người dùng</h1>
+                <h1>Quản lý Người dùng</h1>
             </div>
         </div>
         <!-- end page title -->
@@ -28,44 +31,39 @@
                                 <th>Email</th>
                                 <th>Địa chỉ</th>
                                 <th>Số điện thoại</th>
-                                <th>Tình Trạng</th>
                                 <th>Chức năng</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="text-center">
-                                <td>Nguyen Van A</td>
-                                <td>abc@gmail.com</td>
-                                <td>abcd</td>
-                                <td>0123456789</td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-success">Hoạt động</span>
-                                </td>
-                                <td>
-                                    <a href="edituser" class="tabledit-edit-button btn btn-sm btn-primary">
-                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="text-center">
-                                <td>Nguyen Van A</td>
-                                <td>abc@gmail.com</td>
-                                <td>abcd</td>
-                                <td>0123456789</td>
-                                <td>
-                                    <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge badge-danger">Ngừng Hoạt động</span>
-                                </td>
-                                <td>
-                                    <a href="edituser" class="tabledit-edit-button btn btn-sm btn-primary">
-                                        <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
-                                    </a>
-                                </td>
-                            </tr>
+                            @if (users != null && users.Any())
+                            {
+                                @foreach (var user in users)
+                                {
+                                    <tr class="text-center">
+                                        <td>@user.FullName</td>
+                                        <td>@user.Email</td>
+                                        <td>@user.Address</td>
+                                        <td>@user.PhoneNumber</td>
+                                        <td>
+                                            <a href="edituser/@user.Id" class="tabledit-edit-button btn btn-sm btn-primary">
+                                                <span><i class="dashicons dashicons-admin-customizer"></i></span> Sửa
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center">Không có dữ liệu</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
 
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-end">
+                            <!-- Add pagination controls here if needed -->
                             <li class="page-item disabled">
                                 <a class="page-link" href="#" tabindex="-1">Previous</a>
                             </li>
@@ -83,7 +81,11 @@
     </div>
 </div>
 <!-- end row -->
-
 @code {
+    private IEnumerable<UserForView> users;
 
+    protected override async Task OnInitializedAsync()
+    {
+        users = await UserService.GetAllUsersAsync();
+    }
 }

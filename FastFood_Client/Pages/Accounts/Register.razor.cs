@@ -1,9 +1,4 @@
-﻿using Data.Models.AccountModels;
-using FastFood_Client.HttpRepositories.Interfaces;
-using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
-namespace FastFood_Client.Pages.Accounts
+﻿namespace FastFood_Client.Pages.Accounts
 {
     public partial class Register
     {
@@ -12,5 +7,45 @@ namespace FastFood_Client.Pages.Accounts
         public IHttpAccountService accountService { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+        private async Task HandleRegister()
+        {
+            try
+            {
+                var response = await accountService.Register(registerVM);
+
+                if (response.IsSuccess)
+                {
+                    NavigationManager.NavigateTo("/login");
+                }
+                else
+                {
+                    Console.WriteLine(response.Errors);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+        }
+        private async Task HandleRegister()
+        {
+            try
+            {
+                var response = await accountService.Register(registerVM);
+
+                if (response.IsSuccess)
+                {
+                    NavigationManager.NavigateTo("/login");
+                }
+                else
+                {
+                    Console.WriteLine(response.Errors);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+        }
     }
 }

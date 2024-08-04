@@ -1,7 +1,10 @@
 ﻿using Data.Models.AccountModels.Response;
 using Data.Models.ProductModels;
 using FastFood_Client.HttpRepositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace FastFood_Client.HttpRepositories.Services
 {
@@ -14,14 +17,24 @@ namespace FastFood_Client.HttpRepositories.Services
             _httpClient = httpClient;
         }
 
-        public Task<BaseResponseMessage> CreateProductAsync(ProductForCreate productDto)
+        [HttpPost]
+        public async Task CreateProductAsync([FromBody]ProductForCreate productForCreate)
         {
-            throw new NotImplementedException();
+            string data = JsonConvert.SerializeObject(productForCreate);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+
+            var postResult = await _httpClient.PostAsync("https://localhost:44346/api/ProductsApi/create-product", content);
+            var postContent = await postResult.Content.ReadAsStringAsync();
+
+            if (!postResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(postContent);
+            }
         }
 
         public async Task<IEnumerable<ProductForView>> GetAllProductsAsync()
         {
-            var response = await _httpClient.GetAsync("https://localhost:7241/api/ProductsApi/get-products");
+            var response = await _httpClient.GetAsync("https://localhost:44346/api/ProductsApi/get-products");
             if (response.IsSuccessStatusCode)
             {
                 var products = await response.Content.ReadFromJsonAsync<IEnumerable<ProductForView>>();
@@ -33,14 +46,31 @@ namespace FastFood_Client.HttpRepositories.Services
             return Enumerable.Empty<ProductForView>();
         }
 
-        public Task<ProductForView> GetProductByIdAsync(Guid id)
+        public async Task<ProductForView> GetProductByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.GetAsync($"https://localhost:44346/api/ProductsApi/get-product/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                var product = await response.Content.ReadFromJsonAsync<ProductForView>();
+                if (product != null)
+                {
+                    return product;
+                }
+            }
+            throw new ApplicationException($"Product with ID {id} not found. Status code: {response.StatusCode}");
         }
 
-        public Task<BaseResponseMessage> UpdateProductAsync(ProductForUpdate productDto, Guid id)
+        public async Task UpdateProductAsync(Guid id, ProductForUpdate productForUpdate)
         {
-            throw new NotImplementedException();
+            string data = JsonConvert.SerializeObject(productForUpdate);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync($"https://localhost:44346/api/ProductsApi/update-product/{id}", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                throw new ApplicationException($"Failed to update product with ID {id}. Status code: {response.StatusCode}, Error: {errorContent}");
+            }
         }
     }
 }
