@@ -18,24 +18,33 @@
             <li>
                 Tài Khoản <span class="arrow_carrot-down"></span>
                 <ul>
-                    <li>
-                        <a href="login">Đăng nhập</a>
-                    </li>
-                    <li>
-                        <a href="register">Đăng kí</a>
-                    </li>
-                    <li>
-                        <a href="#">Đăng Xuất</a>
-                    </li>
-                    <li>
-                        <a href="#">Thông tin cá nhân</a>
-                    </li>
-                    <li>
-                        <a href="orderhistory">Đơn hàng</a>
-                    </li>
-                    <li>
-                        <a href="admin">Admin</a>
-                    </li>
+                    <AuthorizeView>
+                        <Authorized>
+                            <li>
+                                Hello, @context.User.Identity!.Name!
+                            </li>
+                            <li>
+                                <a href="logout">Đăng Xuất</a>
+                            </li>
+                            <li>
+                                <a href="userinfo">Thông tin cá nhân</a>
+                            </li>
+                            <li>
+                                <a href="orderhistory">Đơn hàng</a>
+                            </li>
+                            <li>
+                                <a href="admin">Admin</a>
+                            </li>
+                        </Authorized>
+                        <NotAuthorized>
+                            <li>
+                                <a href="login">Đăng nhập</a>
+                            </li>
+                            <li>
+                                <a href="register">Đăng kí</a>
+                            </li>
+                        </NotAuthorized>
+                    </AuthorizeView>
                 </ul>
             </li>
         </ul>
@@ -54,24 +63,33 @@
                                 <li>
                                     Tài Khoản <span class="arrow_carrot-down"></span>
                                     <ul>
-                                        <li>
-                                            <a href="login">Đăng nhập</a>
-                                        </li>
-                                        <li>
-                                            <a href="register">Đăng kí</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Đăng Xuất</a>
-                                        </li>
-                                        <li>
-                                            <a href="userinfo">Thông tin cá nhân</a>
-                                        </li>
-                                        <li>
-                                            <a href="orderhistory">Đơn hàng</a>
-                                        </li>
-                                        <li>
-                                            <a href="admin">Admin</a>
-                                        </li>
+                                        <AuthorizeView>
+                                            <Authorized>
+                                                <li>
+                                                    Hello, @context.User.Identity!.Name! 
+                                                </li>
+                                                <li>
+                                                    <a href="logout">Đăng Xuất</a>
+                                                </li>
+                                                <li>
+                                                    <a href="userinfo">Thông tin cá nhân</a>
+                                                </li>
+                                                <li>
+                                                    <a href="orderhistory">Đơn hàng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="admin">Admin</a>
+                                                </li>
+                                            </Authorized>
+                                            <NotAuthorized>
+                                                <li>
+                                                    <a href="login">Đăng nhập</a>
+                                                </li>
+                                                <li>
+                                                    <a href="register">Đăng kí</a>
+                                                </li>
+                                            </NotAuthorized>
+                                        </AuthorizeView>
                                     </ul>
                                 </li>
                             </ul>
