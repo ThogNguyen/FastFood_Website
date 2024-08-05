@@ -10,5 +10,6 @@ namespace Data.Models.ProductModels
     public class ProductForView : ProductBaseDTO
     {
         public Guid Id { get; set; }
+        public string? CategoryName { get; set; }
     }
 }

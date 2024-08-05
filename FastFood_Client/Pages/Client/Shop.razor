@@ -1,4 +1,12 @@
 ﻿@page "/shop"
+@using Data.Models.CategoryModels
+@using Data.Models.ProductModels
+@using FastFood_Client.HttpRepositories.Interfaces
+@inject IHttpProductService HttpProductService
+@inject IHttpCategoryService HttpCategoryService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Sản Phẩm</PageTitle>
 
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
@@ -11,7 +19,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="breadcrumb__links">
-                    <a href="">Trang Chủ</a>
+                    <a href="/">Trang Chủ</a>
                     <span>Sản Phẩm</span>
                 </div>
             </div>
@@ -19,7 +27,6 @@
     </div>
 </div>
 <!-- Breadcrumb End -->
-
 <!-- Shop Section Begin -->
 <section class="shop spad">
     <div class="container">
@@ -28,13 +35,21 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="shop__option__search">
                         <form action="#">
-                            <select class="form-select">
+                            <select @bind-value="SelectedCategory" @bind-value:event="oninput">
                                 <option value="">Loại sản phẩm</option>
-                                <option value="">Red Velvet</option>
-                                <option value="">Cup Cake</option>
-                                <option value="">Biscuit</option>
+                                @if (Categories != null)
+                                {
+                                    @foreach (var category in Categories)
+                                    {
+                                        <option value="@category.Id">@category.Name</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="">Không có loại sản phẩm</option>
+                                }
                             </select>
-                            <input type="text" placeholder="Từ khóa sản phẩm...">
+                            <input type="text" placeholder="Từ khóa sản phẩm..." @bind-value="SearchKeyword" @oninput="Search">
                             <button type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
@@ -51,177 +66,58 @@
                 </div>
                 <div class="col-lg-2 col-md-2">
                     <div class="shop__option__right">
-                        <select>
-                            <option value="">Sắp xếp</option>
-                            <option value="">A to Z</option>
-                            <option value="">1 - 8</option>
-                            <option value="">Name</option>
+                        <select @bind-value:event="oninput" @bind-value="SelectedCategory">
+                            <option value="">Loại sản phẩm</option>
+                            @if (Categories != null)
+                            {
+                                @foreach (var category in Categories)
+                                {
+                                    <option value="@category.Id">@category.Name</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="">Không có loại sản phẩm</option>
+                            }
                         </select>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg">
-                        <a href="detailproduct">
-                            <img src="client/img/shop/product-4.jpg" />
-                        </a>
+            @if (FilteredProducts != null)
+            {
+                @foreach (var product in FilteredProducts)
+                {
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg">
+                                <a href="@($"ProductDetails/{product.Id}")">
+                                    <img src="/client/img/shop/@product.Image" />
+                                </a>
 
-                        <div class="product__label">
-                            <span>Cupcake</span>
+                                <div class="product__label">
+                                    <span>@product.CategoryName</span>
+                                </div>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="@($"ProductDetails/{product.Id}")">@product.ProductName</a></h6>
+                                <div class="product__item__price">$@product.Price.ToString("0.00")</div>
+                                <div class="cart_add">
+                                    <a href="cart">Thêm vào giỏ</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="product__item__text">
-                        <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                        <div class="product__item__price">$32.00</div>
-                        <div class="cart_add">
-                            <a href="cart">Thêm vào giỏ</a>
-                        </div>
-                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center">
+                    <p>Đang tải dữ liệu sản phẩm...</p>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg">
-                        <a href="detailproduct">
-                            <img src="client/img/shop/product-4.jpg" />
-                        </a>
+            }
 
-                        <div class="product__label">
-                            <span>Cupcake</span>
-                        </div>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                        <div class="product__item__price">$32.00</div>
-                        <div class="cart_add">
-                            <a href="cart">Thêm vào giỏ</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg">
-                        <a href="detailproduct">
-                            <img src="client/img/shop/product-4.jpg" />
-                        </a>
-
-                        <div class="product__label">
-                            <span>Cupcake</span>
-                        </div>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                        <div class="product__item__price">$32.00</div>
-                        <div class="cart_add">
-                            <a href="cart">Thêm vào giỏ</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg">
-                        <a href="detailproduct">
-                            <img src="client/img/shop/product-4.jpg" />
-                        </a>
-
-                        <div class="product__label">
-                            <span>Cupcake</span>
-                        </div>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                        <div class="product__item__price">$32.00</div>
-                        <div class="cart_add">
-                            <a href="cart">Thêm vào giỏ</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg">
-                        <a href="detailproduct">
-                            <img src="client/img/shop/product-4.jpg" />
-                        </a>
-
-                        <div class="product__label">
-                            <span>Cupcake</span>
-                        </div>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                        <div class="product__item__price">$32.00</div>
-                        <div class="cart_add">
-                            <a href="cart">Thêm vào giỏ</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg">
-                        <a href="detailproduct">
-                            <img src="client/img/shop/product-4.jpg" />
-                        </a>
-
-                        <div class="product__label">
-                            <span>Cupcake</span>
-                        </div>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                        <div class="product__item__price">$32.00</div>
-                        <div class="cart_add">
-                            <a href="cart">Thêm vào giỏ</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg">
-                        <a href="detailproduct">
-                            <img src="client/img/shop/product-4.jpg" />
-                        </a>
-
-                        <div class="product__label">
-                            <span>Cupcake</span>
-                        </div>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                        <div class="product__item__price">$32.00</div>
-                        <div class="cart_add">
-                            <a href="cart">Thêm vào giỏ</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg">
-                        <a href="detailproduct">
-                            <img src="client/img/shop/product-4.jpg" />
-                        </a>
-
-                        <div class="product__label">
-                            <span>Cupcake</span>
-                        </div>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                        <div class="product__item__price">$32.00</div>
-                        <div class="cart_add">
-                            <a href="cart">Thêm vào giỏ</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="shop__last__option">
             <div class="row">
@@ -243,7 +139,42 @@
     </div>
 </section>
 <!-- Shop Section End -->
-
 @code {
+    private IEnumerable<ProductForView> Products { get; set; }
+    private IEnumerable<ProductForView> FilteredProducts { get; set; }
+    private IEnumerable<CategoryForView> Categories { get; set; }
+    private string SearchKeyword { get; set; } = "";
+    private string SortOption { get; set; } = "asc";
+    private Guid SelectedCategory { get; set; } = Guid.Empty;
 
+    protected override async Task OnInitializedAsync()
+    {
+        Products = await HttpProductService.GetAllProductsAsync();
+        FilteredProducts = Products;
+        Categories = await HttpCategoryService.GetCategoriesAsync();
+    }
+
+    private void Search()
+    {
+        if (string.IsNullOrEmpty(SearchKeyword))
+        {
+            FilteredProducts = Products;
+        }
+        else
+        {
+            FilteredProducts = Products.Where(p => p.ProductName.ToLower().Contains(SearchKeyword.ToLower())).ToList();
+        }
+    }
+
+    private void SortProducts()
+    {
+        if (SortOption == "asc")
+        {
+            FilteredProducts = FilteredProducts.OrderBy(p => p.ProductName).ToList();
+        }
+        else if (SortOption == "desc")
+        {
+            FilteredProducts = FilteredProducts.OrderByDescending(p => p.ProductName).ToList();
+        }
+    }
 }
