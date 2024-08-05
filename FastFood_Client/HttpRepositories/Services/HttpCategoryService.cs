@@ -12,6 +12,17 @@ namespace FastFood_Client.HttpRepositories.Services
         {
             _httpClient = httpClient;
         }
+
+        public Task CreateCategory(CategoryForCreate model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<CategoryForView>> GetAllCategory()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<CategoryForView>> GetCategoriesAsync()
         {
             var response = await _httpClient.GetAsync("https://localhost:44346/api/CategoriesApi/get-categories");
@@ -24,6 +35,16 @@ namespace FastFood_Client.HttpRepositories.Services
                 }
             }
             return Enumerable.Empty<CategoryForView>();
+        }
+
+        public Task<CategoryForView> GetCategory(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateCategory(CategoryForUpdate model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

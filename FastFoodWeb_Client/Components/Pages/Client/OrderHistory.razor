@@ -1,0 +1,143 @@
+﻿@page "/orderhistory"
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__text">
+                    <h2>Lịch sử đơn hàng</h2>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__links">
+                    <a href="">Trang chủ</a>
+                    <span>Lịch sử đơn hàng</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<div class="spad">
+    <div class="container">
+        <table class="table table-bordered">
+            <tr class="text-center">
+                <th class="align-middle">Mã Đơn Hàng</th>
+                <th class="align-middle">Thời Gian Đặt</th>
+                <th class="align-middle">Hình thức thanh toán</th>
+                <th class="align-middle">Trạng Thái </th>
+                <th class="align-middle">Tổng Tiền</th>
+                <th class="align-middle">Xem</th>
+                <th class="align-middle">Hủy</th>
+            </tr>
+            <tbody>
+                <tr class="text-center">
+                    <td class="align-middle">1</td>
+                    <td class="align-middle">1/1/2000</td>
+                    <td class="align-middle">COD</td>
+                    <td class="align-middle">Đang xử lí</td>
+                    <td class="align-middle">5000</td>
+                    <td class="align-middle">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-checkorder" data-toggle="modal"
+                            data-target="#orderModal">
+                            Xem
+                        </button>
+                    </td>
+                    <td class="align-middle">
+                        <button type="button" class="btn btn-danger btn-cancel-order">Hủy</button>
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <td class="align-middle">2</td>
+                    <td class="align-middle">1/1/2000</td>
+                    <td class="align-middle">VNPay</td>
+                    <td class="align-middle">Đang xử lí</td>
+                    <td class="align-middle">5000</td>
+                    <td class="align-middle">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-checkorder" data-toggle="modal"
+                            data-target="#orderModal">
+                            Xem
+                        </button>
+                    </td>
+                    <td class="align-middle">
+                        <button type="button" class="btn btn-danger btn-cancel-order">Hủy</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<!-- Modal (Xem đơn hàng) -->
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content custom-modal-checkorder-content">
+            <div class="modal-header custom-header-checkorder">
+                <h4 class="modal-title custom-title-checkorder" id="orderModalLabel"><strong>Chi Tiết Đơn
+                        Hàng</strong></h4>
+            </div>
+            <div class="modal-body custom-body-checkorder">
+                <p class="text-center"><strong>Tên khách hàng:</strong> Name</p>
+                <p class="text-center"><strong>Địa chỉ giao:</strong> DeliveryAddress</p>
+                <p class="text-center"><strong>Số điện thoại:</strong> PhoneNo</p>
+                <p class="text-center"><strong>Ghi chú:</strong> Note</p>
+                <table class="table">
+                    <tr class="text-center">
+                        <th class="align-middle">Combo</th>
+                        <th class="align-middle" colspan="2">Sản phẩm</th>
+                        <th class="align-middle">Số lượng</th>
+                        <th class="align-middle">Giá</th>
+                        <th class="align-middle" colspan="2">Thành Tiền</th>
+                    </tr>
+                    <tbody>
+                        <tr class="text-center">
+                            <td class="col-1 align-middle">1</td>
+                            <td class="col-2 align-middle">
+                                <img src="client/img/shop/product-1.jpg" width="80px" />
+                            </td>
+                            <td class="col-3 align-middle">abc</td>
+                            <td class="col-2 align-middle">5</td>
+                            <td class="col-2 align-middle">1000</td>
+                            <td class="col-2 align-middle">5000</td>
+                        </tr>
+                        <tr class="text-center">
+                            <td class="col-1 align-middle"></td>
+                            <td class="col-2 align-middle">
+                                <img src="client/img/shop/product-1.jpg" width="80px" />
+                            </td>
+                            <td class="col-3 align-middle">abc</td>
+                            <td class="col-2 align-middle">5</td>
+                            <td class="col-2 align-middle">1000</td>
+                            <td class="col-2 align-middle">5000</td>
+                        </tr>
+                        <tr class="text-center">
+                            <td class="col-1 align-middle">1</td>
+                            <td class="col-2 align-middle">
+                                <img src="client/img/shop/product-1.jpg" width="80px" />
+                            </td>
+                            <td class="col-3 align-middle">abc</td>
+                            <td class="col-2 align-middle">5</td>
+                            <td class="col-2 align-middle">1000</td>
+                            <td class="col-2 align-middle">5000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer custom-footer-checkorder">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

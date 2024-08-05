@@ -18,7 +18,7 @@ namespace FastFood_Client.Pages.Admin.QLProduct
 
         private async Task LoadData()
         {
-            products = await productService!.GetAllProductsAsync();
+            // products = await productService!.GetAllProductsAsync();
         }
 
         private string FormatCurrency(decimal amount)

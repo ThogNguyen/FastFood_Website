@@ -1,5 +1,4 @@
-﻿using Azure;
-using Data.Models.AccountModels.Response;
+﻿using Data.Models.AccountModels.Response;
 using Data.Models.UserRolesModels;
 using FastFood_API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;

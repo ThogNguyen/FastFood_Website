@@ -1,0 +1,87 @@
+﻿@page "/editcategory/{id:guid}"
+@using FastFoodWeb_Client.Components.Layout
+@layout AdminLayout
+
+@using Data.Models.CategoryModels
+@using FastFoodWeb_Client.HttpRepositories.Interfaces
+
+@inject IHttpCategoryService CategoryService
+@inject NavigationManager NavigationManager
+
+
+<h3>Chỉnh sửa loại sản phẩm</h3>
+<div class="row editable-wrapper">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="form-group mb-3">
+                <a href="category" class="tabledit-edit-button btn btn-danger">
+                    Trở về
+                </a>
+            </div>
+            <div class="col-md-6 mx-auto">
+                <EditForm Model="category" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="form-group">
+                        <label for="name">Tên loại sản phẩm</label>
+                        <InputText id="name" class="form-control" @bind-Value="category.Name" />
+                        <ValidationMessage For="@(() => category.Name)" />
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group mt-3">
+                            <button class="btn btn-primary mb-4 w-100" type="submit">Lưu Thay Đổi</button>
+                        </div>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger">
+        @errorMessage
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Guid id { get; set; }
+
+    private CategoryForUpdate category = new CategoryForUpdate();
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var categoryFromService = await CategoryService.GetCategory(id);
+            category = new CategoryForUpdate
+                {
+                    Name = categoryFromService.Name
+                };
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            await CategoryService.UpdateCategory(id,category);
+            NavigationManager.NavigateTo("/categories");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+}

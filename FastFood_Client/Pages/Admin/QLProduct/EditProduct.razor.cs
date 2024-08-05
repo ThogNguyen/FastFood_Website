@@ -34,18 +34,18 @@ namespace FastFood_Client.Pages.Admin.QLProduct
 
         private async Task LoadCategories()
         {
-            categories = await httpCategoryService.GetCategoriesAsync();
+            //categories = await httpCategoryService.GetCategoriesAsync();
         }
 
         private async Task LoadProduct()
         {
-            productView = await httpProductService.GetProductByIdAsync(ProductId);
+            // productView = await httpProductService.GetProductByIdAsync(ProductId);
         }
 
 
         private async Task UpdateProduct()
         {
-            await httpProductService.UpdateProductAsync(ProductId, product);
+            // await httpProductService.UpdateProductAsync(ProductId, product);
         }
 
         private void OnImageChange(InputFileChangeEventArgs e)

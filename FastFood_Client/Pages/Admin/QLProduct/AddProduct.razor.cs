@@ -1,12 +1,8 @@
-﻿using Data.Entity;
-using Data.Models.CategoryModels;
+﻿using Data.Models.CategoryModels;
 using Data.Models.ProductModels;
 using FastFood_Client.HttpRepositories.Interfaces;
-using FastFood_Client.HttpRepositories.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Net.Http;
+
 
 namespace FastFood_Client.Pages.Admin.QLProduct
 {
@@ -19,10 +15,6 @@ namespace FastFood_Client.Pages.Admin.QLProduct
         [Inject]
         public NavigationManager navigationManager { get; set; }
 
-        [Inject]
-        public HttpClient httpClient { get; set; }
-
-
         ProductForCreate product = new ProductForCreate();
         private IEnumerable<CategoryForView> categories = new List<CategoryForView>();
 
@@ -33,13 +25,18 @@ namespace FastFood_Client.Pages.Admin.QLProduct
 
         private async Task LoadCategory()
         {
-            categories = await httpCategoryService.GetCategoriesAsync();
+            // categories = await httpCategoryService.GetCategoriesAsync();
         }
 
-        private async Task CreateProduct()
+        /*private async Task CreateProduct()
         {
             await httpProductService.CreateProductAsync(product);
             navigationManager.NavigateTo("/products");
+        }*/
+        private async Task Create()
+        {
+            await httpProductService.CreateProduct(product);
+            // navigationManager.NavigateTo("/products");
         }
 
     }

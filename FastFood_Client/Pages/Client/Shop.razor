@@ -149,9 +149,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Products = await HttpProductService.GetAllProductsAsync();
+        // Products = await HttpProductService.GetAllProductsAsync();
         FilteredProducts = Products;
-        Categories = await HttpCategoryService.GetCategoriesAsync();
+        Categories = await HttpCategoryService.GetAllCategory();
     }
 
     private void Search()

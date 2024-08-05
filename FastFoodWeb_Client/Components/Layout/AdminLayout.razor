@@ -1,0 +1,50 @@
+﻿@inherits LayoutComponentBase
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>FastFood Store</title>
+    <base href="/" />
+    <!-- app favicon -->
+    <link rel="shortcut icon" href="/admin/assets/img/favicon.ico">
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="/admin/assets/css/vendors.css">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/admin/assets/css/style2.css">
+
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-wrap">
+            <div class="loader">
+                <div class="h-100 d-flex justify-content-center">
+                    <div class="align-self-center">
+                        <img src="admin/assets/img/loader/loader.svg" alt="loader">
+                    </div>
+                </div>
+            </div>
+            <AdminHeader></AdminHeader>
+            <div class="app-container">
+
+                <AdminSideBar></AdminSideBar>
+                <div class="app-main" id="main">
+                    <div class="container-fluid">
+                        @Body
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="/admin/assets/js/vendors.js"></script>
+    <script src="/admin/assets/js/app.js"></script>
+    <script src="/admin/assets/js/custom.js"></script>
+</body>
+</html>

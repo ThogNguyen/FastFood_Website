@@ -1,6 +1,5 @@
 ﻿@page "/createcoupon"
 @using Data.Models.CouponModels
-@using Data.Models.CouponModels.Base
 @using FastFood_Client.HttpRepositories.Interfaces
 
 @layout AdminLayout
@@ -89,13 +88,6 @@
                         </div>
                     </div>
                 </EditForm>
-
-                @if (!string.IsNullOrEmpty(_errorMessage))
-                {
-                    <div class="alert alert-danger">
-                        @(_errorMessage)
-                    </div>
-                }
             </div>
         </div>
     </div>
@@ -103,7 +95,6 @@
 <!-- end row -->
 @code {
     private CouponForCreate _couponForCreate = new CouponForCreate();
-    private string _errorMessage;
 
     [Inject]
     public IHttpCouponService CouponService { get; set; }
@@ -113,14 +104,7 @@
 
     private async Task Create()
     {
-        try
-        {
-            await CouponService.CreateCoupons(_couponForCreate); // Truyền _couponForCreate vào phương thức
-            NavigationManager.NavigateTo("/coupons");
-        }
-        catch (Exception ex)
-        {
-            _errorMessage = ex.Message; // Hiển thị thông báo lỗi
-        }
+        await CouponService.CreateCoupons(_couponForCreate); 
+        NavigationManager.NavigateTo("/coupons");
     }
 }

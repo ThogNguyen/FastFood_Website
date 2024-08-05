@@ -1,0 +1,83 @@
+﻿@page "/addcategory"
+@using FastFoodWeb_Client.Components.Layout 
+@layout AdminLayout
+
+@using Data.Models.CategoryModels
+@using FastFoodWeb_Client.HttpRepositories.Interfaces
+
+<!-- begin row -->
+<div class="row">
+    <div class="col-md-12 m-b-30">
+        <!-- begin page title -->
+        <div class="d-block d-sm-flex flex-nowrap align-items-center">
+            <div class="page-title mb-2 mb-sm-0">
+                <h1>Thêm loại sản phẩm</h1>
+            </div>
+        </div>
+        <!-- end page title -->
+    </div>
+</div>
+<!-- end row -->
+<!-- begin row -->
+<div class="row editable-wrapper">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="form-group mb-3">
+                <a href="categories" class="tabledit-edit-button btn btn-danger">
+                    Trở về
+                </a>
+            </div>
+            <div class="col-md-6 mx-auto">
+                <EditForm Model="_categoryForCreate" OnValidSubmit="Create">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary class="text-danger" />
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label">Tên loại sản phẩm</label>
+                            <InputText @bind-Value="_categoryForCreate.Name" class="form-control" />
+                            <ValidationMessage For="@(() => _categoryForCreate.Name)" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="mt-3">
+                                <button class="btn btn-success mb-4 w-100" type="submit">Thêm loại sản phẩm</button>
+                            </div>
+                        </div>
+                    </div>
+                </EditForm>
+
+                @if (!string.IsNullOrEmpty(_errorMessage))
+                {
+                    <div class="alert alert-danger">
+                        @(_errorMessage)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+@code {
+    private CategoryForCreate _categoryForCreate = new CategoryForCreate();
+    private string _errorMessage;
+
+    [Inject]
+    public IHttpCategoryService CategoryService { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    private async Task Create()
+    {
+        try
+        {
+            await CategoryService.CreateCategory(_categoryForCreate); // Truyền _categoryForCreate vào phương thức
+            NavigationManager.NavigateTo("/categories");
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.Message; // Hiển thị thông báo lỗi
+        }
+    }
+}

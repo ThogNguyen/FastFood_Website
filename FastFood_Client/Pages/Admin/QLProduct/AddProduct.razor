@@ -1,5 +1,7 @@
-﻿@page "/addproduct"
+﻿@page "/AddProduct"
 @layout AdminLayout
+@using Microsoft.AspNetCore.Components.Forms
+
 
 <!-- Page content -->
 <div class="row">
@@ -22,7 +24,7 @@
     <div class="col-lg-8 mx-auto">
         <div class="card card-statistics">
             <div class="card-body">
-                <EditForm Model="@product" OnValidSubmit="CreateProduct">
+                <EditForm Model="@product" OnValidSubmit="Create">
                     <DataAnnotationsValidator/>
                     <div class="row">
                         <div class="col-md-5">

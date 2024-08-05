@@ -1,0 +1,122 @@
+﻿@page "/editcoupon/{id:guid}"
+@using FastFoodWeb_Client.Components.Layout
+@layout AdminLayout
+
+@using Data.Models.CouponModels
+@using FastFoodWeb_Client.HttpRepositories.Interfaces
+@inject IHttpCouponService HttpCouponService
+@inject NavigationManager Navigation
+
+
+<!-- begin row -->
+<div class="row">
+    <div class="col-md-12 m-b-30">
+        <!-- begin page title -->
+        <div class="d-block d-sm-flex flex-nowrap align-items-center">
+            <div class="page-title mb-2 mb-sm-0">
+                <h1>Sửa mã giảm giá</h1>
+            </div>
+        </div>
+        <!-- end page title -->
+    </div>
+</div>
+<!-- end row -->
+<!-- begin row -->
+<div class="row editable-wrapper">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="form-group mb-3">
+                <a href="coupons" class="tabledit-edit-button btn btn-danger">
+                    Trở về
+                </a>
+            </div>
+            <div class="col-md-6 mx-auto">
+                <EditForm Model="coupon" OnValidSubmit="UpdateCoupon">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label">Mã giảm giá</label>
+                            <InputText @bind-Value="coupon.Code" class="form-control" />
+                            <ValidationMessage For="@(() => coupon.Code)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label">Giá giảm</label>
+                            <InputNumber @bind-Value="coupon.DiscountPrice" class="form-control" />
+                            <ValidationMessage For="@(() => coupon.DiscountPrice)" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Giá giảm tối đa</label>
+                            <InputNumber @bind-Value="coupon.MaxDiscountValue" class="form-control" />
+                            <ValidationMessage For="@(() => coupon.MaxDiscountValue)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label">Mô tả</label>
+                            <InputText @bind-Value="coupon.Description" class="form-control" />
+                            <ValidationMessage For="@(() => coupon.Description)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label">Giảm ?%</label>
+                            <InputNumber @bind-Value="coupon.PercentDiscount" class="form-control" />
+                            <ValidationMessage For="@(() => coupon.PercentDiscount)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label">Ngày bắt đầu</label>
+                            <InputDate @bind-Value="coupon.StartDate" class="form-control" />
+                            <ValidationMessage For="@(() => coupon.StartDate)" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Ngày kết thúc</label>
+                            <InputDate @bind-Value="coupon.EndDate" class="form-control" />
+                            <ValidationMessage For="@(() => coupon.EndDate)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Tình trạng</label>
+                            <InputSelect @bind-Value="coupon.IsActive" class="form-control">
+                                <option value="true">Hoạt động</option>
+                                <option value="false">Ngừng hoạt động</option>
+                            </InputSelect>
+                            <ValidationMessage For="@(() => coupon.IsActive)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group mt-3">
+                            <button class="btn btn-primary mb-4 w-100" type="submit">Lưu Thay Đổi</button>
+                        </div>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+
+
+@code {
+    private CouponForUpdate coupon = new CouponForUpdate(); // Use CouponForUpdate
+    private CouponForView couponForView = new CouponForView();
+
+    [Parameter]
+    public Guid Id { get; set; } // To receive the coupon ID from the URL
+
+    protected override async Task OnInitializedAsync()
+    {
+        couponForView = await HttpCouponService.GetCoupons(Id);
+    }
+
+    private async Task UpdateCoupon()
+    {
+        await HttpCouponService.UpdateCoupons(coupon);
+        Navigation.NavigateTo("coupons");
+    }
+}
