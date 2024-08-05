@@ -1,4 +1,4 @@
-﻿@page "/editcoupon"
+﻿@page "/editcoupon/{id:guid}"
 @using Data.Models.CouponModels
 @using Data.Models.CouponModels.Base
 @using FastFood_Client.HttpRepositories.Interfaces
@@ -7,49 +7,20 @@
 
 @code {
     private CouponForUpdate coupon = new CouponForUpdate(); // Use CouponForUpdate
+    private CouponForView couponForView = new CouponForView();
 
     [Parameter]
     public Guid Id { get; set; } // To receive the coupon ID from the URL
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            // Fetch coupon details
-            var couponForView = await HttpCouponService.GetCoupons(Id);
-
-            // Map CouponForView to CouponForUpdate
-            coupon = new CouponForUpdate
-                {
-                    Code = couponForView.Code,
-                    DiscountPrice = couponForView.DiscountPrice,
-                    MaxDiscountValue = couponForView.MaxDiscountValue,
-                    Description = couponForView.Description,
-                    PercentDiscount = couponForView.PercentDiscount,
-                    StartDate = couponForView.StartDate,
-                    EndDate = couponForView.EndDate,
-                    IsActive = couponForView.IsActive
-                };
-        }
-        catch (Exception ex)
-        {
-            // Handle error (e.g., show an error message)
-            Console.WriteLine(ex.Message);
-        }
+        couponForView = await HttpCouponService.GetCoupons(Id);
     }
 
     private async Task UpdateCoupon()
     {
-        try
-        {
-            await HttpCouponService.UpdateCoupons(coupon);
-            Navigation.NavigateTo("coupons");
-        }
-        catch (Exception ex)
-        {
-            // Handle the exception (e.g., show an error message)
-            Console.WriteLine(ex.Message);
-        }
+        await HttpCouponService.UpdateCoupons(coupon);
+        Navigation.NavigateTo("coupons");
     }
 }
 
