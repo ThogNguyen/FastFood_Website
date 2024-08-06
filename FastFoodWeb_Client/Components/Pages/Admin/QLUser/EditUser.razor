@@ -5,7 +5,7 @@
 @using Data.Models.UserModels
 @using FastFoodWeb_Client.HttpRepositories.Interfaces
 @inject IHttpUserService UserService
-
+@inject NavigationManager NavigationManager
 
 
 <!-- begin row -->
@@ -29,24 +29,24 @@
                 <EditForm Model="user" OnValidSubmit="HandleValidSubmit">
                     <div class="form-group">
                         <label class="control-label">Họ và Tên</label>
-                        <InputText @bind-Value="userView.FullName" class="form-control" />
+                        <InputText @bind-Value="user.FullName" class="form-control" />
                         <ValidationMessage For="@(() => user.FullName)" />
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label class="control-label">Email</label>
-                            <InputText @bind-Value="userView.Email" class="form-control" disabled />
+                            <InputText @bind-Value="user.Email" class="form-control" disabled />
                             <ValidationMessage For="@(() => user.Email)" />
                         </div>
                         <div class="form-group col-md-6">
                             <label class="control-label">Số điện thoại</label>
-                            <InputText @bind-Value="userView.PhoneNumber" class="form-control" />
+                            <InputText @bind-Value="user.PhoneNumber" class="form-control" />
                             <ValidationMessage For="@(() => user.PhoneNumber)" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Địa chỉ</label>
-                        <InputText @bind-Value="userView.Address" class="form-control" />
+                        <InputText @bind-Value="user.Address" class="form-control" />
                         <ValidationMessage For="@(() => user.Address)" />
                     </div>
 
@@ -70,10 +70,18 @@
     protected override async Task OnInitializedAsync()
     {
         userView = await UserService.GetUserByIdAsync(Id);
+        user = new UserForUpdate
+            {
+                FullName = userView.FullName,
+                Email = userView.Email,
+                PhoneNumber = userView.PhoneNumber,
+                Address = userView.Address
+            };
     }
 
     private async Task HandleValidSubmit()
     {
         await UserService.UpdateUserAsync(Id, user);
+        NavigationManager.NavigateTo("/users");
     }
 }

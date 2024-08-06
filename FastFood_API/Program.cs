@@ -170,6 +170,8 @@ namespace FastFood_API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FastFood API V1");
             });
 
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

@@ -49,13 +49,11 @@
                         </div>
                     </div>
 
-                    <div class="form-group text-center">
-                        <img src="/client/img/shop/product-1.jpg" width="150" />
+                    <div class="form-group mb-3">
+                        <label for="imageUrl">Hình ảnh</label>
+                        <ImageUpload OnChange="AssignImage" />
                     </div>
-                    <div class="form-group">
-                        <label for="productImage">Hình Ảnh</label>
-                        <InputText class="form-control" id="productImage" @bind-Value="product.Image" />
-                    </div>
+
                     <div class="form-group">
                         <label for="productDescription">Mô Tả</label>
                         <InputTextArea class="form-control" id="productDescription" @bind-Value="product.Description" />

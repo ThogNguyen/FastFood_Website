@@ -4,6 +4,7 @@ using FastFoodWeb_Client.HttpRepositories.Interfaces;
 using FastFoodWeb_Client.HttpRepositories.Services;
 using FastFoodWeb_Client.Utility;
 using Microsoft.AspNetCore.Components.Authorization;
+using Tewr.Blazor.FileReader;
 
 namespace FastFoodWeb_Client
 {
@@ -33,6 +34,9 @@ namespace FastFoodWeb_Client
             builder.Services.AddScoped<IHttpOrderService, HttpOrderService>();
             builder.Services.AddScoped<IHttpCouponService, HttpCouponService>();
 
+            // Register IFileReaderService
+            builder.Services.AddFileReaderService();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -44,6 +48,7 @@ namespace FastFoodWeb_Client
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseStaticFiles();
 
             app.UseAuthentication();

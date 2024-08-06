@@ -8,5 +8,6 @@ namespace FastFoodWeb_Client.HttpRepositories.Interfaces
         Task<ProductForView> GetProductByIdAsync(Guid id);
         Task CreateProduct(ProductForCreate productForCreate);
         Task UpdateProductAsync(Guid id, ProductForUpdate productForUpdate);
+        Task<string> UploadProductImage(MultipartFormDataContent content);
     }
 }

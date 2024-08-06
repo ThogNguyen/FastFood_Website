@@ -1,4 +1,5 @@
-﻿using Data.Models.CategoryModels;
+﻿using Data.Entity;
+using Data.Models.CategoryModels;
 using Data.Models.ProductModels;
 using FastFoodWeb_Client.HttpRepositories.Interfaces;
 using Microsoft.AspNetCore.Components;
@@ -31,5 +32,6 @@ namespace FastFoodWeb_Client.Components.Pages.Admin.QLProduct
             await httpProductService.CreateProduct(product);
             navigationManager.NavigateTo("/products");
         }
+        private void AssignImage(string imgUrl) => product.Image = imgUrl;
     }
 }

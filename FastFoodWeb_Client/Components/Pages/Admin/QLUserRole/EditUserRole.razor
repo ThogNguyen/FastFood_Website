@@ -34,10 +34,10 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-user"></i></span>
                         </div>
-                        <select class="custom-select" @bind="userRoleView.RoleName">
+                        <select class="custom-select" @bind="userRole.RoleName">
                             @foreach (var role in roles)
                             {
-                                <option value="@role.Id">@role.Name</option>
+                                <option value="@role.Name" selected="@(role.Name == userRole.RoleName ? "selected" : null)">@role.Name</option>
                             }
                         </select>
                     </div>
@@ -68,7 +68,7 @@
         try
         {
             await UserRoleService.UpdateUserRoleAsync(userId, userRole);
-            NavigationManager.NavigateTo("/RoleUser");
+            NavigationManager.NavigateTo("/userroles");
         }
         catch (Exception ex)
         {
