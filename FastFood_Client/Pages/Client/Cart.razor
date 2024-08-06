@@ -37,13 +37,13 @@
                                                 <h5>$@product.Price.ToString("0.00")</h5>
                                             </div>
                                         </td>
-                                        <td class="quantity__item">
+                                        @* <td class="quantity__item">
                                             <div class="quantity">
                                                 <div class="pro-qty">
-                                                    <input type="text" @bind="quantity">
+                                                    < @bind-Value="quantity">
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td> *@
                                         <td class="cart__price">$@(product.Price * quantity).ToString("0.00")</td>
                                         <td class="cart__close">
                                             <a href="#" @onclick="@(() => RemoveFromCart(product.Id))">
@@ -117,6 +117,8 @@ else
 @code {
     private List<ProductForView> CartItems { get; set; } = new List<ProductForView>();
     private decimal TotalPrice { get; set; }
+    private int Quantity { get; set; }
+
 
     private void CalculateCartTotal()
     {

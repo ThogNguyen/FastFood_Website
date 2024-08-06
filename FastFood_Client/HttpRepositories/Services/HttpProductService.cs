@@ -35,7 +35,7 @@ namespace FastFood_Client.HttpRepositories.Services
 
         public async Task CreateProduct([FromBody] ProductForCreate productForCreate)
         {
-            Console.WriteLine("Calling GetAllProductsAsync...");
+            /*Console.WriteLine("Calling GetAllProductsAsync...");
             var products = await _httpClient.GetAsync("https://localhost:7241/api/ProductsApi/get-products");
             Console.WriteLine($"GetAllProductsAsync: Status code = {products.StatusCode}");
 
@@ -79,13 +79,40 @@ namespace FastFood_Client.HttpRepositories.Services
                     return productList;
                 }
             }
-            return Enumerable.Empty<ProductForView>();
+            return Enumerable.Empty<ProductForView>();*/
+            throw new NotImplementedException();
+        }
+
+        public Task CreateProductAsync(ProductForCreate productForCreate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<ProductForView>> GetAllProductsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ProductForView> GetProductByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<ProductForView>> GetProductsAsync(string? keyword, string? sortOption, Guid? categoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<ProductForView>> GetProductsByCategoryAsync(Guid categoryId)
+        {
+            throw new NotImplementedException();
         }
 
         public Task UpdateProductAsync(Guid id, ProductForUpdate productForUpdate)
         {
             throw new NotImplementedException();
         }
+
 
         /*public async Task<IEnumerable<ProductForView>> GetAllProductsAsync()
         {
@@ -126,6 +153,6 @@ namespace FastFood_Client.HttpRepositories.Services
         }
 
             return Enumerable.Empty<ProductForView>();
-        }
+        }*/
     }
 }
