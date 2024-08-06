@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastFood_Client", "FastFood
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{7697C6B9-4032-406E-A841-EA881D261541}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastFoodWeb_Client", "FastFoodWeb_Client\FastFoodWeb_Client.csproj", "{408D98B1-1B3F-41F3-BF0B-45AEBCBC3579}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastFoodWeb_Client", "FastFoodWeb_Client\FastFoodWeb_Client.csproj", "{408D98B1-1B3F-41F3-BF0B-45AEBCBC3579}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

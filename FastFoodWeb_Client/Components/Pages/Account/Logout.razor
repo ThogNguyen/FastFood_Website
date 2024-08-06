@@ -1,0 +1,16 @@
+﻿@page "/logout"
+@using FastFoodWeb_Client.HttpRepositories.Interfaces
+@using FastFoodWeb_Client.Components.Layout
+@layout NullLayout
+@inject IHttpAccountService AuthService
+@inject NavigationManager NavigationManager
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await AuthService.Logout();
+        NavigationManager.NavigateTo("/");
+    }
+
+}

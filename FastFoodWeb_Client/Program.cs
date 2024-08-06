@@ -1,6 +1,9 @@
+using Blazored.LocalStorage;
 using FastFoodWeb_Client.Components;
 using FastFoodWeb_Client.HttpRepositories.Interfaces;
 using FastFoodWeb_Client.HttpRepositories.Services;
+using FastFoodWeb_Client.Utility;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace FastFoodWeb_Client
 {
@@ -14,17 +17,12 @@ namespace FastFoodWeb_Client
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
-            /*var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
-                {
-                    policy.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(origin =>
-                    true).AllowCredentials();
-                });
-            });*/
-
             builder.Services.AddHttpClient();
+
+            builder.Services.AddBlazoredLocalStorage();
+            builder.Services.AddAuthorizationCore();
+
+            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
             builder.Services.AddScoped<IHttpProductService, HttpProductService>();
             builder.Services.AddScoped<IHttpCategoryService, HttpCategoryService>();
@@ -46,10 +44,12 @@ namespace FastFoodWeb_Client
             }
 
             app.UseHttpsRedirection();
-
             app.UseStaticFiles();
-            app.UseAntiforgery();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseAntiforgery();
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
 

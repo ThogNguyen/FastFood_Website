@@ -1,14 +1,6 @@
-﻿using AutoMapper;
-using AutoMapper.Internal;
-using Data.Entity;
-using Data.Models.AccountModels.Response;
-using Data.Models.AccountModels;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using System.Text;
+﻿using Data.Models.AccountModels;
 using FastFood_API.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FastFood_API.Controllers
 {

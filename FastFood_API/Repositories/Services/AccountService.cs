@@ -96,7 +96,11 @@ namespace FastFood_API.Repositories.Services
             var tokenEncoded = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
             // api reset-password
-            var callbackUrl = $"https://localhost:7241/api/Accounts/reset-password?email=" +
+            /*var callbackUrl = $"https://localhost:44346/api/Accounts/reset-password?email=" +
+                                $"{user.Email}&token={tokenEncoded}";*/
+
+            // client reset-password
+            var callbackUrl = $"https://localhost:44359/resetpassword?email=" +
                                 $"{user.Email}&token={tokenEncoded}";
 
             var mailRequest = new MailRequest

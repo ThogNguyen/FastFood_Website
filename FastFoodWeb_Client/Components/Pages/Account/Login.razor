@@ -6,6 +6,7 @@
 @inject IHttpAccountService AccountService
 @inject NavigationManager NavigationManager
 
+
 @* Form model *@
 @using Data.Models.AccountModels
 @using FastFoodWeb_Client.HttpRepositories.Interfaces
@@ -64,5 +65,6 @@
     private async Task HandleValidSubmit()
     {
         await AccountService.LoginUserAsync(loginModel);
+        NavigationManager.NavigateTo("/");
     }
 }
