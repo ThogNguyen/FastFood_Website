@@ -10,7 +10,7 @@ namespace Data.Models.OrderModels
 {
     public class OrderForCreate
     {
-        public Guid Coupon_Id { get; set; }
+        public Guid? Coupon_Id { get; set; }
         public string? User_Id { get; set; }
         public string? Note { get; set; }
 

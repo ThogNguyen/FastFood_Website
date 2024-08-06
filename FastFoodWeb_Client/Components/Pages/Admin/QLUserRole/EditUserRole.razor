@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="card-body">
-            <EditForm Model="@userRole" OnValidSubmit="HandleValidSubmit">
+            <EditForm Model="@userRole" OnValidSubmit="UpdateUserrole">
                 <DataAnnotationsValidator />
                 <div class="form-group">
                     <label for="inputAddress">User Name</label>
@@ -34,10 +34,16 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-user"></i></span>
                         </div>
-                        <select class="custom-select" @bind="userRoleView.RoleName">
+                        @* <select class="custom-select" @bind="userRole.RoleName">
                             @foreach (var role in roles)
                             {
-                                <option value="@role.Id">@role.Name</option>
+                                <option value="@role.Name" selected="@(role.Name == userRole.RoleName ? "selected" : null)">@role.Name</option>
+                            }
+                        </select> *@
+                        <select class="custom-select" @bind="userRole.RoleName">
+                            @foreach (var role in roles)
+                            {
+                                <option value="@role.Name">@role.Name</option>
                             }
                         </select>
                     </div>
@@ -63,12 +69,12 @@
         await LoadUserRole();
     }
 
-    private async Task HandleValidSubmit()
+    private async Task UpdateUserrole()
     {
         try
         {
             await UserRoleService.UpdateUserRoleAsync(userId, userRole);
-            NavigationManager.NavigateTo("/RoleUser");
+            NavigationManager.NavigateTo("/userroles");
         }
         catch (Exception ex)
         {
@@ -83,6 +89,11 @@
     private async Task LoadUserRole()
     {
         userRoleView = await UserRoleService.GetUserRolesByUserIdAsync(userId);
+
+        userRole = new UserRoleForUpdate
+            {
+                RoleName = userRoleView.RoleName
+            };
     }
 
     private async Task LoadRole()

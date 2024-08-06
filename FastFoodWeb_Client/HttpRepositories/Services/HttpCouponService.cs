@@ -40,11 +40,11 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
             throw new ApplicationException("Coupon not found.");
         }
 
-        public async Task UpdateCoupons(CouponForUpdate model)
+        public async Task UpdateCoupons(Guid id, CouponForUpdate model)
         {
             string data = JsonConvert.SerializeObject(model);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-            var putResult = await _httpClient.PutAsync("https://localhost:44346/api/CouponsApi/update-coupon", content); // Sử dụng đường dẫn tương đối
+            var putResult = await _httpClient.PutAsync("https://localhost:44346/api/CouponsApi/update-coupon?id=" + id, content); // Sử dụng đường dẫn tương đối
             var putContent = await putResult.Content.ReadAsStringAsync();
 
             if (!putResult.IsSuccessStatusCode)

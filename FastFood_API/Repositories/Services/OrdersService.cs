@@ -105,9 +105,20 @@ namespace FastFood_API.Repositories.Services
         public async Task<BaseResponseMessage> UpdateOrderAsync(OrderForUpdate orderDto, Guid id)
         {
             var order = await _context.Orders.SingleOrDefaultAsync(x => x.Id == id);
+            
+            // Kiểm tra trạng thái của đơn hàng
+            if (order.OrderStatus == OrderStatus.Paid.ToString())
+            {
+                return new BaseResponseMessage
+                {
+                    IsSuccess = false,
+                    Errors = "Đơn hàng đã được thanh toán và không thể cập nhật."
+                };
+            }
+
             _mapper.Map(orderDto, order);
-            if (order!.OrderStatus == OrderStatus.Pending.ToString() ||
-                order.OrderStatus == OrderStatus.UnPaid.ToString())
+            if (order!.OrderStatus != OrderStatus.Pending.ToString() ||
+                order.OrderStatus != OrderStatus.UnPaid.ToString())
             {
                 _context.Orders.Update(order);
                 await _context.SaveChangesAsync();

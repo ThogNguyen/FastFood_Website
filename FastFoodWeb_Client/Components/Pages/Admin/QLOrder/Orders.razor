@@ -40,6 +40,7 @@
                                     <th>Thời gian đặt</th>
                                     <th>Tên khách hàng</th>
                                     <th>Trạng Thái</th>
+                                    <th>Giao Hàng</th>
                                     <th>Tổng Tiền</th>
                                     <th>Chức năng</th>
                                 </tr>
@@ -54,10 +55,15 @@
                                         <td>
                                             <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge
                                                 @(order.OrderStatus == "Pending" ? "badge-secondary" :
-                                                  order.OrderStatus == "Confirmed" ? "badge-info" :
-                                                  order.OrderStatus == "Shipping" ? "badge-warning" :
-                                                  order.OrderStatus == "Delivered" ? "badge-success" :
+                                                  order.OrderStatus == "UnPaid" ? "badge-info" :
+                                                  order.OrderStatus == "Paid" ? "badge-success" :
                                                   "badge-danger")">@order.OrderStatus</span>
+                                        </td>
+                                        <td>
+                                            <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge
+                                                @(order.ShippingStatus == "InProgress" ? "badge-info" :
+                                                  order.ShippingStatus == "Delivered" ? "badge-success" : ""
+                                                  )">@order.ShippingStatus</span>
                                         </td>
                                         <td>@order.TotalAmount.ToString("C")</td>
                                         <td>

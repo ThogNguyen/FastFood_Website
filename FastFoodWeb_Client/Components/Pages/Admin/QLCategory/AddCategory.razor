@@ -28,6 +28,14 @@
                 </a>
             </div>
             <div class="col-md-6 mx-auto">
+                @if (!string.IsNullOrEmpty(_errorMessage))
+                {
+                    <div class="form-group">
+                        <div class="alert alert-danger">
+                            @(_errorMessage)
+                        </div>
+                    </div>
+                }
                 <EditForm Model="_categoryForCreate" OnValidSubmit="Create">
                     <DataAnnotationsValidator />
                     <ValidationSummary class="text-danger" />
@@ -46,13 +54,6 @@
                         </div>
                     </div>
                 </EditForm>
-
-                @if (!string.IsNullOrEmpty(_errorMessage))
-                {
-                    <div class="alert alert-danger">
-                        @(_errorMessage)
-                    </div>
-                }
             </div>
         </div>
     </div>

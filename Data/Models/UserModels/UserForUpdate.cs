@@ -12,7 +12,6 @@ namespace Data.Models.UserModels
         [Required(ErrorMessage = "Email không được để trống")]
         [EmailAddress(ErrorMessage = "Email sai định dạng")]
         public string? Email { get; set; }
-        [Required(ErrorMessage = "Avatar không được để trống")]
         public string? Avatar { get; set; }
         [Required(ErrorMessage = "Họ và tên không được để trống")]
         public string? FullName { get; set; }

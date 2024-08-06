@@ -80,11 +80,11 @@ namespace FastFood_API
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
-                options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireDigit = false;
-                options.Password.RequireLowercase = false;
+                options.Password.RequiredLength = 8;
+                //options.Password.RequireNonAlphanumeric = false;
+                //options.Password.RequireUppercase = false;
+                //options.Password.RequireDigit = false;
+                //options.Password.RequireLowercase = false;
 
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
@@ -169,6 +169,8 @@ namespace FastFood_API
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FastFood API V1");
             });
+
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 

@@ -49,7 +49,7 @@
                                         <td>@product.ProductName</td>
                                         <td>@FormatCurrency(product.Price)</td>
                                         <td>
-                                            <img src="@($"/client/img/shop/{product.Image}")" width="70" alt="Product Image" class="product-image" />
+                                            <img src="@product.Image" width="70" alt="Product Image" class="product-image" />
                                         </td>
                                         <td>
                                             <span class="mr-2 mb-2 mr-sm-0 mb-sm-0 badge @(product.IsActive ? "badge-success" : "badge-danger")">

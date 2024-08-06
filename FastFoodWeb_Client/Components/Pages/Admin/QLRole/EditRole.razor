@@ -34,7 +34,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-user"></i></span>
                         </div>
-                        <InputText id="roleName" class="form-control" @bind-Value="roleView.Name" />
+                        <InputText id="roleName" class="form-control" @bind-Value="roleForEdit.Name" />
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
@@ -61,7 +61,12 @@
     private async Task LoadRoleData()
     {
         roleView = await RoleService.GetRoleByIdAsync(Id);
+        roleForEdit = new RoleForUpdate
+            {
+                Name = roleView.Name
+            };
     }
+
 
     private async Task HandleValidSubmit()
     {

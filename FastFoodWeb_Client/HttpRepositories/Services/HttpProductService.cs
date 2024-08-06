@@ -68,5 +68,22 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
                 throw new ApplicationException($"Failed to update product with ID {id}. Status code: {response.StatusCode}, Error: {errorContent}");
             }
         }
+
+        public async Task<string> UploadProductImage(MultipartFormDataContent content)
+        {
+            var postResult = await _httpClient.PostAsync("https://localhost:44346/api/ImageUpload/upload-product-image", content);
+            var postContent = await postResult.Content.ReadAsStringAsync();
+
+            if (!postResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(postContent);
+            }
+            else
+            {
+                // Giả sử postContent chứa đường dẫn hình ảnh tương đối
+                var imgUrl = $"https://localhost:44346/{postContent}";
+                return imgUrl;
+            }
+        }
     }
 }

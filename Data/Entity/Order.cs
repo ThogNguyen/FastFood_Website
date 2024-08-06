@@ -25,7 +25,7 @@ namespace Data.Entity
 
 
         // Foreign key
-        public Guid Coupon_Id { get; set; }
+        public Guid? Coupon_Id { get; set; }
         [ForeignKey(nameof(Coupon_Id))]
         public Coupon? Coupon { get; set; }
         public string? User_Id { get; set; }

@@ -13,10 +13,10 @@ namespace Data.Models.OrderModels
     {
         [Required(ErrorMessage = "Trạng thái đơn hàng không được bỏ trống")]
         public OrderStatus OrderStatus { get; set; }
-        public string? Note { get; set; }
+        // public string? Note { get; set; }
         public ShippingStatus ShippingStatus { get; set; }
-        [Required(ErrorMessage = "Địa chỉ giao hàng không được bỏ trống")]
-        public string? DeliveryAddress { get; set; }
+        // [Required(ErrorMessage = "Địa chỉ giao hàng không được bỏ trống")]
+        //public string? DeliveryAddress { get; set; }
     }
 
     public class OrderDetailForUpdate

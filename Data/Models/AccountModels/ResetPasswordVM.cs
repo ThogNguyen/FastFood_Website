@@ -11,7 +11,7 @@ namespace Data.Models.AccountModels
     {
         [Required(ErrorMessage = "Mật khẩu không được bỏ trống")]
         public string? Password { get; set; }
-        [Required(ErrorMessage = "Mật khẩu không được bỏ trống")]
+        [Required(ErrorMessage = "Xác nhận mật khẩu không được bỏ trống")]
         [Compare("Password", ErrorMessage = "Mật khẩu không khớp")]
         public string? ConfirmPassword { get; set; }
 

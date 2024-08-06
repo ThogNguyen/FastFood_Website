@@ -32,7 +32,7 @@ namespace FastFood_API.Repositories.Services
 
             Coupon discount = _mapper.Map<Coupon>(couponDto);
             discount.StartDate = DateTime.UtcNow.ToUniversalTime();
-            discount.EndDate = DateTime.UtcNow.AddDays(3).ToUniversalTime();
+            //discount.EndDate = DateTime.UtcNow.AddDays(3).ToUniversalTime();
 
             await _context.Coupons.AddAsync(discount);
             await _context.SaveChangesAsync();

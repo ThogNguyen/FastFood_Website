@@ -9,6 +9,6 @@ namespace FastFoodWeb_Client.HttpRepositories.Interfaces
         Task<LoginVMResponse> LoginUserAsync(LoginVM loginVM);
         Task Logout();
         Task ForgotPasswordAsync(ForgotPasswordVM model);
-        Task ResetPasswordAsync(ResetPasswordVM model);
+        Task<BaseResponseMessage> ResetPasswordAsync(ResetPasswordVM model);
     }
 }
