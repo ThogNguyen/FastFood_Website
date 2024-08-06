@@ -1,4 +1,12 @@
-﻿@page "/detailproduct"
+﻿@page "/detailproduct/{id:guid}"
+@using FastFoodWeb_Client.HttpRepositories.Interfaces
+@using Data.Models.ProductModels
+@using Data.Models.CategoryModels
+@inject IHttpProductService ProductService
+@inject IHttpCategoryService CategoryService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Chi tiết sản phẩm</PageTitle>
 
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
@@ -6,14 +14,14 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="breadcrumb__text">
-                    <h2>Sản phẩm chi tiết</h2>
+                    <h2>Chi tiết sản phẩm</h2>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="breadcrumb__links">
-                    <a href="">Trang chủ</a>
+                    <a href="/">Trang chủ</a>
                     <a href="shop">Sản phẩm</a>
-                    <span>(Tên món ăn)</span>
+                    <span>@Product?.ProductName</span>
                 </div>
             </div>
         </div>
@@ -27,20 +35,20 @@
             <div class="col-lg-6">
                 <div class="product__details__img">
                     <div class="product__details__big__img">
-                        <img class="big_img" src="client/img/shop/details/product-big-1.jpg" alt="">
+                        <img class="big_img" src="@Product?.Image" alt="@Product?.ProductName">
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="product__details__text">
-                    <div class="product__label">Loại sản phẩm</div>
-                    <h4>SWEET AUTUMN LEAVES</h4>
-                    <h5>$26.41</h5>
+                    <div class="product__label">@Product?.CategoryName</div>
+                    <h4>@Product?.ProductName</h4>
+                    <h5>@Product?.Price.ToString("C")</h5>
                     <p>
-                        (Mô tả sản phẩm)
+                        @Product?.Description
                     </p>
                     <ul>
-                        <li>Mã sản phẩm: <span>17</span></li>
+                        <li>Mã sản phẩm: <span>@Product?.Id</span></li>
                     </ul>
                     <div class="product__details__option">
                         <div class="quantity">
@@ -68,10 +76,7 @@
                         <div class="row d-flex justify-content-center">
                             <div class="col-lg-8">
                                 <p>
-                                    This delectable Strawberry Pie is an extraordinary treat filled with sweet and
-                                    tasty chunks of delicious strawberries. Made with the freshest ingredients, one
-                                    bite will send you to summertime. Each gift arrives in an elegant gift box and
-                                    arrives with a greeting card of your choice that you can personalize online!
+                                    @Product?.Description
                                 </p>
                             </div>
                         </div>
@@ -81,42 +86,7 @@
                             <div class="col-lg-8">
                                 <div class="reviews">
                                     <div class="comments-list">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="item">
-                                                    <div class="comment-body">
-                                                        <div class="comment-meta">
-                                                            <span class="author">Peter</span> - <span class="time">June 02, 2018</span>
-                                                        </div>
-                                                        <div class="comment-content">Look at the sunset, .</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="item">
-                                                    <div class="comment-body">
-                                                        <div class="comment-meta">
-                                                            <span class="author">Peter</span> - <span class="time">June 02, 2018</span>
-                                                        </div>
-                                                        <div class="comment-content">Look at the sunset, .</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="item">
-                                                    <div class="comment-body">
-                                                        <div class="comment-meta">
-                                                            <span class="author">Peter</span> - <span class="time">June 02, 2018</span>
-                                                        </div>
-                                                        <div class="comment-content">Look at the sunset, .</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!-- Hiển thị danh sách bình luận -->
                                     </div>
 
                                     <div class="review-form">
@@ -159,133 +129,69 @@
             </div>
         </div>
         <div class="row">
-            <div class="related__products__slider owl-carousel">
-                <div class="col-lg-3">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="detailproduct">
-                                <img src="client/img/shop/product-4.jpg" />
-                            </a>
+            @if (RelatedProducts == null)
+            {
+                <div class="col-12">
+                    <p>Đang tải sản phẩm...</p>
+                </div>
+            }
+            else if (RelatedProducts.Any())
+            {
+                @foreach (var relatedProduct in RelatedProducts)
+                {
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg">
+                                <a href="detailproduct/@relatedProduct.Id">
+                                    <img src="@relatedProduct.Image" />
+                                </a>
 
-                            <div class="product__label">
-                                <span>Cupcake</span>
+                                <div class="product__label">
+                                    <span>@relatedProduct.CategoryName</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
-                            <div class="cart_add">
-                                <a href="cart">Thêm vào giỏ</a>
+                            <div class="product__item__text">
+                                <h6><a href="detailproduct/@relatedProduct.Id">@relatedProduct.ProductName</a></h6>
+                                <div class="product__item__price">@relatedProduct.Price.ToString("C")</div>
+                                <div class="cart_add">
+                                    <a href="cart">Thêm vào giỏ</a>
+                                </div>
                             </div>
                         </div>
                     </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p>Không có sản phẩm nào.</p>
                 </div>
-                <div class="col-lg-3">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="detailproduct">
-                                <img src="client/img/shop/product-4.jpg" />
-                            </a>
-
-                            <div class="product__label">
-                                <span>Cupcake</span>
-                            </div>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
-                            <div class="cart_add">
-                                <a href="cart">Thêm vào giỏ</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="detailproduct">
-                                <img src="client/img/shop/product-4.jpg" />
-                            </a>
-
-                            <div class="product__label">
-                                <span>Cupcake</span>
-                            </div>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
-                            <div class="cart_add">
-                                <a href="cart">Thêm vào giỏ</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="detailproduct">
-                                <img src="client/img/shop/product-4.jpg" />
-                            </a>
-
-                            <div class="product__label">
-                                <span>Cupcake</span>
-                            </div>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
-                            <div class="cart_add">
-                                <a href="cart">Thêm vào giỏ</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="detailproduct">
-                                <img src="client/img/shop/product-4.jpg" />
-                            </a>
-
-                            <div class="product__label">
-                                <span>Cupcake</span>
-                            </div>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
-                            <div class="cart_add">
-                                <a href="cart">Thêm vào giỏ</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="detailproduct">
-                                <img src="client/img/shop/product-4.jpg" />
-                            </a>
-
-                            <div class="product__label">
-                                <span>Cupcake</span>
-                            </div>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="detailproduct">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
-                            <div class="cart_add">
-                                <a href="cart">Thêm vào giỏ</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
 <!-- Related Products Section End -->
-
 @code {
+    [Parameter]
+    public Guid Id { get; set; }
 
+    private ProductForView? Product;
+    private IEnumerable<ProductForView>? RelatedProducts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Product = await ProductService.GetProductByIdAsync(Id);
+
+        if (Product != null)
+        {
+            // Chờ task hoàn thành trước khi lọc
+            var allProducts = await ProductService.GetAllProductsAsync();
+            RelatedProducts = allProducts.Where(p => p.Category_Id == Product.Category_Id && p.Id != Product.Id).ToList();
+            Product.CategoryName = (await CategoryService.GetCategory(Product.Category_Id ?? Guid.Empty))?.Name;
+            foreach (var relatedProduct in RelatedProducts)
+            {
+                relatedProduct.CategoryName = (await CategoryService.GetCategory(relatedProduct.Category_Id ?? Guid.Empty))?.Name;
+            }
+        }
+    }
 }

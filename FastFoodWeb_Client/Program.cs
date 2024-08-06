@@ -51,9 +51,9 @@ namespace FastFoodWeb_Client
             app.UseStaticFiles();
             app.UseStaticFiles();
 
-            app.UseAuthentication();
+           /* app.UseAuthentication();
             app.UseAuthorization();
-
+*/
             app.UseAntiforgery();
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
