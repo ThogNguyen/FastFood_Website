@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="card-body">
-            <EditForm Model="@userRole" OnValidSubmit="HandleValidSubmit">
+            <EditForm Model="@userRole" OnValidSubmit="UpdateUserrole">
                 <DataAnnotationsValidator />
                 <div class="form-group">
                     <label for="inputAddress">User Name</label>
@@ -63,7 +63,7 @@
         await LoadUserRole();
     }
 
-    private async Task HandleValidSubmit()
+    private async Task UpdateUserrole()
     {
         try
         {
