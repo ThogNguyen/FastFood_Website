@@ -69,6 +69,16 @@
                     </div>
                     <div class="row">
                         <div class="form-group">
+                            <label>Giảm theo %</label>
+                            <InputSelect @bind-Value="coupon.IsPercentDiscount" class="form-control">
+                                <option value="true">Có</option>
+                                <option value="false">Không</option>
+                            </InputSelect>
+                            <ValidationMessage For="@(() => coupon.IsPercentDiscount)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
                             <label class="control-label">Ngày bắt đầu</label>
                             <InputDate @bind-Value="coupon.StartDate" class="form-control" />
                             <ValidationMessage For="@(() => coupon.StartDate)" />
@@ -104,19 +114,31 @@
 
 @code {
     private CouponForUpdate coupon = new CouponForUpdate(); // Use CouponForUpdate
-    private CouponForView couponForView = new CouponForView();
 
     [Parameter]
     public Guid Id { get; set; } // To receive the coupon ID from the URL
 
     protected override async Task OnInitializedAsync()
     {
-        couponForView = await HttpCouponService.GetCoupons(Id);
+        var couponForView = await HttpCouponService.GetCoupons(Id);
+
+        coupon = new CouponForUpdate
+            {
+                Code = couponForView.Code,
+                DiscountPrice = couponForView.DiscountPrice,
+                MaxDiscountValue = couponForView.MaxDiscountValue,
+                Description = couponForView.Description,
+                PercentDiscount = couponForView.PercentDiscount,
+                IsPercentDiscount = couponForView.IsPercentDiscount,
+                StartDate = couponForView.StartDate,
+                EndDate = couponForView.EndDate,
+                IsActive = couponForView.IsActive
+            };
     }
 
     private async Task UpdateCoupon()
     {
-        await HttpCouponService.UpdateCoupons(coupon);
+        await HttpCouponService.UpdateCoupons(Id, coupon);
         Navigation.NavigateTo("coupons");
     }
 }

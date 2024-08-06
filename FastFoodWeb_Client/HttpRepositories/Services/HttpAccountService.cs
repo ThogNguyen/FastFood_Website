@@ -86,7 +86,7 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
             }
         }
 
-        public async Task ResetPasswordAsync(ResetPasswordVM model)
+        public async Task<BaseResponseMessage> ResetPasswordAsync(ResetPasswordVM model)
         {
             string data = JsonConvert.SerializeObject(model);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
@@ -96,8 +96,17 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new ApplicationException($"Failed to reset password. Status code: {response.StatusCode}, Error: {responseContent}");
+                return new BaseResponseMessage
+                {
+                    IsSuccess = false,
+                    Errors = "Something went wrong."
+                };
             }
+            return new BaseResponseMessage
+            {
+                IsSuccess = true,
+                Errors = "Login Success."
+            };
         }
     }
 }

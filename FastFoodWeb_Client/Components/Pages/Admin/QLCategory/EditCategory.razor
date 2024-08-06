@@ -19,6 +19,15 @@
                 </a>
             </div>
             <div class="col-md-6 mx-auto">
+                @if (errorMessage != null)
+                {
+                    <div class="form-group">
+                        <div class="alert alert-danger">
+                            @(errorMessage)
+                        </div>
+                    </div>
+                }
+
                 <EditForm Model="category" OnValidSubmit="HandleValidSubmit">
                     <DataAnnotationsValidator />
                     <ValidationSummary />
@@ -42,12 +51,6 @@
 
 
 
-@if (errorMessage != null)
-{
-    <div class="alert alert-danger">
-        @errorMessage
-    </div>
-}
 
 @code {
     [Parameter]
@@ -71,7 +74,7 @@
             errorMessage = ex.Message;
         }
     }
-
+        
     private async Task HandleValidSubmit()
     {
         try

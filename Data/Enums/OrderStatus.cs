@@ -8,7 +8,7 @@ namespace Data.Enums
 {
     public enum OrderStatus
     {
-        Pending,
+        Pending,    
         UnPaid,
         Paid
     }

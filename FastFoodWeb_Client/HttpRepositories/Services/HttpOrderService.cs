@@ -15,55 +15,72 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
             _httpClient = httpClient;
         }
 
-        private async Task<T> SendRequestAsync<T>(HttpRequestMessage requestMessage)
+        public async Task CreateOrderAsync(OrderForCreate orderDto)
         {
-            var response = await _httpClient.SendAsync(requestMessage);
+            string data = JsonConvert.SerializeObject(orderDto);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("https://localhost:44346/api/OrdersApi/cteate-order", content);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(responseContent);
+            }
+        }
+
+        public async Task<IEnumerable<OrderForView>> GetAllOrdersAsync()
+        {
+            var response = await _httpClient.GetAsync("https://localhost:44346/api/OrdersApi/get-orders");
+            var content = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(responseContent)
-                    ?? throw new ApplicationException("Deserialization failed.");
+                var orders = JsonConvert.DeserializeObject<IEnumerable<OrderForView>>(content)!;
+                return orders;
             }
-
-            var errorMessage = await response.Content.ReadAsStringAsync();
-            throw new ApplicationException($"Error: {response.StatusCode}, {errorMessage}");
+            throw new ApplicationException(content);
         }
 
-        public Task<BaseResponseMessage> CreateOrderAsync(OrderForCreate orderDto)
+        public async Task<OrderForView> GetOrderByIdAsync(Guid id)
         {
-            var data = JsonConvert.SerializeObject(orderDto);
-            var content = new StringContent(data, Encoding.UTF8, "application/json");
-            var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44346/api/OrdersApi/create-order") { Content = content };
-            return SendRequestAsync<BaseResponseMessage>(requestMessage);
+            var response = await _httpClient.GetAsync($"https://localhost:44346/api/OrdersApi/get-order/{id}");
+            var content = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var order = JsonConvert.DeserializeObject<OrderForView>(content)!;
+                return order;
+            }
+            throw new ApplicationException("Order not found.");
         }
 
-        public Task<BaseResponseMessage> UpdateOrderAsync(OrderForUpdate orderDto, Guid id)
+        public async Task UpdateOrderAsync(OrderForUpdate orderDto, Guid id)
         {
-            var data = JsonConvert.SerializeObject(orderDto);
-            var content = new StringContent(data, Encoding.UTF8, "application/json");
-            var requestMessage = new HttpRequestMessage(HttpMethod.Put, $"https://localhost:44346/api/OrdersApi/update-order/{id}") { Content = content };
-            return SendRequestAsync<BaseResponseMessage>(requestMessage);
+            string data = JsonConvert.SerializeObject(orderDto);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync($"https://localhost:44346/api/OrdersApi/update-order-status/{id}", content);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(responseContent);
+            }
         }
 
-        public Task<BaseResponseMessage> UpdateOrderStatusShippingAsync(OrderForUpdateShippingStatus shippingStatus, Guid id)
+        public async Task UpdateOrderStatusShippingAsync(OrderForUpdateShippingStatus shippingStatus, Guid id)
         {
-            var data = JsonConvert.SerializeObject(shippingStatus);
-            var content = new StringContent(data, Encoding.UTF8, "application/json");
-            var requestMessage = new HttpRequestMessage(HttpMethod.Put, $"https://localhost:44346/api/OrdersApi/update-shipping-status/{id}") { Content = content };
-            return SendRequestAsync<BaseResponseMessage>(requestMessage);
-        }
+            string data = JsonConvert.SerializeObject(shippingStatus);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
-        public Task<IEnumerable<OrderForView>> GetAllOrdersAsync()
-        {
-            var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44346/api/OrdersApi/get-orders");
-            return SendRequestAsync<IEnumerable<OrderForView>>(requestMessage);
-        }
+            var response = await _httpClient.PutAsync($"https://localhost:44346/api/OrdersApi/update-shipping-status/{id}", content);
+            var responseContent = await response.Content.ReadAsStringAsync();
 
-        public Task<OrderForView> GetOrderByIdAsync(Guid id)
-        {
-            var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:44346/api/OrdersApi/get-order/{id}");
-            return SendRequestAsync<OrderForView>(requestMessage);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(responseContent);
+            }
         }
     }
 }
