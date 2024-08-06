@@ -137,10 +137,10 @@
     protected override async Task OnInitializedAsync()
     {
         // Products = await HttpProductService.GetAllProductsAsync();
-        FilteredProducts = Products;
+        //FilteredProducts = Products;
         Categories = await HttpCategoryService.GetAllCategory();
         Products = await HttpProductService.GetAllProductsAsync();
-        Categories = await HttpCategoryService.GetAllCategoriesAsync();
+        //Categories = await HttpCategoryService.GetAllCategoriesAsync();
     }
 
     private async Task SearchProducts()
@@ -200,7 +200,7 @@
                 ProductName = product.ProductName,
                 Price = product.Price,
                 Image = product.Image,
-                Quantity = 1, // Mặc định là 1
+                // Quantity = 1, // Mặc định là 1
                 CategoryName = product.CategoryName
             });
         await SaveCartItemsToSession(cartItems);

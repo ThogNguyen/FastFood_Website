@@ -44,11 +44,11 @@
                                                 </div>
                                             </div>
                                         </td> *@
-                                        <td class="cart__price">$@(product.Price * quantity).ToString("0.00")</td>
+                                       @*  <td class="cart__price">$@(product.Price * quantity).ToString("0.00")</td> *@
                                         <td class="cart__close">
-                                            <a href="#" @onclick="@(() => RemoveFromCart(product.Id))">
+                                            @* <a href="#" @onclick="@(() => RemoveFromCart(product.Id))">
                                                 <span class="icon_close"></span>
-                                            </a>
+                                            </a> *@
                                         </td>
                                     </tr>
                                 }
@@ -98,7 +98,7 @@ else
                     <td>
                         @* <input type="number" min="1" value="@item.Quantity" @onchange="() => UpdateQuantity(item, (int)Math.Max(1, double.Parse(Value)))"> *@
                     </td>
-                    <td>$@(item.Price * item.Quantity).ToString("0.00")</td>
+                    @* <td>$@(item.Price * item.Quantity).ToString("0.00")</td> *@
                     <td><button @onclick="() => RemoveFromCart(item)">Remove</button></td>
                 </tr>
             }
@@ -106,12 +106,12 @@ else
         <tfoot>
             <tr>
                 <td colspan="4" class="text-right">Total:</td>
-                <td>$@CartTotal.ToString("0.00")</td>
+                @* //<td>$@CartTotal.ToString("0.00")</td> *@
             </tr>
         </tfoot>
     </table>
 
-    <button @onclick="Checkout" class="btn btn-primary">Checkout</button>
+    //<button @onclick="Checkout" class="btn btn-primary">Checkout</button>
 }
 
 @code {
@@ -122,7 +122,7 @@ else
 
     private void CalculateCartTotal()
     {
-        CartTotal = CartItems.Sum(item => item.Price * item.Quantity);
+        //CartTotal = CartItems.Sum(item => item.Price * item.Quantity);
     }
 
     private async void UpdateQuantity(ProductForView item, int newQuantity)
@@ -130,7 +130,7 @@ else
         var cartItem = CartItems.FirstOrDefault(i => i.Id == item.Id);
         if (cartItem != null)
         {
-            cartItem.Quantity = newQuantity;
+            //cartItem.Quantity = newQuantity;
 
             // Update cart in local storage or session
             // (replace with your actual logic)
@@ -142,10 +142,10 @@ else
 
     private async void RemoveFromCart(ProductForView item)
     {
-        TotalPrice = CartItems.Sum(p => p.Price * p.Quantity);
+        //TotalPrice = CartItems.Sum(p => p.Price * p.Quantity);
     }
 
-        CalculateCartTotal();
+        //CalculateCartTotal();
     }
 
     private void Checkout()

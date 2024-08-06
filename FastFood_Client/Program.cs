@@ -27,14 +27,14 @@ namespace FastFood_Client
             builder.Services.AddSession();
 
             // Configure HttpClient with the API base address
-            builder.Services.AddHttpClient<IHttpRoleService, HttpRoleService>(client =>
+            /*builder.Services.AddHttpClient<IHttpRoleService, HttpRoleService>(client =>
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
                 {
                     policy.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(origin =>
                     true).AllowCredentials();
                 });
-            });
+            });*/
 
             builder.Services.AddHttpClient();
 
