@@ -1,6 +1,9 @@
 ﻿@page "/cart"
 @using Data.Models.ProductModels
-@inject IJSRuntime jsRuntime
+@using FastFood_Client.HttpRepositories.Interfaces
+@inject IHttpProductService HttpProductService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime // Inject JSRuntime
 
 <PageTitle>Giỏ Hàng</PageTitle>
 <!-- ... (Phần Breadcrumb như trước) ... -->
@@ -68,42 +71,84 @@
     </div>
 </section>
 <!-- Shopping Cart Section End -->
+<h1>Your Cart</h1>
+
+@if (CartItems.Count == 0)
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in CartItems)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>$@item.Price.ToString("0.00")</td>
+                    <td>
+                        @* <input type="number" min="1" value="@item.Quantity" @onchange="() => UpdateQuantity(item, (int)Math.Max(1, double.Parse(Value)))"> *@
+                    </td>
+                    <td>$@(item.Price * item.Quantity).ToString("0.00")</td>
+                    <td><button @onclick="() => RemoveFromCart(item)">Remove</button></td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-right">Total:</td>
+                <td>$@CartTotal.ToString("0.00")</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <button @onclick="Checkout" class="btn btn-primary">Checkout</button>
+}
+
 @code {
     private List<ProductForView> CartItems { get; set; } = new List<ProductForView>();
     private decimal TotalPrice { get; set; }
-    private int quantity { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private void CalculateCartTotal()
     {
-        if (firstRender)
-        {
-            // 1. Lấy danh sách sản phẩm từ session
-            var cartItemsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "cart");
-            if (!string.IsNullOrEmpty(cartItemsJson))
-            {
-                CartItems = System.Text.Json.JsonSerializer.Deserialize<List<ProductForView>>(cartItemsJson);
-            }
+        CartTotal = CartItems.Sum(item => item.Price * item.Quantity);
+    }
 
-            // 2. Tính tổng tiền
-            CalculateTotalPrice();
+    private async void UpdateQuantity(ProductForView item, int newQuantity)
+    {
+        var cartItem = CartItems.FirstOrDefault(i => i.Id == item.Id);
+        if (cartItem != null)
+        {
+            cartItem.Quantity = newQuantity;
+
+            // Update cart in local storage or session
+            // (replace with your actual logic)
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "cart", System.Text.Json.JsonSerializer.Serialize(CartItems));
+
+            CalculateCartTotal();
         }
     }
 
-    private void CalculateTotalPrice()
+    private async void RemoveFromCart(ProductForView item)
     {
-        TotalPrice = CartItems.Sum(p => p.Price * quantity);
+        TotalPrice = CartItems.Sum(p => p.Price * p.Quantity);
     }
 
-    private void RemoveFromCart(Guid productId)
-    {
-        CartItems.RemoveAll(p => p.Id == productId);
-        CalculateTotalPrice();
-        // Cập nhật session (nếu cần)
+        CalculateCartTotal();
     }
 
-    private void UpdateCart()
+    private void Checkout()
     {
-        CalculateTotalPrice();
-        // Cập nhật session (nếu cần)
+        // Implement checkout logic (e.g., redirect to payment page, handle API call)
+        NavigationManager.NavigateTo("/checkout");
     }
 }

@@ -10,5 +10,7 @@ namespace FastFood_Client.HttpRepositories.Interfaces
         Task CreateProductAsync(ProductForCreate productForCreate);
         Task CreateProduct(ProductForCreate productForCreate);
         Task UpdateProductAsync(Guid id, ProductForUpdate productForUpdate);
+        Task<IEnumerable<ProductForView>> GetProductsByCategoryAsync(Guid categoryId);
+        Task<IEnumerable<ProductForView>> GetProductsAsync(string? keyword, string? sortOption, Guid? categoryId);
     }
 }

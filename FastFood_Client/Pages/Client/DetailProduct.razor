@@ -3,6 +3,7 @@
 @using FastFood_Client.HttpRepositories.Interfaces
 @inject IHttpProductService HttpProductService
 @inject NavigationManager NavigationManager
+@inject IJSRuntime jsRuntime
 <PageTitle>Chi tiết sản phẩm</PageTitle>
 
 <!-- Breadcrumb Begin -->
@@ -50,10 +51,10 @@
                     <div class="product__details__option">
                         <div class="quantity">
                             <div class="pro-qty">
-                                <input type="text" value="1">
+                                <input type="text" @bind="Quantity">
                             </div>
                         </div>
-                        <a href="/Cart" class="primary-btn">Thêm vào giỏ</a>
+                        <a href="#" @onclick="@(() => AddToCart(Product.Id, Quantity))" class="primary-btn">Thêm vào giỏ</a>
                     </div>
                 </div>
             </div> 
@@ -167,6 +168,7 @@
 
     private ProductForView Product { get; set; }
     private IEnumerable<ProductForView> RelatedProducts { get; set; }
+    private int Quantity { get; set; } = 1;
 
     protected override async Task OnInitializedAsync()
     {
@@ -175,8 +177,44 @@
         // RelatedProducts = await HttpProductService.GetAllProductsAsync();
     }
 
-    private void NavigateToProductDetails(Guid productId)
+    private async Task AddToCart(Guid productId, int quantity)
     {
-        NavigationManager.NavigateTo($"/ProductDetails/{productId}");
+        // 1. Lấy thông tin sản phẩm từ API
+        var product = await HttpProductService.GetProductByIdAsync(productId);
+
+        // 2. Lưu thông tin sản phẩm vào session storage
+        //    (Bạn có thể sử dụng một cơ chế lưu trữ khác như local storage hoặc database nếu cần)
+        var cartItems = await GetCartItemsFromSession();
+        cartItems.Add(new ProductForView
+        {
+            Id = product.Id,
+            ProductName = product.ProductName,
+            Price = product.Price,
+            Image = product.Image,
+            Quantity = quantity, 
+            CategoryName = product.CategoryName
+        });
+        await SaveCartItemsToSession(cartItems);
+
+        // 3. Chuyển hướng hoặc hiển thị thông báo
+        NavigationManager.NavigateTo("/cart"); // Chuyển hướng đến trang giỏ hàng
+        // Hoặc bạn có thể hiển thị một thông báo cho người dùng
     }
+
+    private async Task<List<ProductForView>> GetCartItemsFromSession()
+    {
+        var cartItemsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "cart");
+        if (!string.IsNullOrEmpty(cartItemsJson))
+        {
+            return System.Text.Json.JsonSerializer.Deserialize<List<ProductForView>>(cartItemsJson);
+        }
+        return new List<ProductForView>();
+    }
+
+    private async Task SaveCartItemsToSession(List<ProductForView> cartItems)
+    {
+        var cartItemsJson = System.Text.Json.JsonSerializer.Serialize(cartItems);
+        await jsRuntime.InvokeAsync<string>("sessionStorage.setItem", "cart", cartItemsJson);
+    }
+
 }

@@ -126,5 +126,18 @@ namespace FastFood_API.Controllers
 
             return BadRequest(result);
         }
+        [HttpGet("search-products")]
+        public async Task<IActionResult> SearchProducts(
+            [FromQuery] string? keyword,
+            [FromQuery] string? sortOption,
+            [FromQuery] Guid? categoryId)
+        {
+            // Sử dụng GetProductsAsync thay vì GetAllProductsAsync
+            var products = await _productService.GetProductsAsync(keyword, sortOption, categoryId);
+
+            // Không cần lọc và sắp xếp lại ở đây vì GetProductsAsync đã xử lý
+
+            return Ok(products);
+        }
     }
 }

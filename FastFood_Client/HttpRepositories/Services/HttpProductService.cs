@@ -35,6 +35,11 @@ namespace FastFood_Client.HttpRepositories.Services
 
         public async Task CreateProduct([FromBody] ProductForCreate productForCreate)
         {
+            Console.WriteLine("Calling GetAllProductsAsync...");
+            var products = await _httpClient.GetAsync("https://localhost:7241/api/ProductsApi/get-products");
+            Console.WriteLine($"GetAllProductsAsync: Status code = {products.StatusCode}");
+
+            if (products.IsSuccessStatusCode)
             string data = JsonConvert.SerializeObject(productForCreate);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
@@ -43,23 +48,38 @@ namespace FastFood_Client.HttpRepositories.Services
 
             if (!postResult.IsSuccessStatusCode)
             {
-                throw new ApplicationException(postContent);
+                var productsData = await products.Content.ReadFromJsonAsync<IEnumerable<ProductForView>>();
+                if (productsData != null)
+                {
+                    // Sử dụng async/await để chờ cho mỗi task hoàn thành 
+                    var productList = await Task.WhenAll(productsData.Select(async p =>
+                    {
+                        var category = await _httpClient.GetAsync($"https://localhost:7241/api/CategoriesApi/get-category/{p.Category_Id}");
+                        if (category.IsSuccessStatusCode)
+                        {
+                            var categoryData = await category.Content.ReadFromJsonAsync<CategoryForView>();
+                            return new ProductForView
+                            {
+                                Id = p.Id,
+                                ProductName = p.ProductName,
+                                Price = p.Price,
+                                Discount = p.Discount,
+                                Image = p.Image,
+                                IsActive = p.IsActive,
+                                IsCombo = p.IsCombo,
+                                Description = p.Description,
+                                Category_Id = p.Category_Id,
+                                CategoryName = categoryData.Name,
+                            };
+                        }
+                        return p;
+                    }));
+
+                    // Trả về danh sách ProductForView sau khi tất cả task hoàn thành
+                    return productList;
+                }
             }
-        }
-
-        public Task CreateProductAsync(ProductForCreate productForCreate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<ProductForView>> GetAllProductsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ProductForView> GetProductByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
+            return Enumerable.Empty<ProductForView>();
         }
 
         public Task UpdateProductAsync(Guid id, ProductForUpdate productForUpdate)
@@ -100,12 +120,12 @@ namespace FastFood_Client.HttpRepositories.Services
             string data = JsonConvert.SerializeObject(productForUpdate);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync($"https://localhost:44346/api/ProductsApi/update-product/{id}", content);
-            if (!response.IsSuccessStatusCode)
-            {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                throw new ApplicationException($"Failed to update product with ID {id}. Status code: {response.StatusCode}, Error: {errorContent}");
-            }
-        }*/
+        public Task<BaseResponseMessage> UpdateProductAsync(ProductForUpdate productDto, Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+            return Enumerable.Empty<ProductForView>();
+        }
     }
 }

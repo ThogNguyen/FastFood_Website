@@ -121,5 +121,57 @@ namespace FastFood_API.Repositories.Services
                 Errors = "Sửa sản phẩm thành công."
             };
         }
+        public async Task<IEnumerable<ProductForView>> GetProductsAsync(
+        string? keyword,
+        string? sortOption,
+        Guid? categoryId)
+        {
+            IEnumerable<ProductForView> products = await _context.Products
+                .Include(p => p.Category) // Include category để lấy tên danh mục
+                .Select(p => new ProductForView
+                {
+                    Id = p.Id,
+                    ProductName = p.ProductName,
+                    Price = p.Price,
+                    Image = p.Image,
+                    Description = p.Description,
+       
+                    CategoryName = p.Category.Name // Lấy tên danh mục
+                })
+                .ToListAsync();
+
+            // Tìm kiếm theo từ khóa
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                products = products.Where(p => p.ProductName.ToLower().Contains(keyword.ToLower()));
+            }
+
+            // Lọc theo danh mục
+            if (categoryId.HasValue)
+            {
+                products = products.Where(p => p.Category_Id == categoryId.Value);
+            }
+
+            // Sắp xếp theo tên (A-Z hoặc Z-A)
+            if (sortOption == "asc")
+            {
+                products = products.OrderBy(p => p.ProductName);
+            }
+            else if (sortOption == "desc")
+            {
+                products = products.OrderByDescending(p => p.ProductName);
+            }
+            // Sắp xếp theo giá (tăng dần hoặc giảm dần)
+            else if (sortOption == "price-asc")
+            {
+                products = products.OrderBy(p => p.Price);
+            }
+            else if (sortOption == "price-desc")
+            {
+                products = products.OrderByDescending(p => p.Price);
+            }
+
+            return products;
+        }
     }
 }
