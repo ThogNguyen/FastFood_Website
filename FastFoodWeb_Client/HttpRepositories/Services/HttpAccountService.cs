@@ -91,7 +91,8 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
             string data = JsonConvert.SerializeObject(model);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync("https://localhost:44346/api/AccountsApi/reset-password", content);
+            var response = await _httpClient.PostAsync
+                ("https://localhost:44346/api/AccountsApi/reset-password", content);
             var responseContent = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
