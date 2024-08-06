@@ -60,6 +60,7 @@ namespace FastFoodWeb_Client.Components.Pages.Admin.QLProduct
             {
                 ProductName = productView.ProductName,
                 Price = productView.Price,
+                Image = productView.Image,
                 Discount = productView.Discount,
                 Description = productView.Description,
                 IsActive = productView.IsActive,
