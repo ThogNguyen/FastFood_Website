@@ -99,6 +99,7 @@
                             <div class="form-group">
                                 <label for="category-id">Loại</label>
                                 <InputSelect class="form-control" id="category-id" @bind-Value="product.Category_Id">
+                                    <option value="">Chọn loại</option>
                                     @foreach (var category in categories)
                                     {
                                         <option value="@category.Id">@category.Name</option>

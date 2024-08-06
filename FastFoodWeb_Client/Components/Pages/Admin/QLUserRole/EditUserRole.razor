@@ -34,10 +34,16 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-user"></i></span>
                         </div>
-                        <select class="custom-select" @bind="userRole.RoleName">
+                        @* <select class="custom-select" @bind="userRole.RoleName">
                             @foreach (var role in roles)
                             {
                                 <option value="@role.Name" selected="@(role.Name == userRole.RoleName ? "selected" : null)">@role.Name</option>
+                            }
+                        </select> *@
+                        <select class="custom-select" @bind="userRole.RoleName">
+                            @foreach (var role in roles)
+                            {
+                                <option value="@role.Name">@role.Name</option>
                             }
                         </select>
                     </div>
@@ -83,6 +89,11 @@
     private async Task LoadUserRole()
     {
         userRoleView = await UserRoleService.GetUserRolesByUserIdAsync(userId);
+
+        userRole = new UserRoleForUpdate
+            {
+                RoleName = userRoleView.RoleName
+            };
     }
 
     private async Task LoadRole()
