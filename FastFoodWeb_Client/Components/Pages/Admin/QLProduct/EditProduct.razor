@@ -28,6 +28,15 @@
             <!-- Nội dung form thêm sản phẩm -->
             <div class="card-body">
                 <EditForm Model="product" OnValidSubmit="UpdateProduct">
+                    <DataAnnotationsValidator />
+                    @if (!string.IsNullOrEmpty(_errorMessage))
+                    {
+                        <div class="form-group">
+                            <div class="alert alert-danger">
+                                @(_errorMessage)
+                            </div>
+                        </div>
+                    }
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">

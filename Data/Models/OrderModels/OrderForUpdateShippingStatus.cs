@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Data.Enums;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,6 +12,6 @@ namespace Data.Models.OrderModels
     public class OrderForUpdateShippingStatus
     {
         [Required(ErrorMessage = "Trạng thái giao hàng không được bỏ trống")]
-        public string ShippingStatus { get; set; } = "InProgress";
+        public ShippingStatus ShippingStatus { get; set; }
     }
 }

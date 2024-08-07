@@ -38,9 +38,9 @@
                     <div class="row">
                         <div class="form-group mb-3">
                             <label>Trạng thái</label>
-                            <InputSelect class="form-control" @bind-Value="order.OrderStatus">
+                            <InputSelect class="form-control" @bind-Value="order.ShippingStatus">
                                 <option value="">Chọn trạng thái</option>
-                                @foreach (var status in Enum.GetValues(typeof(OrderStatus)))
+                                @foreach (var status in Enum.GetValues(typeof(ShippingStatus)))
                                 {
                                     <option value="@status">@status</option>
                                 }
@@ -70,15 +70,18 @@
 
     private async Task HandleValidSubmit()
     {
-        var orderStatus = Enum.Parse<OrderStatus>(order.OrderStatus);
+        var shippingStatus = Enum.Parse<ShippingStatus>(order.ShippingStatus);
 
-        await OrderService.UpdateOrderAsync(new OrderForUpdate
+        await OrderService.UpdateOrderStatusShippingAsync(new OrderForUpdateShippingStatus
             {
-                OrderStatus = orderStatus
+                ShippingStatus = shippingStatus
             }, orderId);
 
         Navigation.NavigateTo("/orders");
     }
+
+
+
 
     private void NavigateToOrders()
     {

@@ -1,4 +1,5 @@
-﻿using Data.Models.RoleModels;
+﻿using Data.Models.AccountModels.Response;
+using Data.Models.RoleModels;
 using FastFoodWeb_Client.HttpRepositories.Interfaces;
 using Newtonsoft.Json;
 using System.Text;
@@ -19,11 +20,12 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync("https://localhost:44346/api/RolesApi/create-role", content);
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var postContent = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new ApplicationException($"Failed to create role. Status code: {response.StatusCode}, Error: {responseContent}");
+                var errorResponse = JsonConvert.DeserializeObject<BaseResponseMessage>(postContent);
+                throw new ApplicationException(errorResponse?.Errors ?? "Đã xảy ra lỗi không xác định.");
             }
         }
 
@@ -71,10 +73,12 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PutAsync($"https://localhost:44346/api/RolesApi/update-role/{id}", content);
+            var putContent = await response.Content.ReadAsStringAsync();
+
             if (!response.IsSuccessStatusCode)
             {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                throw new ApplicationException($"Failed to update role with ID {id}. Status code: {response.StatusCode}, Error: {errorContent}");
+                var errorResponse = JsonConvert.DeserializeObject<BaseResponseMessage>(putContent);
+                throw new ApplicationException(errorResponse?.Errors ?? "Đã xảy ra lỗi không xác định.");
             }
         }
     }

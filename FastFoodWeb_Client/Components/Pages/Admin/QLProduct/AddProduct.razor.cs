@@ -17,6 +17,8 @@ namespace FastFoodWeb_Client.Components.Pages.Admin.QLProduct
 
         ProductForCreate product = new ProductForCreate();
         private IEnumerable<CategoryForView> categories = new List<CategoryForView>();
+        private string _errorMessage;
+
 
         protected override async Task OnInitializedAsync()
         {
@@ -29,8 +31,15 @@ namespace FastFoodWeb_Client.Components.Pages.Admin.QLProduct
         }
         private async Task Create()
         {
-            await httpProductService.CreateProduct(product);
-            navigationManager.NavigateTo("/products");
+            try
+            {
+                await httpProductService.CreateProduct(product);
+                navigationManager.NavigateTo("/products");
+            }
+            catch (Exception ex)
+            {
+                _errorMessage = ex.Message;
+            }
         }
         private void AssignImage(string imgUrl) => product.Image = imgUrl;
     }

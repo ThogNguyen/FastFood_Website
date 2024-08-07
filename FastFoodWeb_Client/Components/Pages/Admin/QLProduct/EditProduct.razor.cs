@@ -4,6 +4,7 @@ using Data.Models.ProductModels;
 using FastFoodWeb_Client.HttpRepositories.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Net.Http.Headers;
 using Tewr.Blazor.FileReader;
 
@@ -28,6 +29,7 @@ namespace FastFoodWeb_Client.Components.Pages.Admin.QLProduct
 
         private ProductForUpdate product = new ProductForUpdate();
         private ProductForView productView = new ProductForView();
+        private string _errorMessage;
 
         private bool isImageChanged = false;
         private ElementReference _input;
@@ -71,12 +73,19 @@ namespace FastFoodWeb_Client.Components.Pages.Admin.QLProduct
 
         private async Task UpdateProduct()
         {
-            if (isImageChanged)
+            try
             {
-                product.Image = ImgUrl;
+                if (isImageChanged)
+                {
+                    product.Image = ImgUrl;
+                }
+                await httpProductService.UpdateProductAsync(ProductId, product);
+                NavigationManager.NavigateTo("/products");
             }
-            await httpProductService.UpdateProductAsync(ProductId, product);
-            NavigationManager.NavigateTo("/products");
+            catch (Exception ex)
+            {
+                _errorMessage = ex.Message;
+            }
         }
 
         private async Task HandleSelected()

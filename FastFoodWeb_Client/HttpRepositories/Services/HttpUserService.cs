@@ -1,4 +1,5 @@
-﻿using Data.Models.UserModels;
+﻿using Data.Models.AccountModels.Response;
+using Data.Models.UserModels;
 using FastFoodWeb_Client.HttpRepositories.Interfaces;
 using Newtonsoft.Json;
 using System.Text;
@@ -53,7 +54,8 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                throw new ApplicationException($"Failed to update user role with ID {id}. Status code: {response.StatusCode}, Error: {errorContent}");
+                var errorResponse = JsonConvert.DeserializeObject<BaseResponseMessage>(errorContent);
+                throw new ApplicationException(errorResponse?.Errors ?? "Đã xảy ra lỗi không xác định.");
             }
         }
     }

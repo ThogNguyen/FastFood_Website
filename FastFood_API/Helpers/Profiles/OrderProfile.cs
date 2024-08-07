@@ -34,6 +34,9 @@ namespace FastFood_API.Helpers.Profiles
             // public Product? Product { get; set; }
             // cho nên từ đó ta chọc vô Product lấy name của nó để chuyển thành ProductName cho UI
             // Nguồn from OrderDetail, Đích đến from OrderDetailForView
+
+            CreateMap<OrderForUpdateShippingStatus, Order>()
+                .ForMember(dest => dest.ShippingStatus, opt => opt.MapFrom(src => src.ShippingStatus));
         }
     }
 }

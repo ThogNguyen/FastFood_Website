@@ -30,6 +30,14 @@
             <div class="col-md-6 mx-auto">
                 <EditForm Model="_couponForCreate" OnValidSubmit="Create">
                     <DataAnnotationsValidator />
+                    @if (!string.IsNullOrEmpty(_errorMessage))
+                    {
+                        <div class="form-group">
+                            <div class="alert alert-danger">
+                                @(_errorMessage)
+                            </div>
+                        </div>
+                    }
                     <div class="row">
                         <div class="form-group">
                             <label class="control-label">Tên mã giảm giá</label>
@@ -95,7 +103,7 @@
 <!-- end row -->
 @code {
     private CouponForCreate _couponForCreate = new CouponForCreate();
-
+    private string _errorMessage;
     [Inject]
     public IHttpCouponService CouponService { get; set; }
 
@@ -104,7 +112,15 @@
 
     private async Task Create()
     {
-        await CouponService.CreateCoupons(_couponForCreate);
-        NavigationManager.NavigateTo("/coupons");
+        try
+        {
+            await CouponService.CreateCoupons(_couponForCreate);
+            NavigationManager.NavigateTo("/coupons");
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.Message; 
+        }
+        
     }
 }

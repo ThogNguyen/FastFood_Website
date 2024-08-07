@@ -1,4 +1,5 @@
-﻿using Data.Models.ProductModels;
+﻿using Data.Models.AccountModels.Response;
+using Data.Models.ProductModels;
 using FastFoodWeb_Client.HttpRepositories.Interfaces;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -24,7 +25,8 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
 
             if (!postResult.IsSuccessStatusCode)
             {
-                throw new ApplicationException(postContent);
+                var errorResponse = JsonConvert.DeserializeObject<BaseResponseMessage>(postContent);
+                throw new ApplicationException(errorResponse?.Errors ?? "Đã xảy ra lỗi không xác định.");
             }
         }
 
@@ -62,10 +64,12 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PutAsync($"https://localhost:44346/api/ProductsApi/update-product/{id}", content);
+            var putContent = await response.Content.ReadAsStringAsync();
+
             if (!response.IsSuccessStatusCode)
             {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                throw new ApplicationException($"Failed to update product with ID {id}. Status code: {response.StatusCode}, Error: {errorContent}");
+                var errorResponse = JsonConvert.DeserializeObject<BaseResponseMessage>(putContent);
+                throw new ApplicationException(errorResponse?.Errors ?? "Đã xảy ra lỗi không xác định.");
             }
         }
 

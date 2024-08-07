@@ -61,25 +61,27 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PutAsync($"https://localhost:44346/api/OrdersApi/update-order-status/{id}", content);
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var putContent = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new ApplicationException(responseContent);
+                var errorResponse = JsonConvert.DeserializeObject<BaseResponseMessage>(putContent);
+                throw new ApplicationException(errorResponse?.Errors ?? "Đã xảy ra lỗi không xác định.");
             }
         }
 
         public async Task UpdateOrderStatusShippingAsync(OrderForUpdateShippingStatus shippingStatus, Guid id)
         {
-            string data = JsonConvert.SerializeObject(shippingStatus);
+            string data = JsonConvert.SerializeObject(shippingStatus); 
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PutAsync($"https://localhost:44346/api/OrdersApi/update-shipping-status/{id}", content);
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var putContent = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new ApplicationException(responseContent);
+                var errorResponse = JsonConvert.DeserializeObject<BaseResponseMessage>(putContent);
+                throw new ApplicationException(errorResponse?.Errors ?? "Đã xảy ra lỗi không xác định.");
             }
         }
     }

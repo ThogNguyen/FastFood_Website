@@ -33,7 +33,14 @@
             <div class="col-md-6 mx-auto">
                 <EditForm Model="coupon" OnValidSubmit="UpdateCoupon">
                     <DataAnnotationsValidator />
-                    <ValidationSummary />
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="form-group">
+                            <div class="alert alert-danger">
+                                @(errorMessage)
+                            </div>
+                        </div>
+                    }
                     <div class="row">
                         <div class="form-group">
                             <label class="control-label">Mã giảm giá</label>
@@ -114,7 +121,7 @@
 
 @code {
     private CouponForUpdate coupon = new CouponForUpdate(); // Use CouponForUpdate
-
+    private string errorMessage;
     [Parameter]
     public Guid Id { get; set; } // To receive the coupon ID from the URL
 
@@ -138,7 +145,14 @@
 
     private async Task UpdateCoupon()
     {
-        await HttpCouponService.UpdateCoupons(Id, coupon);
-        Navigation.NavigateTo("coupons");
+        try
+        {
+            await HttpCouponService.UpdateCoupons(Id, coupon);
+            Navigation.NavigateTo("coupons");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
     }
 }

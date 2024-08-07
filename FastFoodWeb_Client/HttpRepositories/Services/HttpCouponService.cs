@@ -1,4 +1,5 @@
-﻿using Data.Models.CouponModels;
+﻿using Data.Models.AccountModels.Response;
+using Data.Models.CouponModels;
 using FastFoodWeb_Client.HttpRepositories.Interfaces;
 using Newtonsoft.Json;
 using System.Text;
@@ -49,7 +50,8 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
 
             if (!putResult.IsSuccessStatusCode)
             {
-                throw new ApplicationException(putContent);
+                var errorResponse = JsonConvert.DeserializeObject<BaseResponseMessage>(putContent);
+                throw new ApplicationException(errorResponse?.Errors ?? "Đã xảy ra lỗi không xác định.");
             }
         }
 
@@ -74,7 +76,8 @@ namespace FastFoodWeb_Client.HttpRepositories.Services
 
             if (!postResult.IsSuccessStatusCode)
             {
-                throw new ApplicationException(postContent);
+                var errorResponse = JsonConvert.DeserializeObject<BaseResponseMessage>(postContent);
+                throw new ApplicationException(errorResponse?.Errors ?? "Đã xảy ra lỗi không xác định.");
             }
         }
     }
