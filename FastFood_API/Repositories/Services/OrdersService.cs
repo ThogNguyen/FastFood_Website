@@ -55,7 +55,8 @@ namespace FastFood_API.Repositories.Services
 
                 if (discount.IsPercentDiscount)
                 {
-                    totalOrderPrice = totalOrderDetailPrice - (totalOrderDetailPrice * discount.PercentDiscount / 100);
+                    totalOrderPrice = totalOrderDetailPrice - 
+                            (totalOrderDetailPrice * discount.PercentDiscount / 100);
                     if (totalOrderPrice >= discount.MaxDiscountValue)
                     {
                         totalOrderPrice = totalOrderDetailPrice - discount.MaxDiscountValue;
